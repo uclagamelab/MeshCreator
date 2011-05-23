@@ -1,0 +1,544 @@
+using UnityEngine;
+using System.Collections;
+
+class MC_SimpleSurfaceEdge {
+	Color[] pixels; // the original pixel data from the image
+	int imageHeight;
+	int imageWidth;
+	
+	ArrayList edges;
+	ArrayList vertices;
+	ArrayList edgeLoops;
+	
+	public MC_SimpleSurfaceEdge(Color[] _pixels, int _imageWidth, int _imageHeight) {
+		pixels = _pixels;
+		imageWidth = _imageWidth;
+		imageHeight = _imageHeight;
+
+		edges = new ArrayList();
+		vertices = new ArrayList();
+		edgeLoops = new ArrayList();
+		
+		float uvWidth = (float)imageWidth;
+		float uvHeight = (float)imageHeight;
+		
+		for (int x = 0; x < imageWidth; x++) {
+			float uvX = x + 0.5f;
+			for (int y = 0; y < imageHeight; y++) {
+				float uvY = y+0.5f;
+				// get the first pixel
+				Color pixel = pixels[x + (imageWidth * y)];
+				float pixelAlpha = pixel.a;
+				
+				// only continue if the current pixel is opaque
+				if (pixelAlpha != 1.0) continue;
+				
+				// set up values for other possible pixel values
+				float pixelAboveAlpha = 0.0f;
+				float pixelBelowAlpha = 0.0f;
+				float pixelRightAlpha = 0.0f;
+				float pixelLeftAlpha = 0.0f;
+				float pixelAboveRightAlpha = 0.0f;
+				float pixelAboveLeftAlpha = 0.0f;
+				float pixelBelowRightAlpha = 0.0f;
+				//float pixelBelowLeftAlpha = 0.0f;
+				
+				// check x area, then the y. 
+				if ( x > 0 && x < imageWidth-1) {
+					if ( y > 0 && y < imageHeight -1 ) {
+						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
+						pixelAboveAlpha = pixelAbove.a;
+						Color pixelBelow = pixels[x + (imageWidth * (y-1))];
+						pixelBelowAlpha = pixelBelow.a;
+						Color pixelRight = pixels[x + 1 + (imageWidth * y)];
+						pixelRightAlpha = pixelRight.a;
+						Color pixelLeft = pixels[x - 1 + (imageWidth * y)];
+						pixelLeftAlpha = pixelLeft.a;
+					
+						Color pixelAboveRight = pixels[x + 1 + (imageWidth * (y + 1))];
+						pixelAboveRightAlpha = pixelAboveRight.a;
+						Color pixelAboveLeft = pixels[x - 1 + (imageWidth * (y + 1))];
+						pixelAboveLeftAlpha = pixelAboveLeft.a;
+						Color pixelBelowRight = pixels[x + 1 + (imageWidth * (y - 1))];
+						pixelBelowRightAlpha = pixelBelowRight.a;
+						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
+						//pixelBelowLeftAlpha = pixelBelowLeft.a;
+					}
+					else if ( y == 0) {
+						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
+						pixelAboveAlpha = pixelAbove.a;
+						Color pixelRight = pixels[x + 1 + (imageWidth * y)];
+						pixelRightAlpha = pixelRight.a;
+						Color pixelLeft = pixels[x - 1 + (imageWidth * y)];
+						pixelLeftAlpha = pixelLeft.a;
+					
+						Color pixelAboveRight = pixels[x + 1 + (imageWidth * (y + 1))];
+						pixelAboveRightAlpha = pixelAboveRight.a;
+						Color pixelAboveLeft = pixels[x - 1 + (imageWidth * (y + 1))];
+						pixelAboveLeftAlpha = pixelAboveLeft.a;
+					}
+					else if ( y == imageHeight -1 ) {
+						Color pixelBelow = pixels[x + (imageWidth * (y-1))];
+						pixelBelowAlpha = pixelBelow.a;
+						Color pixelRight = pixels[x + 1 + (imageWidth * y)];
+						pixelRightAlpha = pixelRight.a;
+						Color pixelLeft = pixels[x - 1 + (imageWidth * y)];
+						pixelLeftAlpha = pixelLeft.a;
+					
+						Color pixelBelowRight = pixels[x + 1 + (imageWidth * (y - 1))];
+						pixelBelowRightAlpha = pixelBelowRight.a;
+						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
+						//pixelBelowLeftAlpha = pixelBelowLeft.a;
+					}
+					else {
+						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+					}
+				}
+				else if ( x == 0 ) {
+					if ( y > 0 && y < imageHeight - 1) {
+						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
+						pixelAboveAlpha = pixelAbove.a;
+						Color pixelBelow = pixels[x + (imageWidth * (y-1))];
+						pixelBelowAlpha = pixelBelow.a;
+						Color pixelRight = pixels[x + 1 + (imageWidth * y)];
+						pixelRightAlpha = pixelRight.a;
+					
+						Color pixelAboveRight = pixels[x + 1 + (imageWidth * (y + 1))];
+						pixelAboveRightAlpha = pixelAboveRight.a;
+						Color pixelBelowRight = pixels[x + 1 + (imageWidth * (y - 1))];
+						pixelBelowRightAlpha = pixelBelowRight.a;
+					}
+					else if ( y == 0) {
+						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
+						pixelAboveAlpha = pixelAbove.a;
+						Color pixelRight = pixels[x + 1 + (imageWidth * y)];
+						pixelRightAlpha = pixelRight.a;
+					
+						Color pixelAboveRight = pixels[x + 1 + (imageWidth * (y + 1))];
+						pixelAboveRightAlpha = pixelAboveRight.a;
+					}
+					else if ( y == imageHeight -1 ) {
+						Color pixelBelow = pixels[x + (imageWidth * (y-1))];
+						pixelBelowAlpha = pixelBelow.a;
+						Color pixelRight = pixels[x + 1 + (imageWidth * y)];
+						pixelRightAlpha = pixelRight.a;
+					
+						Color pixelBelowRight = pixels[x + 1 + (imageWidth * (y - 1))];
+						pixelBelowRightAlpha = pixelBelowRight.a;
+					}
+					else {
+						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+					}
+					
+				}
+				else if ( x == imageWidth -1 ) {
+					if ( y > 0 && y < imageHeight -1 ) {
+						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
+						pixelAboveAlpha = pixelAbove.a;
+						Color pixelBelow = pixels[x + (imageWidth * (y-1))];
+						pixelBelowAlpha = pixelBelow.a;
+						Color pixelLeft = pixels[x - 1 + (imageWidth * y)];
+						pixelLeftAlpha = pixelLeft.a;
+					
+						Color pixelAboveLeft = pixels[x - 1 + (imageWidth * (y + 1))];
+						pixelAboveLeftAlpha = pixelAboveLeft.a;
+						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
+						//pixelBelowLeftAlpha = pixelBelowLeft.a;
+					}
+					else if ( y == 0) {
+						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
+						pixelAboveAlpha = pixelAbove.a;
+						Color pixelLeft = pixels[x - 1 + (imageWidth * y)];
+						pixelLeftAlpha = pixelLeft.a;
+					
+						Color pixelAboveLeft = pixels[x - 1 + (imageWidth * (y + 1))];
+						pixelAboveLeftAlpha = pixelAboveLeft.a;
+					}
+					else if ( y == imageHeight -1 ) {
+						Color pixelBelow = pixels[x + (imageWidth * (y-1))];
+						pixelBelowAlpha = pixelBelow.a;
+						Color pixelLeft = pixels[x - 1 + (imageWidth * y)];
+						pixelLeftAlpha = pixelLeft.a;
+					
+						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
+						//pixelBelowLeftAlpha = pixelBelowLeft.a;
+					}
+					else {
+						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+					}
+				}
+				
+				// try the up facing case
+				if (pixelAlpha == 1.0 && pixelAboveAlpha == 1.0) {
+					if (pixelAboveRightAlpha != 1.0 && pixelRightAlpha != 1.0) {
+						if (pixelAboveLeftAlpha == 1.0 || pixelLeftAlpha == 1.0) {
+							// add the vertical edge
+							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x,y+1,uvX/uvWidth,(uvY+1)/uvHeight));
+							edges.Add(e);
+						}
+					}
+					else if ( pixelAboveLeftAlpha != 1.0 && pixelLeftAlpha != 1.0) {
+						if (pixelAboveRightAlpha == 1.0 || pixelRightAlpha == 1.0) {
+							// add the vertical edge
+							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x,y+1,uvX/uvWidth,(uvY+1)/uvHeight));
+							edges.Add(e);
+						}
+					}
+				}
+				
+				// try the up diagonal case
+				if (pixelAlpha == 1.0 && pixelAboveRightAlpha == 1.0) {
+					if (pixelAboveAlpha != 1.0 && pixelRightAlpha == 1.0) {
+						// add the up diagonal edge
+						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y+1,(uvX+1)/uvWidth,(uvY+1)/uvHeight));
+						edges.Add(e);
+					}
+					else if (pixelAboveAlpha == 1.0 && pixelRightAlpha != 1.0) {
+						// add the up diagonal edge
+						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y+1,(uvX+1)/uvWidth,(uvY+1)/uvHeight));
+						edges.Add(e);
+					}
+				}
+				
+				// try the right facing case
+				if (pixelAlpha == 1.0 && pixelRightAlpha == 1.0) {
+					if (pixelAboveAlpha != 1.0 && pixelAboveRightAlpha != 1.0) {
+						if (pixelBelowAlpha == 1.0 || pixelBelowRightAlpha == 1.0) {
+							// add the horizontal edge
+							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y,(uvX+1)/uvWidth,uvY/uvHeight));
+							edges.Add(e);
+						}
+					}
+					else if ( pixelBelowAlpha != 1.0 && pixelBelowRightAlpha != 1.0) {
+						if (pixelAboveAlpha == 1.0 || pixelAboveRightAlpha == 1.0) {
+							// add the horizontal edge
+							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y,(uvX+1)/uvWidth,uvY/uvHeight));
+							edges.Add(e);
+						}
+					}
+				}
+				
+				// try the down diagonal case
+				if (pixelAlpha == 1.0 && pixelBelowRightAlpha == 1.0) {
+					if ( pixelRightAlpha != 1.0 && pixelBelowAlpha == 1.0) {
+						// add the down diagonal edge
+						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y-1,(uvX+1)/uvWidth,(uvY-1)/uvHeight));
+						edges.Add(e);
+					}
+					else if (pixelRightAlpha == 1.0 && pixelBelowAlpha != 1.0) {
+						// ad the down diagonal edge
+						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y-1,(uvX+1)/uvWidth,(uvY-1)/uvHeight));
+						edges.Add(e);
+					}
+				}
+				
+			}
+		}
+		MakeOutsideEdge();
+		SimplifyEdge();
+	}
+	
+	MC_Vertex GetVertex(float x, float y, float u, float v) {
+		for (int i = 0; i < vertices.Count; i++) {
+			MC_Vertex ver = (MC_Vertex) vertices[i]; 
+			if (ver.x == x && ver.y == y) {
+				return ver;
+			}
+		}
+		MC_Vertex newver = new MC_Vertex(x,y,u,v);
+		vertices.Add(newver);
+		return newver;
+	}
+	
+	void SimplifyEdge() {
+		foreach (MC_EdgeLoop edgeLoop in edgeLoops) {
+			edgeLoop.SimplifyEdge();
+		}
+	}
+	
+	void MakeOutsideEdge() {
+		
+		// order the edges
+		// start first edge loop with the first outside edge
+		MC_EdgeLoop currentEdgeLoop = new MC_EdgeLoop((MC_Edge)edges[0]);
+		edges.RemoveAt(0);
+		edgeLoops.Add(currentEdgeLoop);
+		
+		while (edges.Count > 0) {
+			// if the currentEdgeLoop is fully closed make a new edge loop
+			if (currentEdgeLoop.IsClosed()) {
+				MC_EdgeLoop nextEdgeLoop = new MC_EdgeLoop((MC_Edge)edges[0]);
+				Debug.LogWarning("SimpleSurfaceEdge::MakeOutsideEdge: adding another edge loop, last one was " + currentEdgeLoop.orderedEdges.Count + " edges long");
+				Debug.LogWarning("    this means your image has islands, I hope that's what you want.");
+				edges.RemoveAt(0);
+				edgeLoops.Add(nextEdgeLoop);
+				currentEdgeLoop = nextEdgeLoop;
+			}
+			// test each edge to see if it fits into the edgeloop
+			ArrayList deleteEdges = new ArrayList();
+			for (int i = 0; i < edges.Count; i++) {
+				MC_Edge e = (MC_Edge) edges[i];
+				if (currentEdgeLoop.AddEdge(e)) { // try to add the edge
+					deleteEdges.Add(e);
+				}
+			}
+			// delete the added edges
+			for (int i = 0; i < deleteEdges.Count; i++) {
+				edges.Remove( (MC_Edge)deleteEdges[i] );
+			}
+		}
+		
+	}
+	
+	public Vector2[] GetOutsideEdgeVertices() {
+		MC_EdgeLoop eL = (MC_EdgeLoop) edgeLoops[0];
+		return eL.GetVertexList();
+	}
+	
+	public ArrayList GetAllEdgeVertices() {
+		ArrayList edgeLoopVertices = new ArrayList();
+		foreach (MC_EdgeLoop el in edgeLoops) {
+			edgeLoopVertices.Add(el.GetVertexList());
+		}
+		return edgeLoopVertices;
+	}
+	
+	public bool ContainsIslands() {
+		if (edgeLoops.Count > 1) return true;
+		return false;
+	}
+	
+	public Vector2 GetUVForIndex(int loopIndex, int i) {
+		MC_EdgeLoop eL = (MC_EdgeLoop) edgeLoops[loopIndex];
+		return eL.GetUVForIndex(i);
+		//return new Vector2(raw.x/((float)imageWidth), raw.y/((float)imageHeight));
+	}
+	
+	public Vector2 GetUVForIndex(int i) {
+		MC_EdgeLoop eL = (MC_EdgeLoop) edgeLoops[0];
+		return eL.GetUVForIndex(i);
+		//return new Vector2(raw.x/((float)imageWidth), raw.y/((float)imageHeight));
+	}
+}
+
+class MC_Vertex {
+	public float x,y;
+	public float u,v;
+	public MC_Vertex(float _x, float _y, float _u, float _v) {
+		x = _x;
+		y = _y;
+		u = _u;
+		v = _v;
+	}
+	
+	/*
+	*	GetString() returns a descriptive string about info in this object
+	*	Useful for debugging.
+	*/
+	public string GetString() {
+		return "Vertex(x,y:" + x + "," + y + ", uv:" + u + "," + v + ")";
+	}
+	
+}
+
+class MC_Edge {
+	public MC_Vertex v1;
+	public MC_Vertex v2;
+	public bool isShared; // indicate if there are two of these?
+
+	ArrayList attachedFaces;
+
+	public MC_Edge(MC_Vertex _v1, MC_Vertex _v2) {
+		v1 = _v1;
+		v2 = _v2;
+		isShared = false;
+		attachedFaces = new ArrayList();
+	}
+	
+	public void AttachFace(MC_Face f) {
+		attachedFaces.Add(f);
+	}
+	
+	public bool OtherFaceCentered(MC_Face f) {
+		if (attachedFaces.Count > 1) {
+			MC_Face face1 = (MC_Face) attachedFaces[0];
+			MC_Face face2 = (MC_Face) attachedFaces[1];
+			if ( face1 == null && face2 == f) return true; // faces already deleted????
+			else if ( face2 == null && face1 == f) return true;
+			else if ( face1 != null && face1 != f && face1.IsCentered()) return true;
+			else if ( face2 != null && face2 != f && face2.IsCentered()) return true;
+		}
+		return false;
+	}
+	
+	public void SwitchVertices() {
+		MC_Vertex hold = v1;
+		v1 = v2;
+		v2 = hold;
+	}
+	
+	/*
+	*	GetString() returns a descriptive string about info in this object
+	*	Useful for debugging.
+	*/
+	public string GetString() {
+		return "Edge (" + v1.GetString() + ", " + v2.GetString() + ", shared:" + isShared + ")"; 
+	}
+}
+
+class MC_Face {
+	public MC_Vertex v1, v2, v3;
+	public MC_Edge e1, e2, e3;
+	
+	public MC_Face(MC_Edge _e1, MC_Edge _e2, MC_Edge _e3) {
+		e1 = _e1;
+		e2 = _e2;
+		e3 = _e3;
+		e1.AttachFace(this);
+		e2.AttachFace(this);
+		e3.AttachFace(this);
+		v1 = e1.v1;
+		v2 = e1.v2;
+		if (e2.v1 != v1 && e2.v1 != v2) v3 = e2.v1;
+		else v3 = e2.v2;
+	}
+	
+	public bool ContainsEdge(MC_Edge e) {
+		if (e1 == e || e2 == e || e3 == e) {
+			return true;
+		}
+		return false;
+	}
+	
+	public bool IsCentered() {
+		if (e1.isShared && e2.isShared && e3.isShared) {
+			return true;
+		}
+		return false;
+	}
+	
+	 public bool IsCenteredCentered() {
+		if (IsCentered()) {
+			if (e1.OtherFaceCentered(this) && e2.OtherFaceCentered(this) && e3.OtherFaceCentered(this) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public MC_Vertex[] GetVertices() {
+		return new MC_Vertex[] { v1, v2, v3};
+	}
+}
+
+// ordered list of edges
+class MC_EdgeLoop {
+	public ArrayList orderedEdges;
+	
+	public MC_EdgeLoop(MC_Edge e) {
+		orderedEdges = new ArrayList();
+		orderedEdges.Add(e);
+	}
+	
+	public bool AddEdge(MC_Edge e) {
+		// see if it shares with the last edge
+		MC_Vertex lastVertex = ((MC_Edge) orderedEdges[orderedEdges.Count-1]).v2;
+		if (e.v1 == lastVertex) { // this is the corrent vertex order
+			orderedEdges.Add(e);
+			return true;
+		}
+		else if (e.v2 == lastVertex) { // incorrect order, switch before adding
+			e.SwitchVertices();
+			orderedEdges.Add(e);
+			return true;
+		}
+		
+		// see if it shares with the first edge
+		MC_Vertex firstVertex = ((MC_Edge) orderedEdges[0]).v1;
+		if (e.v2 == firstVertex) { // this is the corrent vertex order
+			orderedEdges.Insert(0,e);
+			return true;
+		}
+		else if (e.v1 == firstVertex) { // incorrect order, switch before adding
+			e.SwitchVertices();
+			orderedEdges.Insert(0, e);
+			return true;
+		}
+		return false;
+	}
+	
+	public bool IsClosed() {
+		if (orderedEdges.Count < 2) return false; 
+		MC_Vertex lastVertex = ((MC_Edge) orderedEdges[orderedEdges.Count-1]).v2;
+		MC_Vertex firstVertex = ((MC_Edge) orderedEdges[0]).v1;
+		if (firstVertex.x == lastVertex.x && firstVertex.y == lastVertex.y) return true;
+		return false;
+	}
+	
+	public Vector2[] GetVertexList() {
+		Vector2[] verts = new Vector2[orderedEdges.Count];
+		for (int i = 0; i < orderedEdges.Count; i++) {
+			MC_Vertex v = ((MC_Edge) orderedEdges[i]).v1;
+			verts[i]= new Vector2(v.x, v.y);
+		}
+		return verts;
+	}
+	
+	public Vector2 GetUVForIndex(int i) {
+		if (i >= orderedEdges.Count) {
+			Debug.Log("got " + i + " index for ordered edge with " + orderedEdges.Count + " elements");
+			return new Vector2();
+		}
+		MC_Vertex v = ((MC_Edge)orderedEdges[i]).v1;
+		return new Vector2(v.u, v.v);
+	}
+	
+	/*
+	*	GetString() returns a descriptive string about info in this object
+	*	Useful for debugging.
+	*/
+	public string GetString() {
+		string s = "EdgeLoop with " + orderedEdges.Count + " edges: ";
+		for (int i = 0; i < orderedEdges.Count; i++) {
+			MC_Edge e = (MC_Edge) orderedEdges[i];
+			s += e.GetString() + ", " ;
+		}
+		return s;
+	}
+	
+	/*
+	*	SimplifyEdge() searchs for edges in which the shared vertex is a point
+	*	on a line between the two outer points.
+	*/
+	public void SimplifyEdge() {
+		ArrayList newOrderedEdges = new ArrayList(); // list to stick the joined edges
+		MC_Edge currentEdge = (MC_Edge)orderedEdges[0];
+		for (int i = 1; i < orderedEdges.Count; i++) { // start with the second edge for comparison
+			MC_Edge testEdge = (MC_Edge) orderedEdges[i];
+			MC_Vertex v1 = currentEdge.v1;
+			MC_Vertex v2 = testEdge.v2;
+			MC_Vertex sharedPoint = currentEdge.v2;
+			if (sharedPoint != testEdge.v1) { // oops, bad list, it should be closed by now
+				Debug.LogError("EdgeLoop Error: list is not ordered when simplifying edge");
+				return;
+			}
+			if (v1 == v2) {
+				Debug.LogError("EdgeLoop Error: found matching endpoints for a line when simplifying.");
+				return;
+			}
+			// determine if sharedPoint is on a line between the two endpoints
+			//The point (x3, y3) is on the line determined by (x1, y1) and (x2, y2) if and only if (x3-x1)*(y2-y1)==(x2-x1)*(y3-y1). 
+			float slope1 = (sharedPoint.x - v1.x) * (v2.y-v1.y);
+			float slope2 = (v2.x - v1.x) * (sharedPoint.y- v1.y);
+			if (slope1 == slope2) { // combine the two lines into current
+				currentEdge.v2 = v2;
+			}
+			else { // there isn't a continuation of line, so add current to new ordered and set current to testEdge
+				newOrderedEdges.Add(currentEdge);
+				currentEdge = testEdge;
+			}
+		}
+		newOrderedEdges.Add(currentEdge);
+		orderedEdges = newOrderedEdges;
+	}
+}
