@@ -49,8 +49,8 @@ public class MeshCreatorInspector :  Editor {
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Collider Generation", "");
 			mcd.generateCollider = EditorGUILayout.Toggle("Generate Collider", mcd.generateCollider);
-			if (mcd.generateCollider) mcd.usePrimativeCollider = EditorGUILayout.Toggle("Use Primative Collider", mcd.usePrimativeCollider);
-			if (mcd.usePrimativeCollider) mcd.smallestBoxArea = EditorGUILayout.FloatField("Smallest Box Area", mcd.smallestBoxArea);
+			if (mcd.generateCollider) mcd.usePrimitiveCollider = EditorGUILayout.Toggle("Use Primitive Collider", mcd.usePrimitiveCollider);
+			if (mcd.usePrimitiveCollider) mcd.smallestBoxArea = EditorGUILayout.FloatField("Smallest Box Area", mcd.smallestBoxArea);
 			EditorGUILayout.Space();
 			
 			if (GUILayout.Button("Update Mesh", GUILayout.MaxWidth(100))) {
@@ -114,7 +114,7 @@ public class MeshCreatorInspector :  Editor {
 			mf.sharedMesh = msh;
 			
 			// generate a mesh collider
-			if (mcd.generateCollider && !mcd.usePrimativeCollider) {
+			if (mcd.generateCollider && !mcd.usePrimitiveCollider) {
 				Collider col = mcd.gameObject.collider;
 				if (col == null) {
 					mcd.gameObject.AddComponent(typeof(MeshCollider));
@@ -143,7 +143,7 @@ public class MeshCreatorInspector :  Editor {
 				}
 				mcd.gameObject.transform.rotation = oldRotation;
 			}
-			else if (mcd.generateCollider && mcd.usePrimativeCollider) {
+			else if (mcd.generateCollider && mcd.usePrimitiveCollider) {
 				// remove the old collider if necessary
 				Collider col = mcd.gameObject.collider;
 				if (col != null) {
