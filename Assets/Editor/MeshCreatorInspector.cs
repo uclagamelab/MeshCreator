@@ -3,6 +3,12 @@ using UnityEngine;
 using System.Collections;
 using System;
 
+/***
+* MeshCreatorInspector
+*	modifies the inspector to show controls for the Mesh Creator.
+*	this script needs to be in the Editor folder of your project along
+*	with the SimpleSurfaceEdge.cs and the Triangulator.cs script.
+***/
 [CustomEditor(typeof(MeshCreatorData))]
 public class MeshCreatorInspector :  Editor {
 	
@@ -28,6 +34,8 @@ public class MeshCreatorInspector :  Editor {
 		EditorGUIUtility.LookLikeInspector();
 		//EditorGUIUtility.LookLikeControls();
 		
+		// TODO: inspector layout should be redesigned so that it's easier to 
+		//	 see the texture and material information
 		if (mcd != null) {
 			EditorGUILayout.LabelField("Mesh Creation Outline", "");
 			mcd.outlineTexture = EditorGUILayout.ObjectField("Mesh Outline Texture", mcd.outlineTexture, typeof(Texture2D)) as Texture2D;
@@ -43,9 +51,11 @@ public class MeshCreatorInspector :  Editor {
 			EditorGUILayout.LabelField("Mesh Size and Placement", "");
 			mcd.meshHeight = EditorGUILayout.FloatField("Mesh Height", mcd.meshHeight);
 			mcd.meshWidth = EditorGUILayout.FloatField("Mesh Width", mcd.meshWidth);
+			mcd.meshDepth = EditorGUILayout.FloatField("Mesh Depth", mcd.meshDepth);
+			
 			mcd.heightOffset = EditorGUILayout.FloatField("Height Offset", mcd.heightOffset);
 			mcd.widthOffset = EditorGUILayout.FloatField("Width Offset", mcd.widthOffset);
-			mcd.meshDepth = EditorGUILayout.FloatField("Mesh Depth", mcd.meshDepth);
+			
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Collider Generation", "");
 			mcd.generateCollider = EditorGUILayout.Toggle("Generate Collider", mcd.generateCollider);
@@ -54,7 +64,13 @@ public class MeshCreatorInspector :  Editor {
 			EditorGUILayout.Space();
 			
 			if (GUILayout.Button("Update Mesh", GUILayout.MaxWidth(100))) {
-				UpdateMesh();
+				// do some simple parameter checking here so we don't get into trouble
+				if (mcd.smallestBoxArea < 2) {
+					Debug.LogWarning("Mesh Creator: smallest box area should be larger than 1.");
+				}
+				else {
+					UpdateMesh();
+				}
 			}
 		}
 		else {
@@ -131,6 +147,10 @@ public class MeshCreatorInspector :  Editor {
 				Quaternion oldRotation = mcd.gameObject.transform.rotation;
 				mcd.gameObject.transform.rotation = Quaternion.identity;
 				
+				// stash the scale value, set back to one, then switch back later
+				Vector3 oldScale = mcd.gameObject.transform.localScale;
+				mcd.gameObject.transform.localScale = Vector3.one;
+				
 				MeshCollider mcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
 				if (mcol == null) {
 					Debug.LogWarning("MeshCreator Warning: found a non-Mesh collider on object to update. If you really want a new collider generated, remove the old one and update the object with MeshCreator again.");
@@ -142,6 +162,7 @@ public class MeshCreatorInspector :  Editor {
 					mcol.material = mcd.physicMaterial;
 				}
 				mcd.gameObject.transform.rotation = oldRotation;
+				mcd.gameObject.transform.localScale = oldScale;
 			}
 			else if (mcd.generateCollider && mcd.usePrimitiveCollider) {
 				// remove the old collider if necessary
@@ -171,6 +192,10 @@ public class MeshCreatorInspector :  Editor {
 				// stash the rotation value, set back to identity, then switch back later
 				Quaternion oldRotation = mcd.gameObject.transform.rotation;
 				mcd.gameObject.transform.rotation = Quaternion.identity;
+				
+				// stash the scale value, set back to one, then switch back later
+				Vector3 oldScale = mcd.gameObject.transform.localScale;
+				mcd.gameObject.transform.localScale = Vector3.one;
 				
 				go.name = compoundColliderName;
 				go.transform.parent = mcd.gameObject.transform;
@@ -209,9 +234,11 @@ public class MeshCreatorInspector :  Editor {
 					}
 				}
 				mcd.gameObject.transform.rotation = oldRotation;
+				mcd.gameObject.transform.localScale = oldScale;
 			}
     }  
 	
+	// TODO: this should be moved to another script, kinda funky here
 	ArrayList GetBoxColliderCoordinates() {
 		ArrayList boxCoordinates = new ArrayList();
 		string path = AssetDatabase.GetAssetPath(mcd.outlineTexture);
@@ -245,6 +272,16 @@ public class MeshCreatorInspector :  Editor {
 		return boxCoordinates;
 	}
 	
+	/***
+	* GetLargestBox
+	*	takes pixel data ref and finds largest rectangular area of solid opaque pixels.
+	*	pixels are then deleted inside that rectangular area.
+	* returns Vector4 of opposite corner coordinates, or Vector4(-1.0) if no area found.
+	*
+	* TODO: this is really slow. incrementally checking pixel box areas is not efficient. 
+	*	maybe try checking max first and then half that amount, then half, and so on.
+	*    check this: http://stackoverflow.com/questions/1726632/dynamic-programming-largest-square-block
+	***/
 	Vector4 GetLargestBox(ref Color[] pixs, int imageWidth, int imageHeight) {
 		Vector4 boxCoords = new Vector4(-1.0f, -1.0f, -1.0f, -1.0f);
 		int area = 1; // smallest possible area

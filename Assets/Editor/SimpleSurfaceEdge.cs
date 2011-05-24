@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+/***
+* MC_SimpleSurfaceEdge
+*	class to read pixel data and create outline edges around opaque pixel areas.
+***/
+
 class MC_SimpleSurfaceEdge {
 	Color[] pixels; // the original pixel data from the image
 	int imageHeight;
