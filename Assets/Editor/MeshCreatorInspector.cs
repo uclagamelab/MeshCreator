@@ -70,6 +70,7 @@ public class MeshCreatorInspector :  Editor {
 				}
 				else {
 					UpdateMesh();
+					//Editor.Repaint(); // error when deleting colliders
 				}
 			}
 		}
@@ -168,7 +169,8 @@ public class MeshCreatorInspector :  Editor {
 				// remove the old collider if necessary
 				Collider col = mcd.gameObject.collider;
 				if (col != null) {
-					DestroyImmediate(col);
+					//DestroyImmediate(col); // using destroy here causes a editor error after the script runs
+					col = null;
 				}
 				
 				// all compound colliders are stored in a gameObject 
@@ -213,9 +215,9 @@ public class MeshCreatorInspector :  Editor {
 					colgo.transform.localPosition = Vector3.zero;
 					BoxCollider bxcol = colgo.AddComponent(typeof(BoxCollider)) as BoxCollider;
 					
-					float vertX = bc.x/imageWidth ; // get X point and normalize
+					float vertX = 1.0f - (bc.x/imageWidth) ; // get X point and normalize
 					float vertY = bc.y/imageHeight ; // get Y point and normalize
-					float vert2X = bc.z/imageWidth;
+					float vert2X = 1.0f - (bc.z/imageWidth);
 					float vert2Y = bc.w/imageHeight;
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
@@ -390,8 +392,8 @@ public class MeshCreatorInspector :  Editor {
 			
 				float halfDepth = mcd.meshDepth/2.0f;
 				for (int i=0; i<vertices2D.Length; i++) {
-					float vertX = vertices2D[i].x/imageWidth ; // get X point and normalize
-					float vertY = vertices2D[i].y/imageHeight ; // get Y point and normalize
+					float vertX = 1.0f - (vertices2D[i].x/imageWidth) ; // get X point and normalize
+					float vertY = vertices2D[i].y/imageHeight; // get Y point and normalize
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
 					vertX = vertX + mcd.widthOffset;
@@ -465,7 +467,7 @@ public class MeshCreatorInspector :  Editor {
 			
 					float halfDepth = mcd.meshDepth/2.0f;
 					for (int i=0; i<vertices2D.Length; i++) {
-						float vertX = vertices2D[i].x/imageWidth ; // get X point and normalize
+						float vertX = 1.0f - (vertices2D[i].x/imageWidth) ; // get X point and normalize
 						float vertY = vertices2D[i].y/imageHeight ; // get Y point and normalize
 						vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 						vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
