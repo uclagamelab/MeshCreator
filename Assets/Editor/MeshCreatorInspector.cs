@@ -104,12 +104,15 @@ public class MeshCreatorInspector :  Editor {
 			}
 			
 			Mesh msh = new Mesh();
+			Mesh collidermesh = new Mesh();
 			if (mcd.uvWrapMesh) {
 				// Set up game object with mesh;
 				AssignMesh(ref msh);
+				collidermesh = msh;
 			}
 			else {
-				AssignFlatMesh(ref msh);
+				AssignPlaneMesh(ref msh);
+				AssignMesh(ref collidermesh);
 			}
 			
 			MeshRenderer mr = (MeshRenderer) mcd.gameObject.GetComponent("MeshRenderer");
@@ -192,7 +195,7 @@ public class MeshCreatorInspector :  Editor {
 					Debug.LogWarning("MeshCreator Warning: found a non-Mesh collider on object to update. If you really want a new collider generated, remove the old one and update the object with MeshCreator again.");
 				}
 				else {
-					mcol.sharedMesh = msh;
+					mcol.sharedMesh = collidermesh;
 				}
 				if (mcd.usePhysicMaterial) {
 					mcol.material = mcd.physicMaterial;
@@ -653,6 +656,58 @@ public class MeshCreatorInspector :  Editor {
 			
 		msh.vertices = vertices;
 		msh.triangles = allIndices;
+		msh.uv = uvs;
+		msh.RecalculateNormals();
+		msh.RecalculateBounds();
+		msh.name = mcd.outlineTexture.name + ".mesh";
+	}
+	
+	/*
+	*	AssignPlaneMesh() does calculation for a simple plane with uv coordinates
+	* at the corners of the images. Really simple.
+	*/ 
+	public void AssignPlaneMesh(ref Mesh msh) {
+		// get the outline texture
+		string path = AssetDatabase.GetAssetPath(mcd.outlineTexture);
+		TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+		textureImporter.isReadable = true;
+		AssetDatabase.ImportAsset(path);
+			
+		Color[] pixels = mcd.outlineTexture.GetPixels();	// get the pixels to build the mesh from
+			
+		// do some size checking
+		int imageHeight = mcd.outlineTexture.height;
+		int imageWidth = mcd.outlineTexture.width;
+		
+		if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
+			Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+			Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
+		}
+		
+		// need a list of ordered 2d points
+		Vector2 [] vertices2D = {new Vector2(0.0f,0.0f), new Vector2(0.0f, imageHeight), new Vector2(imageWidth, imageHeight), new Vector2(imageWidth,0.0f)};
+        
+		// 
+		int[] indices = {0,1,2,0,2,3}; // these will be reversed for the back side
+		Vector2[] frontUVs = {new Vector2(0.0f,0.0f), new Vector2(0.0f,1.0f), new Vector2(1.0f,1.0f), new Vector2(1.0f,0.0f) };
+		Vector2[] uvs = new Vector2[vertices2D.Length];
+		// Create the Vector3 vertices
+		Vector3[] vertices = new Vector3[vertices2D.Length];
+		
+		float halfDepth = -mcd.meshDepth/2.0f;
+		for (int i=0; i<vertices2D.Length; i++) {
+			float vertX = 1.0f - (vertices2D[i].x/imageWidth) ; // get X point and normalize
+			float vertY = vertices2D[i].y/imageHeight; // get Y point and normalize
+			vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
+			vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
+			vertX = vertX + mcd.widthOffset;
+			vertY = vertY + mcd.heightOffset;
+			vertices[i] = new Vector3(vertX, vertY, -halfDepth);
+			uvs[i] = frontUVs[i];
+		}
+			
+		msh.vertices = vertices;
+		msh.triangles = indices;
 		msh.uv = uvs;
 		msh.RecalculateNormals();
 		msh.RecalculateBounds();
