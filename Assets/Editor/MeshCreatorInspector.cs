@@ -570,7 +570,7 @@ public class MeshCreatorInspector :  Editor {
 			Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
 		}
 		
-		if (
+		
 		// make a surface object to create and store data from image
 		MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight);
 			
