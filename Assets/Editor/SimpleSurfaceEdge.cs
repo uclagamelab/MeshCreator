@@ -448,11 +448,11 @@ class MC_EdgeLoop {
 	public bool AddEdge(MC_Edge e) {
 		// see if it shares with the last edge
 		MC_Vertex lastVertex = ((MC_Edge) orderedEdges[orderedEdges.Count-1]).v2;
-		if (e.v1 == lastVertex) { // this is the corrent vertex order
+		if (e.v1 == lastVertex) { // this is the correct vertex order
 			orderedEdges.Add(e);
 			return true;
 		}
-		else if (e.v2 == lastVertex) { // incorrect order, switch before adding
+		else if (e.v2 == lastVertex) { // incorrect order, switch before adding 
 			e.SwitchVertices();
 			orderedEdges.Add(e);
 			return true;
@@ -460,7 +460,7 @@ class MC_EdgeLoop {
 		
 		// see if it shares with the first edge
 		MC_Vertex firstVertex = ((MC_Edge) orderedEdges[0]).v1;
-		if (e.v2 == firstVertex) { // this is the corrent vertex order
+		if (e.v2 == firstVertex) { // this is the correct vertex order
 			orderedEdges.Insert(0,e);
 			return true;
 		}
