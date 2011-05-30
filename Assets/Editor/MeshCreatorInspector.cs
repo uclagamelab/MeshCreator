@@ -402,7 +402,7 @@ public class MeshCreatorInspector :  Editor {
 				Vector3[] vertices = new Vector3[vertices2D.Length * 4];
 				//Vector3[] verticesBack = new Vector3[vertices2D.Length];
 			
-				float halfDepth = mcd.meshDepth/2.0f;
+				float halfDepth = -mcd.meshDepth/2.0f;
 				for (int i=0; i<vertices2D.Length; i++) {
 					float vertX = 1.0f - (vertices2D[i].x/imageWidth) ; // get X point and normalize
 					float vertY = vertices2D[i].y/imageHeight; // get Y point and normalize
@@ -477,7 +477,7 @@ public class MeshCreatorInspector :  Editor {
 					// Create the Vector3 vertices
 					Vector3[] vertices = new Vector3[vertices2D.Length * 4];
 			
-					float halfDepth = mcd.meshDepth/2.0f;
+					float halfDepth = -mcd.meshDepth/2.0f;
 					for (int i=0; i<vertices2D.Length; i++) {
 						float vertX = 1.0f - (vertices2D[i].x/imageWidth) ; // get X point and normalize
 						float vertY = vertices2D[i].y/imageHeight ; // get Y point and normalize
