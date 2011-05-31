@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 /***
@@ -206,9 +207,16 @@ public class MeshCreatorInspector :  Editor {
 			else if (mcd.generateCollider && mcd.usePrimitiveCollider) {
 				// remove the old collider if necessary
 				Collider col = mcd.gameObject.collider;
-				if (col != null) {
+				if (col != null) { 
 					//DestroyImmediate(col); // using destroy here causes a editor error after the script runs
-					col = null;
+					//DestroyImmediate(col.sharedMesh);
+					Debug.LogWarning("Mesh Creator: found a collider on game object " + name +", please remove it.");
+					MeshCollider mshcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
+					if (mshcol != null) {
+						Debug.LogWarning("Mesh Creator: found a mesh collider on game object " + name + ", destroying it's mesh.");
+						//DestroyImmediate(mshcol.sharedMesh);
+						mshcol.sharedMesh = null;
+					}
 				}
 				
 				// all compound colliders are stored in a gameObject 
@@ -245,7 +253,18 @@ public class MeshCreatorInspector :  Editor {
 				int count = 0;
 				int imageHeight = mcd.outlineTexture.height;
 				int imageWidth = mcd.outlineTexture.width;
-				foreach (Vector4 bc in boxColliderCoordinates) {
+				foreach (Vector4 bcc in boxColliderCoordinates) {
+					Vector4 bc = bcc;
+					// if using a uvWrapMesh, subtract half a pixel from each side 
+					if (mcd.uvWrapMesh && Math.Abs(bc.x - bc.z) > 1.0f && Math.Abs(bc.y - bc.w) > 1.0f) {
+						bc.x += 0.5f;
+						bc.y += 0.5f;
+						bc.z -= 0.5f;
+						bc.w -= 0.5f;
+					}
+					else if (mcd.uvWrapMesh) { // if here, height or width is only one
+						continue;
+					}
 					count++;
 					GameObject colgo = new GameObject();
 					colgo.name = compoundColliderName+"."+count;
@@ -306,14 +325,130 @@ public class MeshCreatorInspector :  Editor {
 		
 		Vector4 boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight);
 		while ((Math.Abs(boxCoord.x-boxCoord.z) * Math.Abs(boxCoord.y-boxCoord.w) ) >= mcd.smallestBoxArea) {
+			//Debug.Log("Largest Box " + boxCoord);
 			boxCoordinates.Add(boxCoord);
 			boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight);
 		}
+		//Debug.Log("Last box was " + boxCoord);
 		return boxCoordinates;
 	}
 	
 	/***
-	* GetLargestBox
+	* int n, m ; 
+	Cin  >> n >> m ;
+	Vector < Vector < int >  > a ( n, Vector < int >  ( m ) ) ; 
+	for  ( int I = 0 ; I < n ;  + + I ) 
+		for  ( int j = 0 ; j < m ;  + + j ) 
+			??Cin  >> a [ I ] [ j ] ; 
+	 
+	int ans =  0 ;
+	Vector < int > d ( m, - 1 ) , d1 ( m ) , D2 ( m ) ;
+	stack < int > ST ; 
+	for  ( int I = 0 ; I < n ;  + + I )  { 
+		for  ( int j = 0 ; j < m ;  + + j ) 
+			??if  ( a [ I ] [ j ]  == 1 )
+				d [ j ]  = I ; 
+		while  ( ! ST. empty ( ) ) ST. pop ( ) ; 
+		for  ( int j = 0 ; j < m ;  + + j )  ??{ 
+			while  ( ! ST. empty ( )  & & d [ ST. top ( ) ]  <= d [ j ] )  ST. pop ( ) ;
+			d1 [ j ]  = ST. empty ( )  ?  - 1 : ST. top ( ) ;
+			ST. push  ( j ) ; 
+		} 
+		while  ( ! ST. empty ( ) ) ST. pop ( ) ; 
+		for  ( int j = m - 1 ; j > = 0 ;  - j )  { 
+			while  ( ! ST. empty ( )  & & d [ ST. top ( ) ]  <= d [ j ] )  ST. pop ( ) ;
+			D2 [ j ]  = ST. empty ( )  ? m : ST. top ( ) ;
+			ST. push  ( j ) ; 
+		} 
+		for  ( int j = 0 ; j < m ;  + + j )
+			??ans = max ( ans, ( I - d [ j ] )  *  ( D2 [ j ]  - d1 [ j ]  - 1 ) ) ; 
+	} 
+	 
+	cout  << ans ;
+http://e-maxx.ru/algo/maximum_zero_submatrix
+***/
+Vector4 GetLargestBox(ref Color[] pixs, int imageWidth, int imageHeight) {
+	Vector4 largestBox = new Vector4(-1.0f,-1.0f,-1.0f,-1.0f);
+	int n = imageHeight;
+	int m = imageWidth; 
+	//List<int> olist = new List<int>(m);
+	List< List<int> > a = new List< List<int> > ( n ) ;
+	for (int i = 0; i < n; i++) {
+		a.Add(new List<int>(m));
+		for (int j = 0; j < m; j++) {
+			a[i].Add(0);
+		}
+	}
+	//Debug.Log("a has " + a.Count);
+	for  ( int I = 0 ; I < n ; I++ ) {
+		for  ( int j = 0 ; j < m ;  j++ ) {
+			if (pixs[j + (imageWidth * I )].a != 1.0f) a[ I ][ j ] = 1; // is this right?
+			//else a[ I ][ j ] = 0;
+		}
+	}
+	 
+	int ans =  0 ;
+	List < int > d  = new List < int > ( m );
+	List < int > d1 = new List <int> ( m );
+	List <int >  d2 = new List<int>( m ) ;
+	for (int i = 0; i < m; ++i) {
+		d.Add(-1);
+		d1.Add(-1);
+		d2.Add(-1);
+	}
+	
+	Stack < int > st = new Stack<int>(); 
+	for (int i=0; i<n; ++i) {
+		for (int j=0; j<m; ++j) if (a[i][j] == 1) d[j] = i;
+		while (st.Count > 0) st.Pop(); // empty the stack
+		for (int j=0; j<m; ++j) {
+			while (st.Count > 0 && d[st.Peek()] <= d[j])  st.Pop();
+			d1[j] = st.Count == 0 ? -1 : st.Peek();
+			st.Push(j);
+		}
+		while (st.Count > 0) st.Pop();
+		for (int j=m-1; j>=0; --j) {
+			while (st.Count>0 && d[st.Peek()] <= d[j])  st.Pop();
+			d2[j] = st.Count == 0 ? m : st.Peek();
+			st.Push (j);
+		}
+		for (int j=0; j<m; ++j) {
+			int oldLarge = ans;
+			ans = Math.Max (ans, (i - d[j]) * (d2[j] - d1[j] - 1));
+			if (oldLarge != ans) {
+				largestBox[2] = d2[j];//correct
+				largestBox[3] = i+1; // correct
+				largestBox[0] = d1[j] +1;//(d2[j] - d1[j] - 1);
+				largestBox[1] = d[j]+1;
+			}
+		}
+	} 
+	
+	// remove inside pixels from the box area
+		if (largestBox.x != -1.0f) {
+			for (int i = (int)largestBox.x ; i < (int)largestBox.z; i++) {
+				for (int j = (int)largestBox.y ; j < (int)largestBox.w; j++) {
+					pixs[i + (j *imageWidth)].a = 0.0f;
+				}
+			}
+			// delete all pixels if this is width 1 or height 1
+			if ( ((int)Math.Abs(largestBox.x-largestBox.z) == 1) || ((int)Math.Abs(largestBox.y-largestBox.w) == 1) ){
+				for (int i = (int)largestBox.x; i <= (int)largestBox.z; i++) {
+					for (int j = (int)largestBox.y; j <= (int)largestBox.w; j++) {
+						pixs[i + (j *imageWidth)].a = 0.0f;
+					}
+				}
+			}
+		}
+		else {
+			Debug.Log("got negative box");
+		}
+	
+	return largestBox;
+}
+	
+	/***
+	* GetLargestBoxOld
 	*	takes pixel data ref and finds largest rectangular area of solid opaque pixels.
 	*	pixels are then deleted inside that rectangular area.
 	* returns Vector4 of opposite corner coordinates, or Vector4(-1.0) if no area found.
@@ -322,7 +457,7 @@ public class MeshCreatorInspector :  Editor {
 	*	maybe try checking max first and then half that amount, then half, and so on.
 	*    check this: http://stackoverflow.com/questions/1726632/dynamic-programming-largest-square-block
 	***/
-	Vector4 GetLargestBox(ref Color[] pixs, int imageWidth, int imageHeight) {
+	Vector4 GetLargestBoxOld(ref Color[] pixs, int imageWidth, int imageHeight) {
 		Vector4 boxCoords = new Vector4(-1.0f, -1.0f, -1.0f, -1.0f);
 		int area = 1; // smallest possible area
 		
@@ -429,9 +564,11 @@ public class MeshCreatorInspector :  Editor {
 				//Vector3[] verticesBack = new Vector3[vertices2D.Length];
 			
 				float halfDepth = -mcd.meshDepth/2.0f;
+				float halfVerticalPixel = 0.5f/imageHeight;
+				float halfHorizontalPixel = 0.5f/imageWidth;
 				for (int i=0; i<vertices2D.Length; i++) {
-					float vertX = 1.0f - (vertices2D[i].x/imageWidth) ; // get X point and normalize
-					float vertY = vertices2D[i].y/imageHeight; // get Y point and normalize
+					float vertX = 1.0f - (vertices2D[i].x/imageWidth) - halfHorizontalPixel; // get X point and normalize
+					float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
 					vertX = vertX + mcd.widthOffset;
@@ -504,9 +641,11 @@ public class MeshCreatorInspector :  Editor {
 					Vector3[] vertices = new Vector3[vertices2D.Length * 4];
 			
 					float halfDepth = -mcd.meshDepth/2.0f;
+					float halfVerticalPixel = 0.5f/imageHeight;
+					float halfHorizontalPixel = 0.5f/imageWidth;
 					for (int i=0; i<vertices2D.Length; i++) {
-						float vertX = 1.0f - (vertices2D[i].x/imageWidth) ; // get X point and normalize
-						float vertY = vertices2D[i].y/imageHeight ; // get Y point and normalize
+						float vertX = 1.0f - (vertices2D[i].x/imageWidth) - halfHorizontalPixel; // get X point and normalize
+						float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 						vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 						vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
 						vertX = vertX + mcd.widthOffset;
