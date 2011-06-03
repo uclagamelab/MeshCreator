@@ -16,6 +16,6 @@ public class MeshCreatorData : MonoBehaviour {
 	public bool usePhysicMaterial = false;
 	public PhysicMaterial physicMaterial;
 	public bool uvWrapMesh = true;
-	public bool useEdges = true;
-	public bool useBackside = false;
+	public bool createEdges = true;
+	public bool createBacksidePlane = false;
 }
