@@ -273,8 +273,8 @@ class MC_SimpleSurfaceEdge {
 			// if the currentEdgeLoop is fully closed make a new edge loop
 			if (currentEdgeLoop.IsClosed()) {
 				MC_EdgeLoop nextEdgeLoop = new MC_EdgeLoop((MC_Edge)edges[0]);
-				Debug.LogWarning("SimpleSurfaceEdge::MakeOutsideEdge: adding another edge loop, last one was " + currentEdgeLoop.orderedEdges.Count + " edges long");
-				Debug.LogWarning("    this means your image has islands, I hope that's what you want.");
+				//Debug.LogWarning("SimpleSurfaceEdge::MakeOutsideEdge: adding another edge loop, last one was " + currentEdgeLoop.orderedEdges.Count + " edges long");
+				//Debug.LogWarning("    this means your image has islands, I hope that's what you want.");
 				edges.RemoveAt(0);
 				edgeLoops.Add(nextEdgeLoop);
 				currentEdgeLoop = nextEdgeLoop;
