@@ -1,10 +1,13 @@
-UCLA Game Lab Mesh Creator
+UCLA Game Lab
+Mesh Creator
 
 Create simple meshes from image textures. Add a MeshCreatorData component to an empty game object and select options. Use "Update Mesh" button in the inspector to generate mesh.
 
 See the unity project for example, or import the package in MeshCreator.01 to an existing project.
 
 This software doesn't have a specific license yet. Don't worry. Be happy.
+
+jonathancecil@ucla.edu
 
 **** Versions ****
 
