@@ -19,9 +19,9 @@ public class MeshCreatorData : MonoBehaviour {
 	public float meshDepth = 0.1f;
 	
 	// offset the placement of the mesh from 
-	public float heightOffset = 0.5f; 
-	public float widthOffset = 0.0f; 
-	public float depthOffset = 0.0f;
+	//public float heightOffset = 0.5f; 
+	//public float widthOffset = 0.0f; 
+	//public float depthOffset = 0.0f;
 	
 	// set center pivot offset
 	public float pivotHeightOffset = 0.0f;
@@ -39,5 +39,5 @@ public class MeshCreatorData : MonoBehaviour {
 	public bool usePhysicMaterial = false;
 	public PhysicMaterial physicMaterial;
 	
-	public string saveName = "";
+	//public string saveName = "";
 }
