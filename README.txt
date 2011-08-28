@@ -5,7 +5,7 @@ Create simple meshes from image textures. Add a MeshCreatorData component to an 
 
 For best looking results, uncheck the "Use UV mapped mesh" box.
 
-See the unity project for example, or import the package MeshCreator.03 in MeshCreator.Package to an existing project.
+See the unity project for example, or import the package MeshCreator.04 in MeshCreator.Package to an existing project.
 
 Really basic instructions:
 Make an empty game object and put the MeshCreatorData script on it in the inspector.
