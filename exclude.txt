@@ -7,7 +7,7 @@
 Temp/*
 Library/*
 
-
+!Library/assetDatabase3
 !Library/*.asset
 !Library/AssetImportState
 !Library/AssetVersioning.db
