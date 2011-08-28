@@ -80,6 +80,7 @@ public class MeshCreatorInspector :  Editor {
 				EditorGUILayout.LabelField("Physics Material", "");
 				mcd.usePhysicMaterial = EditorGUILayout.Toggle("Use Physics Material", mcd.usePhysicMaterial);
 				if (mcd.usePhysicMaterial) mcd.physicMaterial = EditorGUILayout.ObjectField("Physical Material", mcd.physicMaterial, typeof(PhysicMaterial)) as PhysicMaterial;
+				mcd.addRigidBody = EditorGUILayout.Toggle("Add Rigidbody", mcd.addRigidBody);
 			}
 			
 			//
@@ -499,6 +500,14 @@ public class MeshCreatorInspector :  Editor {
 			
 		mcd.gameObject.transform.rotation = oldRotation;
 		mcd.gameObject.transform.localScale = oldScale;
+		
+		if (mcd.addRigidBody) {
+			Rigidbody rb = (Rigidbody) mcd.gameObject.GetComponent(typeof(Rigidbody));
+			if (rb == null) {
+				rb = (Rigidbody) mcd.gameObject.AddComponent(typeof(Rigidbody));
+				rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+			}
+		}
     }  
 	
 	// TODO: this should be moved to another script, kinda funky here

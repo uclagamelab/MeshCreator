@@ -39,5 +39,5 @@ public class MeshCreatorData : MonoBehaviour {
 	public bool usePhysicMaterial = false;
 	public PhysicMaterial physicMaterial;
 	
-	//public string saveName = "";
+	public bool addRigidBody = false;
 }

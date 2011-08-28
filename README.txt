@@ -1,7 +1,9 @@
 UCLA Game Lab
 Mesh Creator
 
-Create simple meshes from image textures. Add a MeshCreatorData component to an empty game object and select options. Use "Update Mesh" button in the inspector to generate mesh.
+Create simple meshes from image textures. Add a MeshCreatorData component to an empty game object and select options. Use "Update Mesh" button in the inspector to generate mesh. The Editor scripts also need to be included in your project.
+
+For best looking results, uncheck the "Use UV mapped mesh" box.
 
 See the unity project for example, or import the package MeshCreator.03 in MeshCreator.Package to an existing project.
 
@@ -15,11 +17,18 @@ http://games.ucla.edu/resources/unity-mesh-creator/
 
 Hint: use images with solid areas of opaque pixels. The simple triangulation algorithm doesn't like holes.
 
-This software doesn't have a specific license yet. Don't worry. Be happy.
+This software doesn't have a specific license yet. I'm open to suggestions. Don't worry. Be happy. 
 
 jonathancecil@ucla.edu
 
 **** Versions ****
+
+Version 0.4
+August 27, 2011
+Added box to add rigid body to object, should simplfy workflow a little. Included a few extra files in Library to help Unity recreate the project after unpacking the zip file; should be working again for PC and Mac.
+Major Issues:
+- not convinced saving all the meshes in the mesh directory is the best approach....waiting for inspiration, or help.
+- code is still ugly
 
 Version 0.3
 June 25, 2011
