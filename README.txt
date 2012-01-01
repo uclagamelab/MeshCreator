@@ -1,27 +1,48 @@
 UCLA Game Lab
 Mesh Creator
 
-Create simple meshes from image textures. Add a MeshCreatorData component to an empty game object and select options. Use "Update Mesh" button in the inspector to generate mesh. The Editor scripts also need to be included in your project.
+Create simple meshes from alpha image textures in Unity. Mesh Creator has editor scripts that use the alpha channel in textures to build a mesh and colliders in your scene.
 
-For best looking results, uncheck the "Use UV mapped mesh" box.
 
-See the unity project for example, or import the package MeshCreator.04 in MeshCreator.Package to an existing project.
 
-Really basic instructions:
-Make an empty game object and put the MeshCreatorData script on it in the inspector.
-Assign a texture with transparency to the "Mesh Outline Texture" area of the script.
-Press the "Update Mesh" button to create a mesh around the opaque portions of your image.
+There are two methods of mesh creation supported:
+1. Simple Method. In GameObject menu, select Create Mesh Creator. In popup window, select the texture to use as a basis for mesh, flat or extruded for depth, and with colliders or without. Click the Make New Mesh button to create a new game object. Mesh can be updated in the inspector for more complicated changes.
+2. Advanced Method. Create a new empty game object, attach the MeshCreatorData component found the scripts folder, and assign the desired texture to use as the basis for the mesh. Click the Update Mesh button to create the object.
 
-or see a tutorial at:
+
+
+To use Mesh Creator in your project, import the Unity package MeshCreator.05 with Assets->Import Package->Custom Package... The package will import the required assets in their correct locations. There are two folder locations you can not change: Editor and Meshes both have to stay in your folder hierarchy where they are imported.
+
+For a sample scene with fully created objects, import the package MeshCreator.05.sample.unity.
+
+Or see a tutorial at(looks different, but idea is the same):
 http://games.ucla.edu/resources/unity-mesh-creator/
 
 Hint: use images with solid areas of opaque pixels. The simple triangulation algorithm doesn't like holes.
 
 This software doesn't have a specific license yet. I'm open to suggestions. Don't worry. Be happy. 
 
-jonathancecil@ucla.edu
+jonathancecil@arts.ucla.edu
+
+
 
 **** Versions ****
+
+Version 0.5
+
+Changes:
+- Added a GameObject menu item to create new object with simple combination of presets: flat vs depth, with colliders or without, and mesh size. 
+- Meshes save less frequently. When a game object is copied and then updated, script checks other objects with the the Mesh Creator Data component.
+- Advanced options are hidden in inspector window.
+- Did a little code cleanup and slightly improved comments.
+- Added version numbers to script files. They display in the inspector.
+- Cleaned up repo to not include Library folder.
+
+Things to come:
+- Add Game Lab logo and link to inspector window.
+- Change default primitive collider to capsule, with option to change to change to box collider. This could be a difficult circle packing problem.
+- Support holes in mesh with poly2tri library.
+- More code cleanup.
 
 Version 0.4
 August 27, 2011
