@@ -4,6 +4,7 @@ Assets/Scenes/
 Assets/PhysicMaterials/
 Assets/Meshes/
 Assets/Materials/
+*.mat
 !Assets/Materials/baseMaterial.mat
 !Assets/Materials/baseTransparentMaterial.mat
 Assets/Prefabs/
