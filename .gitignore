@@ -8,5 +8,6 @@ Assets/Materials/
 !Assets/Materials/baseMaterial.mat
 !Assets/Materials/baseTransparentMaterial.mat
 Assets/Prefabs/
+*.prefab
 Assets/Textures/
 !Assets/Textures/games.ucla.logo.png
