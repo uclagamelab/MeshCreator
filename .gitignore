@@ -1,1 +1,11 @@
 Library/
+*.unity
+Assets/Scenes/
+Assets/PhysicMaterials/
+Assets/Meshes/
+Assets/Materials/
+!Assets/Materials/baseMaterial
+!Assets/Materials/baseTransparentMaterial
+Assets/Prefabs/
+Assets/Textures/
+!Assets/Textures/games.ucla.logo.png
