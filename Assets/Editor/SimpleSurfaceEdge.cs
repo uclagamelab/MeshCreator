@@ -5,10 +5,12 @@ using System.Collections;
 * MC_SimpleSurfaceEdge
 *	class to read pixel data and create outline edges around opaque pixel areas.
 *
-*	version 0.5 - updated 31/12/11
+*	version 0.5 - updated 1/1/2012
 ***/
 
 class MC_SimpleSurfaceEdge {
+	private const float versionNumber = 0.5f;
+	
 	Color[] pixels; // the original pixel data from the image
 	int imageHeight;
 	int imageWidth;

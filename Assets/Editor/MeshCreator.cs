@@ -6,6 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MeshCreator : UnityEngine.Object {
+	public const float versionNumber = 0.5f;
+	
 	public static void UpdateMesh(GameObject gameObject)
 	{
 		MeshCreatorData mcd = gameObject.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;

@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEditor;
 
 public class MeshCreatorWizard : ScriptableWizard {
-	
+	private const float versionNumber = 0.5f;
+	private Texture2D gameLabLogo;
 	public Texture2D textureToCreateMeshFrom;
 	public bool useDepth;
 	public bool withColliders;
@@ -71,7 +72,7 @@ public class MeshCreatorWizard : ScriptableWizard {
 	
 	void OnWizardUpdate()
 	{
-		helpString = "Where is this displayed?";
+		helpString = "Choose a texture with alpha channel to create a mesh from.\nSquare images are recommended.\nThen select whether to create depth on the mesh and whether you want colliders for your new mesh.\nIndicate size and a game object name and you are good to go.\nAdvanced control is available once you create the object.";
 	}
 	
 	

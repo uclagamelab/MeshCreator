@@ -7,23 +7,25 @@ Create simple meshes from alpha image textures in Unity. Mesh Creator has editor
 
 There are two methods of mesh creation supported:
 1. Simple Method. In GameObject menu, select Create Mesh Creator. In popup window, select the texture to use as a basis for mesh, flat or extruded for depth, and with colliders or without. Click the Make New Mesh button to create a new game object. Mesh can be updated in the inspector for more complicated changes.
-2. Advanced Method. Create a new empty game object, attach the MeshCreatorData component found the scripts folder, and assign the desired texture to use as the basis for the mesh. Click the Update Mesh button to create the object.
+2. Advanced Method. Create a new empty game object, attach the MeshCreatorData component found the scripts folder, and assign the desired texture to use as the basis for the mesh. Tweak the parameters to your heart's content. Click the Update Mesh button to create the object.
 
 
 
-To use Mesh Creator in your project, import the Unity package MeshCreator.05 with Assets->Import Package->Custom Package... The package will import the required assets in their correct locations. There are two folder locations you can not change: Editor and Meshes both have to stay in your folder hierarchy where they are imported.
+To use Mesh Creator in your project, import the Unity package MeshCreator.05.unitypackage with Assets->Import Package->Custom Package... The package will import the required assets in their correct locations. There are two folder locations you can not change: Editor and Meshes both have to stay in your folder hierarchy where they are imported.
 
-For a sample scene with fully created objects, import the package MeshCreator.05.sample.unity.
+For a sample scene with fully created objects, import the package MeshCreator.05.SampleScene.unitypackage
 
 Or see a tutorial at(looks different, but idea is the same):
 http://games.ucla.edu/resources/unity-mesh-creator/
 
-Hint: use images with solid areas of opaque pixels. The simple triangulation algorithm doesn't like holes.
+Hint: use images with solid areas of opaque pixels. The simple triangulation algorithm used by these scripts doesn't like holes.
 
-This software doesn't have a specific license yet. I'm open to suggestions. Don't worry. Be happy. 
+This software doesn't have a specific license yet. I'm open to suggestions.
+Be happy. 
 
+Jonathan Cecil
 jonathancecil@arts.ucla.edu
-
+http://jonathancecil.com
 
 
 **** Versions ****
@@ -35,14 +37,13 @@ Changes:
 - Meshes save less frequently. When a game object is copied and then updated, script checks other objects with the the Mesh Creator Data component.
 - Advanced options are hidden in inspector window.
 - Did a little code cleanup and slightly improved comments.
-- Added version numbers to script files. They display in the inspector.
-- Cleaned up repo to not include Library folder.
-
+- Added version numbers to script files. Some display in the inspector.
+- Cleaned up repo to not include Library folder and some other older assets.
 Things to come:
-- Add Game Lab logo and link to inspector window.
-- Change default primitive collider to capsule, with option to change to change to box collider. This could be a difficult circle packing problem.
-- Support holes in mesh with poly2tri library.
-- More code cleanup.
+- Add Game Lab logo and link to the wizard window.
+- Change default primitive collider to capsule, with option to change to change to box collider...but this could be a difficult circle packing problem.
+- Support holes in mesh: with poly2tri library maybe?
+- More code cleanup. It's still very difficult to read the mesh creation code chunks. I don't really know what I did.
 
 Version 0.4
 August 27, 2011

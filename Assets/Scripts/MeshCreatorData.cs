@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class MeshCreatorData : MonoBehaviour {
+	public string errorMessage = "reinstall the mesh creator package.";
+	
 	// use this texture for creating the outine
 	public Texture2D outlineTexture;
 	public const float versionNumber = 0.5f;
