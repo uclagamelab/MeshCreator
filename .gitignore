@@ -4,8 +4,8 @@ Assets/Scenes/
 Assets/PhysicMaterials/
 Assets/Meshes/
 Assets/Materials/
-!Assets/Materials/baseMaterial
-!Assets/Materials/baseTransparentMaterial
+!Assets/Materials/baseMaterial.mat
+!Assets/Materials/baseTransparentMaterial.mat
 Assets/Prefabs/
 Assets/Textures/
 !Assets/Textures/games.ucla.logo.png
