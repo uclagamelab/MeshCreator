@@ -11,9 +11,9 @@ There are two methods of mesh creation supported:
 
 
 
-To use Mesh Creator in your project, import the Unity package MeshCreator.05.unitypackage with Assets->Import Package->Custom Package... The package will import the required assets in their correct locations. There are two folder locations you can not change: Editor and Meshes both have to stay in your folder hierarchy where they are imported.
+To use Mesh Creator in your project, import the Unity package MeshCreator.06.unitypackage with Assets->Import Package->Custom Package... The package will import the required assets in their correct locations. There are two folder locations you can not change: Editor and Meshes both have to stay in your folder hierarchy where they are imported.
 
-For a sample scene with fully created objects, import the package MeshCreator.05.SampleScene.unitypackage
+For a sample scene with fully created objects, import the package MeshCreator.06.SampleScene.unitypackage
 
 Or see a tutorial at(looks different, but idea is the same):
 http://games.ucla.edu/resources/unity-mesh-creator/
