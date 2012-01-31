@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MeshCreator : UnityEngine.Object {
-	public const float versionNumber = 0.5f;
+	public const float versionNumber = 0.6f;
 	
 	public static void UpdateMesh(GameObject gameObject)
 	{
@@ -14,14 +14,14 @@ public class MeshCreator : UnityEngine.Object {
 		
 		// unity should prevent this from happening to the inspector, but just in case.....
 		if (mcd == null) {
-			Debug.LogError("MeshCreatorInspector Error: selected object does not have a MeshCreatorData component. Select an object with a MeshCreatorData component to update."); // TODO: add instructions on how to fix
+			Debug.LogError("MeshCreator Error: selected object does not have a MeshCreatorData component. Select an object with a MeshCreatorData component to update."); // TODO: add instructions on how to fix
 			return;
 		}
 			
 		// add a TextureImporter object here to check whether texture is readable
 		// set it to readable if necessary
 		if (mcd.outlineTexture == null) {
-			Debug.LogError("MeshCreatorInspector Error: no texture found. Make sure to have a texture selected before updating mesh.");
+			Debug.LogError("MeshCreator Error: no texture found. Make sure to have a texture selected before updating mesh.");
 			return;
 		}
 		
@@ -30,7 +30,7 @@ public class MeshCreator : UnityEngine.Object {
 		{
 			mcd.idNumber = MeshCreator.GenerateId();
 			
-			Debug.Log(mcd.gameObject.name + " set new id number to " + mcd.idNumber);
+			Debug.Log(mcd.gameObject.name + "MeshCreator: set new mesh id number to " + mcd.idNumber);
 		}
 		
 		// this will probably never be the case, but check the id number
@@ -41,6 +41,12 @@ public class MeshCreator : UnityEngine.Object {
 		
 		// check for scene folder
 		string[] sceneNames = EditorApplication.currentScene.Split('/');
+		if (sceneNames.Length == 1 && sceneNames[0] == "")
+		{
+			Debug.LogError("MeshCreator Error: please save the scene before creating a mesh.");
+			DestroyImmediate(mcd.gameObject);
+			return;
+		}
 		string sceneName = sceneNames[sceneNames.Length-1];
 		string folderName = sceneName.Substring(0, sceneName.Length - 6);
 		string folderPath = "Assets/Meshes/" + folderName;
@@ -270,17 +276,20 @@ public class MeshCreator : UnityEngine.Object {
 			
 		// generate a mesh collider
 		if (mcd.generateCollider && !mcd.usePrimitiveCollider) {
-			Collider col = mcd.gameObject.collider;
-			if (col == null) {
-				mcd.gameObject.AddComponent(typeof(MeshCollider));
-			}
-			// remove the old compound collider if necessary
+			
+			// remove the old compound collider before assigning new
 			string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
 			foreach(Transform child in mcd.gameObject.transform) {
 				if (child.name == compoundColliderName) {
 					DestroyImmediate(child.gameObject);
 				}
 			}
+			
+			Collider col = mcd.gameObject.collider;
+			if (col == null) {
+				mcd.gameObject.AddComponent(typeof(MeshCollider));
+			}
+			
 				
 			MeshCollider mcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
 			if (mcol == null) {
@@ -410,7 +419,7 @@ public class MeshCreator : UnityEngine.Object {
 		int imageWidth = mcd.outlineTexture.width;
 		
 		if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-			Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+			Debug.LogWarning("Mesh Creator Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
 		}
 		
 		// copy the pixels so they can be modified
@@ -538,6 +547,8 @@ public class MeshCreator : UnityEngine.Object {
 		
 		// make a surface object to create and store data from image
 		MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight);
+		
+		if ( mcd.mergeClosePoints ) mcs.MergeClosePoints(mcd.mergeDistance);
 		
 		// Create the mesh
 		//Mesh msh = new Mesh();

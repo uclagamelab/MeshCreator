@@ -6,7 +6,7 @@ public class MeshCreatorData : MonoBehaviour {
 	
 	// use this texture for creating the outine
 	public Texture2D outlineTexture;
-	public const float versionNumber = 0.5f;
+	public const float versionNumber = 0.6f;
 	
 	// settings for what the script will create
 	public bool uvWrapMesh = true;
@@ -49,5 +49,8 @@ public class MeshCreatorData : MonoBehaviour {
 	public bool addRigidBody = false;
 	
 	public string idNumber = "";
+	
+	public bool mergeClosePoints = false;
+	public float mergeDistance = 0.0f;
 	
 }

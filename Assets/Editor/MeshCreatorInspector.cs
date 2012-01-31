@@ -16,7 +16,7 @@ using System;
 public class MeshCreatorInspector :  Editor {
 	
 	private MeshCreatorData mcd;
-	private const float versionNumber = 0.5f;
+	private const float versionNumber = 0.6f;
 	private bool showColliderInfo = false;
 	private bool showMeshInfo = false;
 	private bool showMaterialInfo = false;
@@ -115,6 +115,11 @@ public class MeshCreatorInspector :  Editor {
 				//mcd.heightOffset = EditorGUILayout.FloatField("Height Offset", mcd.heightOffset);
 				//mcd.widthOffset = EditorGUILayout.FloatField("Width Offset", mcd.widthOffset);
 				//mcd.depthOffset = EditorGUILayout.FloatField("Depth Offset", mcd.depthOffset);
+				
+				mcd.mergeClosePoints = EditorGUILayout.Toggle( "  Merge Close Points", mcd.mergeClosePoints);
+				//mcd.mergePercent = EditorGUILayout.FloatField( "Merge Percent Points", mcd.mergePercent);
+				mcd.mergeDistance = EditorGUILayout.FloatField( "  Merge Distance (px)", mcd.mergeDistance);
+				EditorGUILayout.Space();
 				
 				EditorGUILayout.LabelField("  Pivot Position", "");
 				mcd.pivotHeightOffset = EditorGUILayout.FloatField("    Pivot Height Offset", mcd.pivotHeightOffset);

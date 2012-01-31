@@ -20,8 +20,7 @@ http://games.ucla.edu/resources/unity-mesh-creator/
 
 Hint: use images with solid areas of opaque pixels. The simple triangulation algorithm used by these scripts doesn't like holes.
 
-This software doesn't have a specific license yet. I'm open to suggestions.
-Be happy. 
+For license information, see license.txt.
 
 Jonathan Cecil
 jonathancecil@arts.ucla.edu
@@ -30,8 +29,15 @@ http://jonathancecil.com
 
 **** Versions ****
 
-Version 0.5
+Version 0.6
+- Added "smoothing" feature called Merge Close Points in the experimental tab. Use it to combine points within a configurable distance. Nice for large textures.
+- Mesh Creator Wizard looks nicer when you choose Game Object->Create Mesh Object. Thanks to Chris Reilly.
+Things to come:
+- Change default primitive collider to capsule, with option to change to change to box collider...but this could be a difficult circle packing problem.
+- Support holes in mesh: with poly2tri library maybe?
+- More code cleanup. It's still very difficult to read the mesh creation code chunks. I don't really know what I did.
 
+Version 0.5
 Changes:
 - Added a GameObject menu item to create new object with simple combination of presets: flat vs depth, with colliders or without, and mesh size. 
 - Meshes save less frequently. When a game object is copied and then updated, script checks other objects with the the Mesh Creator Data component.
