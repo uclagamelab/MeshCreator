@@ -6,7 +6,7 @@ public class MeshCreatorData : MonoBehaviour {
 	
 	// use this texture for creating the outine
 	public Texture2D outlineTexture;
-	public const float versionNumber = 0.6f;
+	public const float versionNumber = 0.61f;
 	
 	// settings for what the script will create
 	public bool uvWrapMesh = true;
