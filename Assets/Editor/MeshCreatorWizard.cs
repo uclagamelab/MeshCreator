@@ -5,7 +5,7 @@ using UnityEditor;
 
 // thanks to Chris Reilly for changing this to EditorWindow from Wizard
 public class MeshCreatorWizard : EditorWindow {
-	private const float versionNumber = 0.6f;
+	private const float versionNumber = 0.61f;
 	private Texture2D gameLabLogo = Resources.Load("games.ucla.logo.small") as Texture2D;
 	public Texture2D textureToCreateMeshFrom;
 	public bool useDepth;
@@ -29,33 +29,43 @@ public class MeshCreatorWizard : EditorWindow {
 	
 	void OnGUI () {
 		
-		EditorGUIUtility.AddCursorRect( new Rect(10,10,400,150), MouseCursor.Link); 
+		EditorGUIUtility.AddCursorRect( new Rect(10,10,350,250), MouseCursor.Link); 
 		
 		GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
 
 			
 			//game lab logo & link 
-			if( GUILayout.Button( gameLabLogo ) ) {
+			if( GUILayout.Button( gameLabLogo, GUILayout.MaxWidth(100),GUILayout.MaxHeight(100) ) ) {
 				Application.OpenURL ("http://games.ucla.edu/");	
 			}
 					
 			GUILayout.FlexibleSpace();
 				//basic instructions
-				GUILayout.Label( "Choose a texture with alpha channel to create a mesh from\nSquare images are recommended.\n\nThen select whether to create depth on the mesh and whether you\nwant colliders for your new mesh.\n\nIndicate size and a game object name and you are good to go.\n\nAdvanced control is available once you create the object.", GUILayout.Width(400) );
+				GUILayout.Label( "Choose a texture with alpha channel to create a mesh.\nSquare images are recommended.\n\nThen select whether to create depth on the mesh and whether you\nwant colliders for your new mesh.\n\nIndicate size and a game object name and you are good to go.\n\nAdvanced control is available once you create the object.", GUILayout.Width(400) );
 			GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
-				
+		
+		EditorGUILayout.Space();
+		EditorGUILayout.Space();
+		EditorGUILayout.Space();
+		EditorGUILayout.Space();
+		
 		GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
 			
-			GUILayout.BeginVertical();			
+			GUILayout.BeginVertical();
+			
 			//source texture
 			EditorGUILayout.BeginHorizontal();
-				GUILayout.Label( "Texture to Create Mesh From", GUILayout.Width(175) );
-				textureToCreateMeshFrom = (Texture2D)EditorGUILayout.ObjectField( textureToCreateMeshFrom, typeof(Texture2D), false, GUILayout.Width(175) );
+				
+				textureToCreateMeshFrom = EditorGUILayout.ObjectField("Mesh Texture", textureToCreateMeshFrom, typeof(Texture2D), true) as Texture2D;
+				//GUILayout.Label( "Texture to Create Mesh From", GUILayout.Width(175) );
+				//textureToCreateMeshFrom = (Texture2D)EditorGUILayout.ObjectField( textureToCreateMeshFrom, typeof(Texture2D), false, GUILayout.Width(175) );
 			EditorGUILayout.EndHorizontal();
-			
+			EditorGUILayout.Space();
+			EditorGUILayout.Space();
+			//EditorGUIUtility.LookLikeInspector();
 			//use depth?
 			GUILayout.BeginHorizontal();
 				GUILayout.Label( "Use Depth", GUILayout.Width(175) );
@@ -91,6 +101,10 @@ public class MeshCreatorWizard : EditorWindow {
 				GUILayout.Label( "Game Object Name", GUILayout.Width(175) );
 				gameObjectName = GUILayout.TextField( gameObjectName, 50, GUILayout.Width(175) );
 			GUILayout.EndHorizontal();
+			
+			EditorGUILayout.Space();
+			EditorGUILayout.Space();
+			EditorGUILayout.Space();
 						
 			//submit button
 			GUILayout.BeginHorizontal();
