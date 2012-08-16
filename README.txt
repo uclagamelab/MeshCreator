@@ -7,27 +7,48 @@ Create simple meshes from alpha image textures in Unity. Mesh Creator has editor
 
 There are two methods of mesh creation supported:
 1. Simple Method. In GameObject menu, select Create Mesh Creator. In popup window, select the texture to use as a basis for mesh, flat or extruded for depth, and with colliders or without. Click the Make New Mesh button to create a new game object. Mesh can be updated in the inspector for more complicated changes.
-2. Advanced Method. Create a new empty game object, attach the MeshCreatorData component found the scripts folder, and assign the desired texture to use as the basis for the mesh. Tweak the parameters to your heart's content. Click the Update Mesh button to create the object.
+2. Advanced Method. Create a new empty game object, attach the MeshCreatorData component found the scripts folder, and assign the desired texture to use as the basis for the mesh. Tweak the parameters to your heart's content. Click the Update Mesh button to create the object. I recommend using method #1 and updating after the object is created...
 
 
 
-To use Mesh Creator in your project, import the Unity package MeshCreator.06.unitypackage with Assets->Import Package->Custom Package... The package will import the required assets in their correct locations. There are two folder locations you can not change: Editor and Meshes both have to stay in your folder hierarchy where they are imported.
+Images used with this tool need to have transparency and areas of highest opacity. PNGs work well. For those concerned about quality, Photoshop documents seem to work really well. I've included a couple Photoshop actions I use to speed up creation and updating of textures. See the OtherFiles directory.
 
-For a sample scene with fully created objects, import the package MeshCreator.06.SampleScene.unitypackage
+Hint: use images with solid areas of opaque pixels. The simple triangulation algorithm used by these scripts doesn't like holes.
+
+
+
+To use Mesh Creator in your project, import the Unity package MeshCreator.061.unitypackage with Assets->Import Package->Custom Package... The package will import the required assets in their correct locations. There are two folder locations you can not change: Editor and Meshes both have to stay in your folder hierarchy where they are imported.
+
+The MeshCreatorOverview pdf included here gives a good introduction to some features of this tool.
+
+For a sample scene with fully created objects, import the package MeshCreator.061.SampleScene.unitypackage
 
 Or see a tutorial at(looks different, but idea is the same):
 http://games.ucla.edu/resources/unity-mesh-creator/
 
-Hint: use images with solid areas of opaque pixels. The simple triangulation algorithm used by these scripts doesn't like holes.
+
 
 For license information, see license.txt.
 
 Jonathan Cecil
 jonathancecil@arts.ucla.edu
 http://jonathancecil.com
+http://games.ucla.edu/
+
 
 
 **** Versions ****
+
+Version 0.61
+August 16, 2012
+Changes:
+- Improve interface and layout in wizard window and mesh data inspector.
+- Move Merge Clost Points option out of Experimental Tab into Mesh Options tab.
+- Very minor code cleanup.
+- Fixed bug in the included Photoshop actions.
+Things to come:
+- Same as before.
+...plus, scaling lock for mesh sizes in editor.
 
 Version 0.6
 - Added "smoothing" feature called Merge Close Points in the experimental tab. Use it to combine points within a configurable distance. Nice for large textures.
@@ -78,3 +99,8 @@ May 23, 2011
 Major Issues:
 - The primitive fill algorithm is super slow, I'm sure there are some nice optimizations that will make life easier.
 - Option for sprite type textures is needed, maybe just by adding a plane instead of creating a mesh.
+
+
+
+Thanks to Chris Reilly for help with wizard interface.
+Thanks to Aliah Darke for usability and interface testing.
