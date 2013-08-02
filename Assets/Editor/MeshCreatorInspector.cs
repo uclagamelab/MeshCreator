@@ -62,13 +62,7 @@ public class MeshCreatorInspector :  Editor {
 			}
 			
 			mcd.generateCollider = EditorGUILayout.Toggle("Generate collider?", mcd.generateCollider);
-			
-			EditorGUILayout.Space();
-			EditorGUILayout.LabelField("Mesh Size", "");
-			mcd.meshHeight = EditorGUILayout.FloatField("Mesh height", mcd.meshHeight);
-			mcd.meshWidth = EditorGUILayout.FloatField("Mesh width", mcd.meshWidth);
-			mcd.meshDepth = EditorGUILayout.FloatField("Mesh depth", mcd.meshDepth);
-			
+						
 			EditorGUILayout.Space();
 			showMeshInfo = EditorGUILayout.Foldout(showMeshInfo, "Mesh Creation");
 			if (showMeshInfo)

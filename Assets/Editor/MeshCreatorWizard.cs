@@ -16,7 +16,7 @@ public class MeshCreatorWizard : EditorWindow {
 	public string gameObjectName = "Mesh Creator Object";
 	
     // window size
-    static public Vector2 minWindowSize = new Vector2(600, 500);
+    static public Vector2 minWindowSize = new Vector2(600, 400);
 	
 	// Add menu named "Create Mesh Object" to the GameObject menu
 	[MenuItem ("GameObject/Create Mesh Object")]
@@ -42,7 +42,7 @@ public class MeshCreatorWizard : EditorWindow {
 					
 			GUILayout.FlexibleSpace();
 				//basic instructions
-				GUILayout.Label( "Choose a texture with alpha channel to create a mesh from\nSquare images are recommended.\n\nThen select whether to create depth on the mesh and whether you\nwant colliders for your new mesh.\n\nIndicate size and a game object name and you are good to go.\n\nAdvanced control is available once you create the object.", GUILayout.Width(400) );
+				GUILayout.Label( "Choose a texture with alpha channel to create a mesh from\nSquare images are recommended.\n\nThen select whether to create depth on the mesh and whether you\nwant colliders for your new mesh.\n\nEnter a game object name and you are good to go.\n\nAdvanced control is available once you create the object.", GUILayout.Width(400) );
 			GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
 				
@@ -68,24 +68,6 @@ public class MeshCreatorWizard : EditorWindow {
 				GUILayout.Label( "With Colliders", GUILayout.Width(175) );
 				withColliders = GUILayout.Toggle( withColliders, "");
 			GUILayout.EndHorizontal();
-			
-			//width
-			EditorGUILayout.BeginHorizontal();
-				GUILayout.Label( "Width (X)", GUILayout.Width(175) );
-				xWidth = EditorGUILayout.FloatField( xWidth, GUILayout.Width(50) );
-			EditorGUILayout.EndHorizontal();
-	
-			//height
-			EditorGUILayout.BeginHorizontal();
-				GUILayout.Label( "Height (Y)", GUILayout.Width(175) );
-				yHeight = EditorGUILayout.FloatField( yHeight, GUILayout.Width(50) );
-			EditorGUILayout.EndHorizontal();
-			
-			//depth
-			EditorGUILayout.BeginHorizontal();
-				GUILayout.Label( "Depth (Z)", GUILayout.Width(175) );
-				zDepth = EditorGUILayout.FloatField( zDepth, GUILayout.Width(50) );
-			EditorGUILayout.EndHorizontal();
 			
 			//object name
 			GUILayout.BeginHorizontal();
