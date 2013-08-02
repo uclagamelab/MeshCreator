@@ -13,15 +13,15 @@ TODO:
 - set version number to 0.7 in all scripts
 - AABB collider for top level
 - change max box size to max number box colliders
-- threshold for pixel on slider in the inspector
 - output island and hole information
 - dropdown list for 2d vs 3d object creation
 - dropdown list for collider selection
 - match terminology in inspector
-- turn off rigidbody by default
 - circle packing for cylinder colliders
 - holes in mesh via poly2tri
 - full code cleanup and comments
+DONE 8/2/13 - threshold for pixel on slider in the inspector
+DONE 8/2/13 - turn off rigidbody by default
 DONE 8/2/13 - add trigger checkbox for colliders
 DONE 8/2/13 - update version info in inspector
 DONE 8/2/13 - dropdown list for collider selection in wizard
@@ -35,4 +35,6 @@ Version 1.0 features
 - more examples: ragdoll, multi-image characters
 - runtime support
 - mesh asset cleanup tool
+- cleanup of mesh creator data, breaks backward compatibility
+	- enums for mesh type, collider type
 

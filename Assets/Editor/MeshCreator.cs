@@ -445,11 +445,11 @@ public class MeshCreator : UnityEngine.Object {
 			pix[i] = new Color(pixel.r, pixel.g, pixel.b, pixel.a);
 		}
 		
-		Vector4 boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight);
+		Vector4 boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
 		while ((Math.Abs(boxCoord.x-boxCoord.z) * Math.Abs(boxCoord.y-boxCoord.w) ) >= mcd.smallestBoxArea) {
 			//Debug.Log("Largest Box " + boxCoord);
 			boxCoordinates.Add(boxCoord);
-			boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight);
+			boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
 		}
 		//Debug.Log("Last box was " + boxCoord);
 		return boxCoordinates;
@@ -457,7 +457,7 @@ public class MeshCreator : UnityEngine.Object {
 	
 		
 	// based on algorithm from http://e-maxx.ru/algo/maximum_zero_submatrix
-	static Vector4 GetLargestBox(ref Color[] pixs, int imageWidth, int imageHeight) {
+	static Vector4 GetLargestBox(ref Color[] pixs, int imageWidth, int imageHeight, float threshold) {
 		Vector4 largestBox = new Vector4(-1.0f,-1.0f,-1.0f,-1.0f);
 		int n = imageHeight;
 		int m = imageWidth; 
@@ -472,7 +472,7 @@ public class MeshCreator : UnityEngine.Object {
 		
 		for  ( int I = 0 ; I < n ; I++ ) {
 			for  ( int j = 0 ; j < m ;  j++ ) {
-				if (pixs[j + (imageWidth * I )].a != 1.0f) a[ I ][ j ] = 1; // check if alpha is one
+				if (pixs[j + (imageWidth * I )].a < threshold) a[ I ][ j ] = 1; // check if alpha is one, old was != 1.0f
 				//else a[ I ][ j ] = 0;
 			}
 		}
@@ -562,7 +562,7 @@ public class MeshCreator : UnityEngine.Object {
 		}
 		
 		// make a surface object to create and store data from image
-		MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight);
+		MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
 		
 		if ( mcd.mergeClosePoints ) mcs.MergeClosePoints(mcd.mergeDistance);
 		
@@ -892,7 +892,7 @@ public class MeshCreator : UnityEngine.Object {
 			}
 			
 			// make a surface object to create and store data from image
-			MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight);
+			MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
 			
 			if (!mcs.ContainsIslands()) {
 				// need a list of ordered 2d points

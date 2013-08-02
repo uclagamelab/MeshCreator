@@ -79,14 +79,12 @@ public class MeshCreatorWizard : EditorWindow {
 			
 			// what type of object being created, 2d or 3d?
             GUILayout.BeginHorizontal();
-            meshType = (ObjectMeshType) EditorGUILayout.EnumPopup("Type of Object", meshType, GUILayout.Width(330));
+            meshType = (ObjectMeshType) EditorGUILayout.EnumPopup("Mesh Type", meshType, GUILayout.Width(330));
             GUILayout.EndHorizontal();
 			
 			//with colliders?
 			GUILayout.BeginHorizontal();
-            colliderType = (ObjectColliderType)EditorGUILayout.EnumPopup("Type of Colliders", colliderType, GUILayout.Width(330));
-				//GUILayout.Label( "With Colliders", GUILayout.Width(175) );
-				//withColliders = GUILayout.Toggle( withColliders, "");
+            colliderType = (ObjectColliderType)EditorGUILayout.EnumPopup("Collider Type", colliderType, GUILayout.Width(330));
 			GUILayout.EndHorizontal();
 			
 			//object name

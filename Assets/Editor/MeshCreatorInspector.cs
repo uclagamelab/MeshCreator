@@ -9,8 +9,7 @@ using System;
 *	modifies the inspector to show controls for the Mesh Creator.
 *	this script needs to be in the Editor folder of your project along
 *	with the SimpleSurfaceEdge.cs and the Triangulator.cs script.
-*
-*	version 0.5 - updated 1/1/2012
+*   
 ***/
 [CustomEditor(typeof(MeshCreatorData))]
 public class MeshCreatorInspector :  Editor {
@@ -23,6 +22,9 @@ public class MeshCreatorInspector :  Editor {
 	private bool showExperimentalInfo = false;
     private bool showToolInfo = false;
 	
+    // show inspector value of 0-255 for pixel transperancy threshold
+    private int pixelThreshold = 255;
+
 	/***
 	* OnEnable
 	* 	set the MeshCreator when component is added to the object
@@ -50,6 +52,7 @@ public class MeshCreatorInspector :  Editor {
 			EditorGUILayout.LabelField("Mesh Creation Outline", "");
 			mcd.outlineTexture = 
 				EditorGUILayout.ObjectField("Mesh Outline Texture", mcd.outlineTexture, typeof(Texture2D), true) as Texture2D;
+            mcd.pixelTransparencyThreshold = EditorGUILayout.Slider("  Pixel Threshold", mcd.pixelTransparencyThreshold, 1.0f, 255.0f);
 			
 			EditorGUILayout.Space();
 			mcd.uvWrapMesh = EditorGUILayout.Toggle("Create Full Mesh?", mcd.uvWrapMesh);
@@ -69,7 +72,7 @@ public class MeshCreatorInspector :  Editor {
 			if (showMeshInfo)
 			{
 				EditorGUILayout.LabelField("  Mesh id number", mcd.idNumber );
-				if (!mcd.uvWrapMesh) {
+                if (!mcd.uvWrapMesh) {
 					mcd.createEdges = EditorGUILayout.Toggle("  Create full mesh for edge?", mcd.createEdges);
 					mcd.createBacksidePlane = EditorGUILayout.Toggle("  Create backside plane?", mcd.createBacksidePlane);
 				}
@@ -106,13 +109,7 @@ public class MeshCreatorInspector :  Editor {
 			EditorGUILayout.Space();
 			showExperimentalInfo = EditorGUILayout.Foldout(showExperimentalInfo, "Experimental");
 			if (showExperimentalInfo)
-			{
-				//EditorGUILayout.Space();
-				//EditorGUILayout.LabelField("Relative Position", "");
-				//mcd.heightOffset = EditorGUILayout.FloatField("Height Offset", mcd.heightOffset);
-				//mcd.widthOffset = EditorGUILayout.FloatField("Width Offset", mcd.widthOffset);
-				//mcd.depthOffset = EditorGUILayout.FloatField("Depth Offset", mcd.depthOffset);
-				
+			{				
 				mcd.mergeClosePoints = EditorGUILayout.Toggle( "  Merge Close Points", mcd.mergeClosePoints);
 				//mcd.mergePercent = EditorGUILayout.FloatField( "Merge Percent Points", mcd.mergePercent);
 				mcd.mergeDistance = EditorGUILayout.FloatField( "  Merge Distance (px)", mcd.mergeDistance);

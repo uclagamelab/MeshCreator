@@ -5,7 +5,6 @@ using System.Collections;
 * MC_SimpleSurfaceEdge
 *	class to read pixel data and create outline edges around opaque pixel areas.
 *
-*	version 0.5 - updated 1/1/2012
 ***/
 
 class MC_SimpleSurfaceEdge {
@@ -19,7 +18,7 @@ class MC_SimpleSurfaceEdge {
 	ArrayList vertices;
 	ArrayList edgeLoops;
 	
-	public MC_SimpleSurfaceEdge(Color[] _pixels, int _imageWidth, int _imageHeight) {
+	public MC_SimpleSurfaceEdge(Color[] _pixels, int _imageWidth, int _imageHeight, float threshold) {
 		pixels = _pixels;
 		imageWidth = _imageWidth;
 		imageHeight = _imageHeight;
@@ -40,7 +39,7 @@ class MC_SimpleSurfaceEdge {
 				float pixelAlpha = pixel.a;
 				
 				// only continue if the current pixel is opaque
-				if (pixelAlpha != 1.0) continue;
+				if (pixelAlpha < threshold) continue;
 				
 				// set up values for other possible pixel values
 				float pixelAboveAlpha = 0.0f;
@@ -178,16 +177,16 @@ class MC_SimpleSurfaceEdge {
 				}
 				
 				// try the up facing case
-				if (pixelAlpha == 1.0 && pixelAboveAlpha == 1.0) {
-					if (pixelAboveRightAlpha != 1.0 && pixelRightAlpha != 1.0) {
-						if (pixelAboveLeftAlpha == 1.0 || pixelLeftAlpha == 1.0) {
+				if (pixelAlpha >= threshold && pixelAboveAlpha >= threshold) {
+					if (pixelAboveRightAlpha < threshold && pixelRightAlpha < threshold) {
+						if (pixelAboveLeftAlpha >= threshold || pixelLeftAlpha >= threshold) {
 							// add the vertical edge
 							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x,y+1,uvX/uvWidth,(uvY+1)/uvHeight));
 							edges.Add(e);
 						}
 					}
-					else if ( pixelAboveLeftAlpha != 1.0 && pixelLeftAlpha != 1.0) {
-						if (pixelAboveRightAlpha == 1.0 || pixelRightAlpha == 1.0) {
+					else if ( pixelAboveLeftAlpha < threshold && pixelLeftAlpha < threshold) {
+						if (pixelAboveRightAlpha >= threshold || pixelRightAlpha >= threshold) {
 							// add the vertical edge
 							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x,y+1,uvX/uvWidth,(uvY+1)/uvHeight));
 							edges.Add(e);
@@ -196,13 +195,13 @@ class MC_SimpleSurfaceEdge {
 				}
 				
 				// try the up diagonal case
-				if (pixelAlpha == 1.0 && pixelAboveRightAlpha == 1.0) {
-					if (pixelAboveAlpha != 1.0 && pixelRightAlpha == 1.0) {
+				if (pixelAlpha >= threshold && pixelAboveRightAlpha >= threshold) {
+					if (pixelAboveAlpha < threshold && pixelRightAlpha >= threshold) {
 						// add the up diagonal edge
 						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y+1,(uvX+1)/uvWidth,(uvY+1)/uvHeight));
 						edges.Add(e);
 					}
-					else if (pixelAboveAlpha == 1.0 && pixelRightAlpha != 1.0) {
+					else if (pixelAboveAlpha >= threshold && pixelRightAlpha < threshold) {
 						// add the up diagonal edge
 						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y+1,(uvX+1)/uvWidth,(uvY+1)/uvHeight));
 						edges.Add(e);
@@ -210,16 +209,16 @@ class MC_SimpleSurfaceEdge {
 				}
 				
 				// try the right facing case
-				if (pixelAlpha == 1.0 && pixelRightAlpha == 1.0) {
-					if (pixelAboveAlpha != 1.0 && pixelAboveRightAlpha != 1.0) {
-						if (pixelBelowAlpha == 1.0 || pixelBelowRightAlpha == 1.0) {
+				if (pixelAlpha >= threshold && pixelRightAlpha >= threshold) {
+					if (pixelAboveAlpha < threshold && pixelAboveRightAlpha < threshold) {
+						if (pixelBelowAlpha >= threshold || pixelBelowRightAlpha >= threshold) {
 							// add the horizontal edge
 							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y,(uvX+1)/uvWidth,uvY/uvHeight));
 							edges.Add(e);
 						}
 					}
-					else if ( pixelBelowAlpha != 1.0 && pixelBelowRightAlpha != 1.0) {
-						if (pixelAboveAlpha == 1.0 || pixelAboveRightAlpha == 1.0) {
+					else if ( pixelBelowAlpha < threshold && pixelBelowRightAlpha < threshold) {
+						if (pixelAboveAlpha >= threshold || pixelAboveRightAlpha >= threshold) {
 							// add the horizontal edge
 							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y,(uvX+1)/uvWidth,uvY/uvHeight));
 							edges.Add(e);
@@ -228,13 +227,13 @@ class MC_SimpleSurfaceEdge {
 				}
 				
 				// try the down diagonal case
-				if (pixelAlpha == 1.0 && pixelBelowRightAlpha == 1.0) {
-					if ( pixelRightAlpha != 1.0 && pixelBelowAlpha == 1.0) {
+				if (pixelAlpha >= threshold && pixelBelowRightAlpha >= threshold) {
+					if ( pixelRightAlpha < threshold && pixelBelowAlpha >= threshold) {
 						// add the down diagonal edge
 						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y-1,(uvX+1)/uvWidth,(uvY-1)/uvHeight));
 						edges.Add(e);
 					}
-					else if (pixelRightAlpha == 1.0 && pixelBelowAlpha != 1.0) {
+					else if (pixelRightAlpha >= threshold && pixelBelowAlpha < threshold) {
 						// ad the down diagonal edge
 						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y-1,(uvX+1)/uvWidth,(uvY-1)/uvHeight));
 						edges.Add(e);
