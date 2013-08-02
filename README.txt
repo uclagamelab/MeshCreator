@@ -5,6 +5,7 @@ BUGS:
 - rigid body added when generate collider set to off
 - when generate collider set to off, colliders should be removed
 - when create edge and create backside unchecked, those subobjects should be removed
+- changing to collider type none in inspector should remove colliders on update
 FIXED 8/2/13 - Object.FindSceneObjectsOfType is obsolete warning
 FIXED 8/2/13 - wizard texture box should be larger and square
 FIXED 8/2/13 - small window size for wizard

@@ -21,6 +21,10 @@ public class MeshCreatorInspector :  Editor {
 	private bool showMaterialInfo = false;
 	private bool showExperimentalInfo = false;
     private bool showToolInfo = false;
+
+    // enums for mesh and collider type
+    private ObjectColliderType colliderType;
+    private ObjectMeshType meshType;
 	
     // show inspector value of 0-255 for pixel transperancy threshold
     private int pixelThreshold = 255;
@@ -53,9 +57,38 @@ public class MeshCreatorInspector :  Editor {
 			mcd.outlineTexture = 
 				EditorGUILayout.ObjectField("Mesh Outline Texture", mcd.outlineTexture, typeof(Texture2D), true) as Texture2D;
             mcd.pixelTransparencyThreshold = EditorGUILayout.Slider("  Pixel Threshold", mcd.pixelTransparencyThreshold, 1.0f, 255.0f);
-			
+
+            EditorGUILayout.Space();
+            // what type of object being created, 2d or 3d?
+            meshType = (ObjectMeshType)EditorGUILayout.EnumPopup("Mesh Type", meshType);
+            if (meshType == ObjectMeshType.Full3D)
+            {
+                mcd.uvWrapMesh = true;
+            }
+            else
+            {
+                mcd.uvWrapMesh = false;
+            }
+
+            //with colliders?
+            colliderType = (ObjectColliderType)EditorGUILayout.EnumPopup("Collider Type", colliderType);
+            if (colliderType == ObjectColliderType.None)
+            {
+                mcd.generateCollider = false;
+            }
+            else if (colliderType == ObjectColliderType.Mesh)
+            {
+                mcd.generateCollider = true;
+                mcd.usePrimitiveCollider = false;
+            }
+            else // ObjectColliderType.Boxes
+            {
+                mcd.generateCollider = true;
+                mcd.usePrimitiveCollider = true;
+            }
+
 			EditorGUILayout.Space();
-			mcd.uvWrapMesh = EditorGUILayout.Toggle("Create Full Mesh?", mcd.uvWrapMesh);
+			
 			if (mcd.uvWrapMesh	) EditorGUILayout.TextArea("A 3d mesh will be created.");
 			else 
 			{
@@ -64,8 +97,6 @@ public class MeshCreatorInspector :  Editor {
 				else if (mcd.createBacksidePlane) EditorGUILayout.TextArea("Flat front and back planes will be created.");
 				else EditorGUILayout.TextArea("A flat front plane will be created.");
 			}
-			
-			mcd.generateCollider = EditorGUILayout.Toggle("Generate collider?", mcd.generateCollider);
 						
 			EditorGUILayout.Space();
 			showMeshInfo = EditorGUILayout.Foldout(showMeshInfo, "Mesh Creation");
@@ -93,9 +124,7 @@ public class MeshCreatorInspector :  Editor {
 			showColliderInfo = EditorGUILayout.Foldout(showColliderInfo, "Collider Creation");
 			if (showColliderInfo)
 			{
-				if (mcd.generateCollider) mcd.usePrimitiveCollider = EditorGUILayout.Toggle("  Create Primitive Collider?", mcd.usePrimitiveCollider);
-				if (mcd.generateCollider && mcd.usePrimitiveCollider) mcd.smallestBoxArea = EditorGUILayout.FloatField("    Smallest Box Area", mcd.smallestBoxArea);
-				//if (mcd.generateCollider && mcd.usePrimitiveCollider) mcd.useBoxCollider = EditorGUILayout.Toggle("Use Box Collider", mcd.useBoxCollider);
+				if (mcd.generateCollider && mcd.usePrimitiveCollider) mcd.smallestBoxArea = EditorGUILayout.FloatField("  Smallest Box Area", mcd.smallestBoxArea);
 				if (mcd.generateCollider) {
 					mcd.usePhysicMaterial = EditorGUILayout.Toggle("  Use Physics Material?", mcd.usePhysicMaterial);
 					if (mcd.usePhysicMaterial) mcd.physicMaterial = 
