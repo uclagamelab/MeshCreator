@@ -5,16 +5,16 @@ BUGS:
 - rigid body added when generate collider set to off
 - when generate collider set to off, colliders should be removed
 - when create edge and create backside unchecked, those subobjects should be removed
-- Object.FindSceneObjectsOfType is obsolete warning
-- FIXED - wizard texture box should be larger and square
-- FIXED - small window size for wizard
+FIXED 8/2/13 - Object.FindSceneObjectsOfType is obsolete warning
+FIXED 8/2/13 - wizard texture box should be larger and square
+FIXED 8/2/13 - small window size for wizard
 
 TODO:
 - set version number to 0.7 in all scripts
 - AABB collider for top level
 - add trigger checkbox for colliders
 - change max box size to max number box colliders
-- threshold for pixel
+- threshold for pixel on slider in the inspector
 - output island and hole information
 - dropdown list for 2d vs 3d object creation
 - dropdown list for boxes, mesh, AABB, none
@@ -23,6 +23,13 @@ TODO:
 - circle packing for cylinder colliders
 - holes in mesh via poly2tri
 - full code cleanup and comments
-- DONE 8/2/13 - remove sizing in wizard and inspector
+DONE 8/2/13 - - dropdown list for 2d vs 3d object creation in wizard
+DONE 8/2/13 - remove sizing in wizard and inspector
 DONE - game lab logo and link - branding
+
+Version 1.0 features
+- deal with holes and islands
+- decimate mesh nicely
+- more examples: ragdoll, multi-image characters
+- runtime support
 

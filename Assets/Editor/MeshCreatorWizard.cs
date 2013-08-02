@@ -2,18 +2,27 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
+// enum for the dropdown object type selector
+public enum ObjectMeshType
+{
+    Flat2D = 0,
+    Full3D = 1
+}
 
 // thanks to Chris Reilly for changing this to EditorWindow from Wizard
 public class MeshCreatorWizard : EditorWindow {
 	private const float versionNumber = 0.6f;
 	private Texture2D gameLabLogo = Resources.Load("games.ucla.logo.small") as Texture2D;
 	public Texture2D textureToCreateMeshFrom;
-	public bool useDepth;
+
 	public bool withColliders;
 	public float xWidth = 1.0f;
 	public float yHeight = 1.0f;
 	public float zDepth = 1.0f;
 	public string gameObjectName = "Mesh Creator Object";
+
+    // enum for the meshtype(2d,3d) to be created
+    public ObjectMeshType meshType = ObjectMeshType.Flat2D;
 	
     // window size
     static public Vector2 minWindowSize = new Vector2(600, 400);
@@ -57,11 +66,10 @@ public class MeshCreatorWizard : EditorWindow {
                 textureToCreateMeshFrom = (Texture2D)EditorGUILayout.ObjectField(textureToCreateMeshFrom, typeof(Texture2D), false, textureDisplaySize);
 			EditorGUILayout.EndHorizontal();
 			
-			//use depth?
-			GUILayout.BeginHorizontal();
-				GUILayout.Label( "Use Depth", GUILayout.Width(175) );
-				useDepth = GUILayout.Toggle( useDepth, "" ); 
-			GUILayout.EndHorizontal();
+			// what type of object being created, 2d or 3d?
+            GUILayout.BeginHorizontal();
+            meshType = (ObjectMeshType) EditorGUILayout.EnumPopup("Type of Object", meshType, GUILayout.Width(250));
+            GUILayout.EndHorizontal();
 			
 			//with colliders?
 			GUILayout.BeginHorizontal();
@@ -91,7 +99,7 @@ public class MeshCreatorWizard : EditorWindow {
 					mcd.meshDepth = zDepth;
 					
 					// set up the depth options
-					if (useDepth)
+					if (meshType == ObjectMeshType.Full3D)
 					{
 						mcd.uvWrapMesh = false;
 						mcd.createEdges = true;
