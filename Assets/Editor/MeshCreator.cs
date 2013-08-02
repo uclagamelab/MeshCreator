@@ -1052,7 +1052,7 @@ public class MeshCreator : UnityEngine.Object {
 	public static bool IdExistsInScene(MeshCreatorData mcd)
 	{
 		// check all objects in this scene for a matching unique number
-		object[] objs = GameObject.FindSceneObjectsOfType( typeof(GameObject));
+		object[] objs = GameObject.FindObjectsOfType( typeof(GameObject));
 		foreach (GameObject go in objs)
 		{
 			MeshCreatorData meshcd = go.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;
