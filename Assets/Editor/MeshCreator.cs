@@ -301,6 +301,16 @@ public class MeshCreator : UnityEngine.Object {
 			if (mcd.usePhysicMaterial) {
 				mcol.material = mcd.physicMaterial;
 			}
+
+            // set triggers for the mesh collider?
+            if (mcd.setTriggers)
+            {
+                mcol.isTrigger = true;
+            }
+            else
+            {
+                mcol.isTrigger = false;
+            }
 		}
 		else if (mcd.generateCollider && mcd.usePrimitiveCollider) {
 			// remove the old collider if necessary
@@ -386,6 +396,12 @@ public class MeshCreator : UnityEngine.Object {
 					if (mcd.usePhysicMaterial) {
 						bxcol.material = mcd.physicMaterial;
 					}
+
+                    // set trigger for this box collider?
+                    if (mcd.setTriggers)
+                    {
+                        bxcol.isTrigger = true;
+                    }
 				}
 			}
 		}

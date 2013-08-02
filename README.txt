@@ -12,7 +12,6 @@ FIXED 8/2/13 - small window size for wizard
 TODO:
 - set version number to 0.7 in all scripts
 - AABB collider for top level
-- add trigger checkbox for colliders
 - change max box size to max number box colliders
 - threshold for pixel on slider in the inspector
 - output island and hole information
@@ -23,6 +22,7 @@ TODO:
 - circle packing for cylinder colliders
 - holes in mesh via poly2tri
 - full code cleanup and comments
+DONE 8/2/13 - add trigger checkbox for colliders
 DONE 8/2/13 - update version info in inspector
 DONE 8/2/13 - dropdown list for collider selection in wizard
 DONE 8/2/13 - dropdown list for 2d vs 3d object creation in wizard
