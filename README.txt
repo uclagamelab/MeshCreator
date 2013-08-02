@@ -23,6 +23,7 @@ TODO:
 - circle packing for cylinder colliders
 - holes in mesh via poly2tri
 - full code cleanup and comments
+DONE 8/2/13 - update version info in inspector
 DONE 8/2/13 - dropdown list for collider selection in wizard
 DONE 8/2/13 - dropdown list for 2d vs 3d object creation in wizard
 DONE 8/2/13 - remove sizing in wizard and inspector
