@@ -15,16 +15,16 @@ public class MeshCreatorWizard : EditorWindow {
 	public float zDepth = 1.0f;
 	public string gameObjectName = "Mesh Creator Object";
 	
+    // window size
+    static public Vector2 minWindowSize = new Vector2(600, 300);
 	
 	// Add menu named "Create Mesh Object" to the GameObject menu
 	[MenuItem ("GameObject/Create Mesh Object")]
 	
 	static void Init () {
 		// Get existing open window or if none, make a new one:
-		//MeshCreatorWizard window = (MeshCreatorWizard)EditorWindow.GetWindowWithRect( typeof( MeshCreatorWizard ), new Rect( 0,0,500,500 ), true, "Create Mesh Object v" + versionNumber );
-		
 		MeshCreatorWizard window = (MeshCreatorWizard)EditorWindow.GetWindow( typeof( MeshCreatorWizard ), true, "Create Mesh Object v" + versionNumber );
-		
+        window.minSize = minWindowSize;
 	}
 	
 	void OnGUI () {
@@ -35,7 +35,7 @@ public class MeshCreatorWizard : EditorWindow {
 			GUILayout.FlexibleSpace();
 
 			
-			//game lab logo & link 
+			// display game lab logo & link 
 			if( GUILayout.Button( gameLabLogo ) ) {
 				Application.OpenURL ("http://games.ucla.edu/");	
 			}
