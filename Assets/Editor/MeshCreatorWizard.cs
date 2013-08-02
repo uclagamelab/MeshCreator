@@ -16,7 +16,7 @@ public class MeshCreatorWizard : EditorWindow {
 	public string gameObjectName = "Mesh Creator Object";
 	
     // window size
-    static public Vector2 minWindowSize = new Vector2(600, 300);
+    static public Vector2 minWindowSize = new Vector2(600, 500);
 	
 	// Add menu named "Create Mesh Object" to the GameObject menu
 	[MenuItem ("GameObject/Create Mesh Object")]
@@ -53,7 +53,8 @@ public class MeshCreatorWizard : EditorWindow {
 			//source texture
 			EditorGUILayout.BeginHorizontal();
 				GUILayout.Label( "Texture to Create Mesh From", GUILayout.Width(175) );
-				textureToCreateMeshFrom = (Texture2D)EditorGUILayout.ObjectField( textureToCreateMeshFrom, typeof(Texture2D), false, GUILayout.Width(175) );
+                GUILayoutOption[] textureDisplaySize = { GUILayout.Width(150), GUILayout.Height(150)};
+                textureToCreateMeshFrom = (Texture2D)EditorGUILayout.ObjectField(textureToCreateMeshFrom, typeof(Texture2D), false, textureDisplaySize);
 			EditorGUILayout.EndHorizontal();
 			
 			//use depth?
