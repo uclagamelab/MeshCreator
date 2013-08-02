@@ -131,7 +131,7 @@ public class MeshCreatorWizard : EditorWindow {
 						mcd.usePrimitiveCollider = true;
 						mcd.smallestBoxArea = 100.0f;
 						mcd.usePhysicMaterial = false;
-						mcd.addRigidBody = true;
+						mcd.addRigidBody = false;
 					}
                     else if (colliderType == ObjectColliderType.Mesh)
                     {
