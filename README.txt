@@ -17,13 +17,14 @@ TODO:
 - threshold for pixel on slider in the inspector
 - output island and hole information
 - dropdown list for 2d vs 3d object creation
-- dropdown list for boxes, mesh, AABB, none
+- dropdown list for collider selection
 - match terminology in inspector
 - turn off rigidbody by default
 - circle packing for cylinder colliders
 - holes in mesh via poly2tri
 - full code cleanup and comments
-DONE 8/2/13 - - dropdown list for 2d vs 3d object creation in wizard
+DONE 8/2/13 - dropdown list for collider selection in wizard
+DONE 8/2/13 - dropdown list for 2d vs 3d object creation in wizard
 DONE 8/2/13 - remove sizing in wizard and inspector
 DONE - game lab logo and link - branding
 
@@ -32,4 +33,5 @@ Version 1.0 features
 - decimate mesh nicely
 - more examples: ragdoll, multi-image characters
 - runtime support
+- mesh asset cleanup tool
 
