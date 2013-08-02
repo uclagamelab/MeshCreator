@@ -36,7 +36,7 @@ public class MeshCreatorWizard : EditorWindow {
     public ObjectColliderType colliderType = ObjectColliderType.Boxes;
 	
     // window size
-    static public Vector2 minWindowSize = new Vector2(600, 400);
+    static public Vector2 minWindowSize = new Vector2(600, 425);
 	
 	// Add menu named "Create Mesh Object" to the GameObject menu
 	[MenuItem ("GameObject/Create Mesh Object")]
@@ -65,18 +65,19 @@ public class MeshCreatorWizard : EditorWindow {
 				GUILayout.Label( "Choose a texture with alpha channel to create a mesh from\nSquare images are recommended.\n\nThen select whether to create depth on the mesh and whether you\nwant colliders for your new mesh.\n\nEnter a game object name and you are good to go.\n\nAdvanced control is available once you create the object.", GUILayout.Width(400) );
 			GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
-				
+        EditorGUILayout.Space();
 		GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
 			
 			GUILayout.BeginVertical();			
 			//source texture
+            EditorGUILayout.Space();
 			EditorGUILayout.BeginHorizontal();
 				GUILayout.Label( "Texture to Create Mesh From", GUILayout.Width(175) );
                 GUILayoutOption[] textureDisplaySize = { GUILayout.Width(150), GUILayout.Height(150)};
                 textureToCreateMeshFrom = (Texture2D)EditorGUILayout.ObjectField(textureToCreateMeshFrom, typeof(Texture2D), false, textureDisplaySize);
 			EditorGUILayout.EndHorizontal();
-			
+			EditorGUILayout.Space();
 			// what type of object being created, 2d or 3d?
             GUILayout.BeginHorizontal();
             meshType = (ObjectMeshType) EditorGUILayout.EnumPopup("Mesh Type", meshType, GUILayout.Width(330));
@@ -92,7 +93,8 @@ public class MeshCreatorWizard : EditorWindow {
 				GUILayout.Label( "Game Object Name", GUILayout.Width(175) );
 				gameObjectName = GUILayout.TextField( gameObjectName, 50, GUILayout.Width(175) );
 			GUILayout.EndHorizontal();
-						
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
 			//submit button
 			GUILayout.BeginHorizontal();
 				GUILayout.FlexibleSpace();
