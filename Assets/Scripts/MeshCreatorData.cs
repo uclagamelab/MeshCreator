@@ -6,6 +6,7 @@ public class MeshCreatorData : MonoBehaviour {
 	
 	// use this texture for creating the outine
 	public Texture2D outlineTexture;
+    public float pixelTransparencyThreshold = 255;
 	public const float versionNumber = 0.6f;
 	
 	// settings for what the script will create
@@ -20,11 +21,6 @@ public class MeshCreatorData : MonoBehaviour {
 	public float meshHeight = 1.0f; 
 	public float meshWidth = 1.0f; 
 	public float meshDepth = 0.1f;
-	
-	// offset the placement of the mesh from 
-	//public float heightOffset = 0.5f; 
-	//public float widthOffset = 0.0f; 
-	//public float depthOffset = 0.0f;
 	
 	// set center pivot offset
 	public float pivotHeightOffset = 0.0f;
@@ -42,10 +38,6 @@ public class MeshCreatorData : MonoBehaviour {
 	public bool usePhysicMaterial = false;
 	public PhysicMaterial physicMaterial;
     public bool setTriggers = false;
-	// for future use
-	//public bool useBoxCollider = true;
-	//public float minCapsuleRadius = 0.1f;
-	//public float maxCapsuleRadius = 0.35f;
 	
 	public bool addRigidBody = false;
 	
