@@ -16,6 +16,7 @@ TODO:
 - change max box size to max number box colliders
 - output island and hole information
 - full code cleanup and comments
+- base materials should be dynamically generated in code
 DONE 8/2/13 - dropdown list for 2d vs 3d object creation in inspector
 DONE 8/2/13 - dropdown list for collider selection in inspector
 DONE 8/2/13 - threshold for pixel on slider in the inspector
@@ -40,3 +41,13 @@ Version 1.0 features
 - cleanup of mesh creator data, breaks backward compatibility
 	- enums for mesh type, collider type
 
+	
+Unit Tests
+- new png in wizard
+- new png in inpspector
+- new psd in wizard
+- new psd in inspector
+- update png in wizard
+- update png in inpspector
+- update psd in wizard
+- update psd in inspector
