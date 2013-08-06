@@ -57,6 +57,15 @@ public class MeshCreatorInspector :  Editor {
 
             EditorGUILayout.Space();
             // what type of object being created, 2d or 3d?
+			if (mcd.uvWrapMesh == true)
+			{
+				meshType = ObjectMeshType.Full3D;	
+			}
+			else
+			{
+				meshType = ObjectMeshType.Flat2D;
+			}
+			
             meshType = (ObjectMeshType)EditorGUILayout.EnumPopup("Mesh Type", meshType);
             if (meshType == ObjectMeshType.Full3D)
             {
@@ -68,6 +77,19 @@ public class MeshCreatorInspector :  Editor {
             }
 
             //with colliders?
+			if (mcd.generateCollider == false)
+			{
+				colliderType = ObjectColliderType.None;	
+			}
+			else if (mcd.usePrimitiveCollider == false)
+			{
+				colliderType = ObjectColliderType.Mesh;	
+			}
+			else
+			{
+				colliderType = ObjectColliderType.Boxes;	
+			}
+			
             colliderType = (ObjectColliderType)EditorGUILayout.EnumPopup("Collider Type", colliderType);
             if (colliderType == ObjectColliderType.None)
             {
