@@ -25,9 +25,6 @@ public class MeshCreatorInspector :  Editor {
     // enums for mesh and collider type
     private ObjectColliderType colliderType;
     private ObjectMeshType meshType;
-	
-    // show inspector value of 0-255 for pixel transperancy threshold
-    private int pixelThreshold = 255;
 
 	/***
 	* OnEnable
@@ -51,7 +48,7 @@ public class MeshCreatorInspector :  Editor {
 		// TODO: inspector layout should be redesigned so that it's easier to 
 		//	 see the texture and material information
 		if (mcd != null) {
-			EditorGUILayout.LabelField("UCLA Game Lab Mesh Creator", "" );
+			EditorGUILayout.LabelField("UCLA Game Lab Mesh Creator" );
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Mesh Creation Outline", "");
 			mcd.outlineTexture = 
