@@ -19,7 +19,7 @@ public enum ObjectColliderType
 
 // thanks to Chris Reilly for changing this to EditorWindow from Wizard
 public class MeshCreatorWizard : EditorWindow {
-	private const float versionNumber = 0.6f;
+	private const float versionNumber = 0.7f;
 	private Texture2D gameLabLogo = Resources.Load("games.ucla.logo.small") as Texture2D;
 	public Texture2D textureToCreateMeshFrom;
 

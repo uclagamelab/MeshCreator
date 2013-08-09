@@ -8,7 +8,7 @@ using System.Collections;
 ***/
 
 class MC_SimpleSurfaceEdge {
-	private const float versionNumber = 0.6f;
+	private const float versionNumber = 0.7f;
 	
 	Color[] pixels; // the original pixel data from the image
 	int imageHeight;

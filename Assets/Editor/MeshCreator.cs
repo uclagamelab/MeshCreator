@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MeshCreator : UnityEngine.Object {
-	public static float versionNumber = 0.6f;
+	public static float versionNumber = 0.7f;
 	
 	public static void UpdateMesh(GameObject gameObject)
 	{

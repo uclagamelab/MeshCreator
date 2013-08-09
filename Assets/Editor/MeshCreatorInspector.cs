@@ -15,7 +15,7 @@ using System;
 public class MeshCreatorInspector :  Editor {
 	
 	private MeshCreatorData mcd;
-	private const float versionNumber = 0.6f;
+	private const float versionNumber = 0.7f;
 	private bool showColliderInfo = false;
 	private bool showMeshInfo = false;
 	private bool showMaterialInfo = false;

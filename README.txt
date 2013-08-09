@@ -11,7 +11,7 @@ FIXED 8/2/13 - wizard texture box should be larger and square
 FIXED 8/2/13 - small window size for wizard
 
 Version 0.7 TODO:
-- set version number to 0.7 in all scripts
+DONE 8/9/13 - set version number to 0.7 in all scripts
 DONE 8/9/13 - AABB collider for top level
 DONE 8/9/13 - change max box size to max number box colliders
 DONE 8/2/13 - dropdown list for 2d vs 3d object creation in inspector
