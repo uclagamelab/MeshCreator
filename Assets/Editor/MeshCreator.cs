@@ -273,9 +273,11 @@ public class MeshCreator : UnityEngine.Object {
 				DestroyImmediate(child.gameObject);
 			}
 		}
+
+        // start collider section
 			
 		// generate a mesh collider
-		if (mcd.generateCollider && !mcd.usePrimitiveCollider) {
+		if (mcd.generateCollider && !mcd.usePrimitiveCollider && !mcd.useAABBCollider) {
 			
 			// remove the old compound collider before assigning new
 			string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
@@ -286,19 +288,28 @@ public class MeshCreator : UnityEngine.Object {
 			}
 			
 			Collider col = mcd.gameObject.collider;
-			if (col == null) {
-				mcd.gameObject.AddComponent(typeof(MeshCollider));
-			}
+            if (col == null)
+            {
+                mcd.gameObject.AddComponent(typeof(MeshCollider));
+            }
+            else
+            {
+                DestroyImmediate(col);
+                mcd.gameObject.AddComponent(typeof(MeshCollider));
+            }
 			
-				
 			MeshCollider mcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
-			if (mcol == null) {
+			if (mcol == null) 
+            {
 				Debug.LogWarning("MeshCreator Warning: found a non-Mesh collider on object to update. If you really want a new collider generated, remove the old one and update the object with MeshCreator again.");
 			}
-			else {
+			else 
+            {
 				mcol.sharedMesh = collidermesh;
 			}
-			if (mcd.usePhysicMaterial) {
+
+			if (mcd.usePhysicMaterial) 
+            {
 				mcol.material = mcd.physicMaterial;
 			}
 
@@ -311,17 +322,23 @@ public class MeshCreator : UnityEngine.Object {
             {
                 mcol.isTrigger = false;
             }
-		}
-		else if (mcd.generateCollider && mcd.usePrimitiveCollider) {
+		} // end generate mesh collider
+        // generate box colliders
+		else if (mcd.generateCollider && mcd.usePrimitiveCollider && !mcd.useAABBCollider) {
 			// remove the old collider if necessary
 			Collider col = mcd.gameObject.collider;
-			if (col != null) { 
-				Debug.LogWarning("Mesh Creator: found a collider on game object " + gameObject.name +", please remove it.");
-				MeshCollider mshcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
-				if (mshcol != null) {
-					Debug.LogWarning("Mesh Creator: found a mesh collider on game object " + gameObject.name + ", destroying it's mesh.");
-					mshcol.sharedMesh = null;
-				}
+			if (col != null) {
+                if (col.GetType() == typeof(MeshCollider))
+                {
+                    //Debug.LogWarning("Mesh Creator: found a collider on game object " + gameObject.name +", please remove it.");
+                    MeshCollider mshcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
+                    if (mshcol != null)
+                    {
+                        //Debug.LogWarning("Mesh Creator: found a mesh collider on game object " + gameObject.name + ", destroying it's mesh.");
+                        mshcol.sharedMesh = null;
+                    }
+                }
+                DestroyImmediate(col);
 			}
 				
 			// all compound colliders are stored in a gameObject 
@@ -393,7 +410,9 @@ public class MeshCreator : UnityEngine.Object {
 					bxcol.center = new Vector3(vertX - ((vertX-vert2X)/2.0f)-mcd.pivotWidthOffset, vertY - ((vertY-vert2Y)/2.0f)-mcd.pivotHeightOffset, - mcd.pivotDepthOffset);
 
 					bxcol.size = new Vector3(Math.Abs(vertX-vert2X), Math.Abs(vertY-vert2Y), mcd.meshDepth);
-					if (mcd.usePhysicMaterial) {
+					
+                    // use physics material
+                    if (mcd.usePhysicMaterial) {
 						bxcol.material = mcd.physicMaterial;
 					}
 
@@ -404,7 +423,80 @@ public class MeshCreator : UnityEngine.Object {
                     }
 				}
 			}
-		}
+        } // end generate box colliders
+        // generate AABB collider
+        else if (mcd.generateCollider && !mcd.usePrimitiveCollider && mcd.useAABBCollider)
+        {
+            // remove the old collider if necessary
+            Collider col = mcd.gameObject.collider;
+            if (col != null)
+            {
+                DestroyImmediate(col);
+            }
+            mcd.gameObject.AddComponent(typeof(BoxCollider));
+
+            // remove the old compound collider before assigning new
+            string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
+            foreach (Transform child in mcd.gameObject.transform)
+            {
+                if (child.name == compoundColliderName)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+
+            BoxCollider bxcol = mcd.gameObject.GetComponent("BoxCollider") as BoxCollider;
+
+            Vector4 extents = GetTransparencyExtents(mcd.gameObject);
+            int imageHeight = mcd.outlineTexture.height;
+            int imageWidth = mcd.outlineTexture.width;
+
+            float vertX = 1.0f - (extents.x / imageWidth); // get X point and normalize
+            float vertY = extents.y / imageHeight; // get Y point and normalize
+            float vert2X = 1.0f - (extents.z / imageWidth);
+            float vert2Y = extents.w / imageHeight;
+            vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
+            vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
+
+            vert2X = (vert2X * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
+            vert2Y = (vert2Y * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
+
+            bxcol.center = new Vector3(vertX - ((vertX - vert2X) / 2.0f) - mcd.pivotWidthOffset, vertY - ((vertY - vert2Y) / 2.0f) - mcd.pivotHeightOffset, -mcd.pivotDepthOffset);
+
+            bxcol.size = new Vector3(Math.Abs(vertX - vert2X), Math.Abs(vertY - vert2Y), mcd.meshDepth);
+
+            // use physics material
+            if (mcd.usePhysicMaterial)
+            {
+                bxcol.material = mcd.physicMaterial;
+            }
+
+            // set trigger for this box collider?
+            if (mcd.setTriggers)
+            {
+                bxcol.isTrigger = true;
+            }
+
+        } // end generate AABB collider
+        else
+        {
+            // remove the old collider if necessary
+            Collider col = mcd.gameObject.collider;
+            if (col != null)
+            {
+                DestroyImmediate(col);
+            }
+
+            // remove the old compound collider before assigning new
+            string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
+            foreach (Transform child in mcd.gameObject.transform)
+            {
+                if (child.name == compoundColliderName)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+        }
 			
 		mcd.gameObject.transform.rotation = oldRotation;
 		mcd.gameObject.transform.localScale = oldScale;
@@ -416,7 +508,48 @@ public class MeshCreator : UnityEngine.Object {
 				rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 			}
 		}
-    }  
+    }
+
+    // Vec4 returned is box coordinates
+    // upperleft.x,upperleft.y, lowerright.x,lowerright.y
+    // pixels in Unity are left to right, from bottom to top
+    static Vector4 GetTransparencyExtents(GameObject gameObject)
+    {
+        MeshCreatorData mcd = gameObject.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;
+        Vector4 extents = new Vector4();
+
+        string path = AssetDatabase.GetAssetPath(mcd.outlineTexture);
+        TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+        textureImporter.isReadable = true;
+        AssetDatabase.ImportAsset(path);
+
+        Color[] pixels = mcd.outlineTexture.GetPixels();	// get the pixels to build the mesh from
+        float pixelThreshold = mcd.pixelTransparencyThreshold / 255.0f;
+        int imageHeight = mcd.outlineTexture.height;
+        int imageWidth = mcd.outlineTexture.width;
+
+        // set the extents to max mins
+        extents.z = imageWidth - 1;
+        extents.w = imageHeight - 1;
+        extents.x = 0;
+        extents.y = 0;
+
+        for (int I = 0; I < imageWidth; I++)
+        {
+            for (int j = 0; j < imageHeight; j++)
+            {
+                if (pixels[I + (imageWidth * j)].a >= pixelThreshold)
+                {
+                    if (I < extents.z) extents.z = I;
+                    if (I > extents.x) extents.x = I;
+                    if (j < extents.w) extents.w = j;
+                    if (j > extents.y) extents.y = j;
+                }
+            }
+        }
+
+        return extents;
+    }
 	
 	static ArrayList GetBoxColliderCoordinates(GameObject gameObject) {
 		MeshCreatorData mcd = gameObject.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;

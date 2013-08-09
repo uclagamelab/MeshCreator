@@ -81,10 +81,14 @@ public class MeshCreatorInspector :  Editor {
 			{
 				colliderType = ObjectColliderType.None;	
 			}
-			else if (mcd.usePrimitiveCollider == false)
+			else if (mcd.usePrimitiveCollider == false && mcd.useAABBCollider == false)
 			{
 				colliderType = ObjectColliderType.Mesh;	
 			}
+            else if (mcd.usePrimitiveCollider == false && mcd.useAABBCollider == true)
+            {
+                colliderType = ObjectColliderType.AABB;
+            }
 			else
 			{
 				colliderType = ObjectColliderType.Boxes;	
@@ -99,11 +103,19 @@ public class MeshCreatorInspector :  Editor {
             {
                 mcd.generateCollider = true;
                 mcd.usePrimitiveCollider = false;
+                mcd.useAABBCollider = false;
+            }
+            else if (colliderType == ObjectColliderType.AABB)
+            {
+                mcd.generateCollider = true;
+                mcd.usePrimitiveCollider = false;
+                mcd.useAABBCollider = true;
             }
             else // ObjectColliderType.Boxes
             {
                 mcd.generateCollider = true;
                 mcd.usePrimitiveCollider = true;
+                mcd.useAABBCollider = false;
             }
 
 			EditorGUILayout.Space();
