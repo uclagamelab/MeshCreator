@@ -446,12 +446,12 @@ public class MeshCreator : UnityEngine.Object {
 		}
 		
 		Vector4 boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
-		while ((Math.Abs(boxCoord.x-boxCoord.z) * Math.Abs(boxCoord.y-boxCoord.w) ) >= mcd.smallestBoxArea) {
-			//Debug.Log("Largest Box " + boxCoord);
-			boxCoordinates.Add(boxCoord);
+        boxCoordinates.Add(boxCoord);
+		while(boxCoordinates.Count < mcd.maxNumberBoxes)
+        {
 			boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
+            boxCoordinates.Add(boxCoord);
 		}
-		//Debug.Log("Last box was " + boxCoord);
 		return boxCoordinates;
 	}
 	

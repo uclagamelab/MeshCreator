@@ -143,7 +143,7 @@ public class MeshCreatorInspector :  Editor {
 			showColliderInfo = EditorGUILayout.Foldout(showColliderInfo, "Collider Creation");
 			if (showColliderInfo)
 			{
-				if (mcd.generateCollider && mcd.usePrimitiveCollider) mcd.smallestBoxArea = EditorGUILayout.FloatField("  Smallest Box Area", mcd.smallestBoxArea);
+                if (mcd.generateCollider && mcd.usePrimitiveCollider) mcd.maxNumberBoxes = EditorGUILayout.IntField("  Max Number Boxes", mcd.maxNumberBoxes);
 				if (mcd.generateCollider) {
 					mcd.usePhysicMaterial = EditorGUILayout.Toggle("  Use Physics Material?", mcd.usePhysicMaterial);
 					if (mcd.usePhysicMaterial) mcd.physicMaterial = 
@@ -172,12 +172,12 @@ public class MeshCreatorInspector :  Editor {
 			EditorGUILayout.Space();
 			if (GUILayout.Button("Update Mesh", GUILayout.MaxWidth(100))) {
 				// do some simple parameter checking here so we don't get into trouble
-				if (mcd.smallestBoxArea < 2) {
-					Debug.LogWarning("Mesh Creator: smallest box area should be larger than 1.");
+                if (mcd.maxNumberBoxes < 1)
+                {
+					Debug.LogWarning("Mesh Creator: minimum number of boxes should be one or more. Setting to 1 and continuing.");
 				}
 				else {
 					MeshCreator.UpdateMesh(mcd.gameObject);
-					//Editor.Repaint(); // error when deleting colliders
 				}
 			}
             showToolInfo = EditorGUILayout.Foldout(showToolInfo, "Mesh Creator Info");

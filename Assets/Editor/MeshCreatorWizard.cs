@@ -129,7 +129,7 @@ public class MeshCreatorWizard : EditorWindow {
 					{
 						mcd.generateCollider = true;
 						mcd.usePrimitiveCollider = true;
-						mcd.smallestBoxArea = 100.0f;
+                        mcd.maxNumberBoxes = 20;
 						mcd.usePhysicMaterial = false;
 						mcd.addRigidBody = false;
 					}
@@ -137,7 +137,7 @@ public class MeshCreatorWizard : EditorWindow {
                     {
                         mcd.generateCollider = true;
                         mcd.usePrimitiveCollider = false;
-                        mcd.smallestBoxArea = 100.0f;
+                        mcd.maxNumberBoxes = 20;
                         mcd.usePhysicMaterial = false;
                         mcd.addRigidBody = false;
                     }
@@ -145,7 +145,7 @@ public class MeshCreatorWizard : EditorWindow {
                     {
                         mcd.generateCollider = false;
                         mcd.usePrimitiveCollider = false;
-                        mcd.smallestBoxArea = 100.0f;
+                        mcd.maxNumberBoxes = 20;
                         mcd.usePhysicMaterial = false;
                         mcd.addRigidBody = false;
                     }
