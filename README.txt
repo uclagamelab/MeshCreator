@@ -2,19 +2,16 @@ MeshCreatorDev is the internal development copy of the Mesh Creator for the game
 
 
 BUGS:
-- rigid body added when generate collider set to off
-- when generate collider set to off, colliders should be removed
-- when create edge and create backside unchecked, those subobjects should be removed
-- changing to collider type none in inspector should remove colliders on update
+FIXED 8/9/13 - rigid body added when generate collider set to off
+FIXED 8/9/13 - when generate collider set to off, colliders should be removed
+FIXED 8/9/13 - when create edge and create backside unchecked, those subobjects should be removed
+FIXED 8/9/13 - changing to collider type none in inspector should remove colliders on update
 FIXED 8/2/13 - Object.FindSceneObjectsOfType is obsolete warning
 FIXED 8/2/13 - wizard texture box should be larger and square
 FIXED 8/2/13 - small window size for wizard
 
-TODO:
+Version 0.7 TODO:
 - set version number to 0.7 in all scripts
-
-- full code cleanup and comments
-- base materials should be dynamically generated in code
 DONE 8/9/13 - AABB collider for top level
 DONE 8/9/13 - change max box size to max number box colliders
 DONE 8/2/13 - dropdown list for 2d vs 3d object creation in inspector
@@ -42,6 +39,8 @@ Version 1.0 features
 	- enums for mesh type, collider type
 - add scale option back, under "advanced" tab
 - output island and hole information
+- full code cleanup and comments
+- base materials should be dynamically generated in code
 
 	
 Unit Tests

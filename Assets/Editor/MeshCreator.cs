@@ -501,6 +501,7 @@ public class MeshCreator : UnityEngine.Object {
 		mcd.gameObject.transform.rotation = oldRotation;
 		mcd.gameObject.transform.localScale = oldScale;
 		
+        /*
 		if (mcd.addRigidBody) {
 			Rigidbody rb = (Rigidbody) mcd.gameObject.GetComponent(typeof(Rigidbody));
 			if (rb == null) {
@@ -508,6 +509,7 @@ public class MeshCreator : UnityEngine.Object {
 				rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 			}
 		}
+         * */
     }
 
     // Vec4 returned is box coordinates

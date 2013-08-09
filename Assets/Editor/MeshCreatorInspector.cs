@@ -161,7 +161,7 @@ public class MeshCreatorInspector :  Editor {
 					if (mcd.usePhysicMaterial) mcd.physicMaterial = 
 						EditorGUILayout.ObjectField("    Physical Material", mcd.physicMaterial, typeof(PhysicMaterial), true) as PhysicMaterial;
                     mcd.setTriggers = EditorGUILayout.Toggle("  Set Collider Triggers?", mcd.setTriggers);
-                    mcd.addRigidBody = EditorGUILayout.Toggle("  Add Rigidbody?", mcd.addRigidBody);
+                    //mcd.addRigidBody = EditorGUILayout.Toggle("  Add Rigidbody?", mcd.addRigidBody);
                     
 				}
 			}

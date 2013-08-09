@@ -132,7 +132,7 @@ public class MeshCreatorWizard : EditorWindow {
                         mcd.useAABBCollider = false;
                         mcd.maxNumberBoxes = 20;
 						mcd.usePhysicMaterial = false;
-						mcd.addRigidBody = false;
+						//mcd.addRigidBody = false;
 					}
                     else if (colliderType == ObjectColliderType.Mesh)
                     {
@@ -141,7 +141,7 @@ public class MeshCreatorWizard : EditorWindow {
                         mcd.useAABBCollider = false;
                         mcd.maxNumberBoxes = 20;
                         mcd.usePhysicMaterial = false;
-                        mcd.addRigidBody = false;
+                        //mcd.addRigidBody = false;
                     }
                     else if (colliderType == ObjectColliderType.AABB)
                     {
@@ -150,7 +150,7 @@ public class MeshCreatorWizard : EditorWindow {
                         mcd.useAABBCollider = true;
                         mcd.maxNumberBoxes = 20;
                         mcd.usePhysicMaterial = false;
-                        mcd.addRigidBody = false;
+                        //mcd.addRigidBody = false;
                     }
                     else // default to none
                     {
@@ -158,7 +158,7 @@ public class MeshCreatorWizard : EditorWindow {
                         mcd.usePrimitiveCollider = false;
                         mcd.maxNumberBoxes = 20;
                         mcd.usePhysicMaterial = false;
-                        mcd.addRigidBody = false;
+                        //mcd.addRigidBody = false;
                     }
 					
 					// update the mesh

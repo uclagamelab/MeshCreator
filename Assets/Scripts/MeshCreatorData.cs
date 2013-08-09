@@ -40,7 +40,7 @@ public class MeshCreatorData : MonoBehaviour {
 	public PhysicMaterial physicMaterial;
     public bool setTriggers = false;
 	
-	public bool addRigidBody = false;
+	//public bool addRigidBody = false;
 	
 	public string idNumber = "";
 	
