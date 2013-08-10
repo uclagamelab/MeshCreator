@@ -50,7 +50,13 @@ public class MeshCreator : UnityEngine.Object {
 		string sceneName = sceneNames[sceneNames.Length-1];
 		string folderName = sceneName.Substring(0, sceneName.Length - 6);
 		string folderPath = "Assets/Meshes/" + folderName;
-			
+
+        if (!Directory.Exists("Assets/Meshes"))
+        {
+            AssetDatabase.CreateFolder("Assets", "Meshes");
+            Debug.Log("MeshCreator:: making new Meshes folder at Assets/Meshes");
+        }
+
 		if (!Directory.Exists(folderPath))
 		{
 			Debug.Log("MeshCreator:: making new folder in Meshes folder at " + folderPath);
