@@ -2,6 +2,7 @@ MeshCreatorDev is the internal development copy of the Mesh Creator for the game
 
 
 BUGS:
+FIXED 8/9/13 - generative meshes not seen by unity as meshes(change extension to .asset)
 FIXED 8/9/13 - rigid body added when generate collider set to off
 FIXED 8/9/13 - when generate collider set to off, colliders should be removed
 FIXED 8/9/13 - when create edge and create backside unchecked, those subobjects should be removed
@@ -29,7 +30,7 @@ Version 1.0 features
 - circle packing for cylinder colliders
 - deal with holes and islands
 	- holes in mesh via poly2tri
-- decimate mesh nicely - merging points, but clean
+- decimate mesh nicely - merging points improvement, but clean
 - more examples: ragdoll, multi-image characters, micro platformer?
 - runtime support, would be fucking amazing
 	- would need the thread library
