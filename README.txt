@@ -2,6 +2,7 @@ MeshCreatorDev is the internal development copy of the Mesh Creator for the game
 
 
 BUGS:
+- triangulation is always run, even if no mesh is required.
 FIXED 8/12/13 - collider mesh not being saved when front plane is used.
 FIXED 8/12/13 - generative meshes not seen by unity as meshes(change extension to .asset)
 FIXED 8/9/13 - rigid body added when generate collider set to off
@@ -32,7 +33,7 @@ Version 1.0 features
 - deal with holes and islands
 	- holes in mesh via poly2tri
 - decimate mesh nicely - merging points improvement, but clean
-- more examples: ragdoll, multi-image characters, micro platformer?
+- more examples: ragdoll, multi-image characters, micro platformer?, skeletal?
 - runtime support, would be fucking amazing
 	- would need the thread library
 - mesh asset cleanup tool
