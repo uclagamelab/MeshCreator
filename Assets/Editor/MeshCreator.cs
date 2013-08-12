@@ -146,7 +146,7 @@ public class MeshCreator : UnityEngine.Object {
 		}
 		//DestroyImmediate(mf.sharedMesh, true);  // get rid of the old shared mesh
 		mf.sharedMesh = msh;
-		string meshName = "Assets/Meshes/" + saveName + ".mesh";
+		string meshName = "Assets/Meshes/" + saveName + ".asset";
 		AssetDatabase.CreateAsset(msh, meshName);
 
 			
@@ -186,7 +186,7 @@ public class MeshCreator : UnityEngine.Object {
 			MeshFilter edgemf = (MeshFilter) edgeObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
 			edgemf.sharedMesh = edgemesh;
 			// save the mesh in the Assets folder
-			string edgeMeshName = "Assets/Meshes/" + saveName + ".Edge" + ".mesh";
+			string edgeMeshName = "Assets/Meshes/" + saveName + ".Edge" + ".asset";
 			AssetDatabase.CreateAsset(edgemesh, edgeMeshName);
 				
 			MeshRenderer edgemr = edgeObject.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
@@ -249,7 +249,7 @@ public class MeshCreator : UnityEngine.Object {
 			MeshFilter backmf = (MeshFilter) backsideObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
 			backmf.sharedMesh = backmesh;
 			// save the mesh in the Assets folder
-			string backMeshName = "Assets/Meshes/" + saveName + ".Back" + ".mesh";
+			string backMeshName = "Assets/Meshes/" + saveName + ".Back" + ".asset";
 			AssetDatabase.CreateAsset(backmesh, backMeshName);
 				
 			MeshRenderer backmr = backsideObject.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
@@ -783,7 +783,7 @@ public class MeshCreator : UnityEngine.Object {
 			msh.uv = uvs;
 			msh.RecalculateNormals();
 			msh.RecalculateBounds();
-			msh.name = mcd.outlineTexture.name + ".mesh";
+			msh.name = mcd.outlineTexture.name + ".asset";
 			
 			// this will get the pivot drawing in the correct place
 			Bounds oldBounds = msh.bounds;
@@ -884,7 +884,7 @@ public class MeshCreator : UnityEngine.Object {
 			msh.uv = (Vector2[]) completeUVs.ToArray(typeof(Vector2));
 			msh.RecalculateNormals();
 			msh.RecalculateBounds();
-			msh.name = mcd.outlineTexture.name + ".mesh";
+			msh.name = mcd.outlineTexture.name + ".asset";
 			
 			// this will get the pivot drawing in the correct place
 			Bounds oldBounds = msh.bounds;
@@ -1003,7 +1003,7 @@ public class MeshCreator : UnityEngine.Object {
 		msh.uv = uvs;
 		msh.RecalculateNormals();
 		msh.RecalculateBounds();
-		msh.name = mcd.outlineTexture.name + ".mesh";
+		msh.name = mcd.outlineTexture.name + ".asset";
 		
 		// this will get the pivot drawing in the correct place
 		Bounds oldBounds = msh.bounds;
@@ -1097,7 +1097,7 @@ public class MeshCreator : UnityEngine.Object {
 				msh.uv = uvs;
 				msh.RecalculateNormals();
 				msh.RecalculateBounds();
-				msh.name = mcd.outlineTexture.name + ".mesh";
+				msh.name = mcd.outlineTexture.name + ".asset";
 				
 				// this will get the pivot drawing in the correct place
 				Bounds oldBounds = msh.bounds;
@@ -1182,7 +1182,7 @@ public class MeshCreator : UnityEngine.Object {
 				msh.uv = (Vector2[]) completeUVs.ToArray(typeof(Vector2));
 				msh.RecalculateNormals();
 				msh.RecalculateBounds();
-				msh.name = mcd.outlineTexture.name + ".mesh";
+				msh.name = mcd.outlineTexture.name + ".asset";
 				
 				// this will get the pivot drawing in the correct place
 				Bounds oldBounds = msh.bounds;
