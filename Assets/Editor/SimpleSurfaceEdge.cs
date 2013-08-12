@@ -640,6 +640,9 @@ class MC_EdgeLoop {
 		}
 		newOrderedEdges.Add(currentEdge);
 		orderedEdges = newOrderedEdges;
-		Debug.Log("trimmed from " + originalCount + " to " + orderedEdges.Count);
+		if (originalCount != orderedEdges.Count)
+		{
+			Debug.Log("SimpleSurfaceEdge::MergeClosePoints(): trimmed from " + originalCount + " to " + orderedEdges.Count + " edges.");
+		}
 	}
 }
