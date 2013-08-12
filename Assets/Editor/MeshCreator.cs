@@ -94,7 +94,7 @@ public class MeshCreator : UnityEngine.Object {
 			
 		MeshRenderer mr = (MeshRenderer) mcd.gameObject.GetComponent("MeshRenderer");
 		if (mr == null) {
-			Debug.Log("MeshCreator Warning: no mesh renderer found on update object, adding one.");
+			//Debug.Log("MeshCreator Warning: no mesh renderer found on update object, adding one.");
 			mcd.gameObject.AddComponent(typeof(MeshRenderer));
 		}
 			
@@ -141,7 +141,7 @@ public class MeshCreator : UnityEngine.Object {
 			
 		MeshFilter mf = (MeshFilter) mcd.gameObject.GetComponent("MeshFilter");
 		if (mf == null) {
-			Debug.LogWarning("MeshCreator Warning: no mesh filter found on update object, adding one.");
+			//Debug.LogWarning("MeshCreator Warning: no mesh filter found on update object, adding one.");
 			mf= mcd.gameObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
 		}
 		//DestroyImmediate(mf.sharedMesh, true);  // get rid of the old shared mesh
