@@ -17,3 +17,9 @@ Assets/AssetStoreTools/Editor/DroidSansMono.ttf
 Assets/AssetStoreTools/Editor/DroidSansMono.ttf.meta
 Assets/AssetStoreTools/Editor/icon.png
 Assets/AssetStoreTools/Editor/icon.png.meta
+Assembly-CSharp-Editor-vs.csproj
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp-vs.csproj
+MeshCreator-csharp.v11.suo
+MeshCreatorDev-csharp.sln
+MeshCreatorDev.sln
