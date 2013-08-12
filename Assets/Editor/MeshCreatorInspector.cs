@@ -170,6 +170,12 @@ public class MeshCreatorInspector :  Editor {
 			showExperimentalInfo = EditorGUILayout.Foldout(showExperimentalInfo, "Advanced");
 			if (showExperimentalInfo)
 			{
+                EditorGUILayout.LabelField("  Mesh Scale", "");
+                mcd.meshWidth = EditorGUILayout.FloatField("    Width", mcd.meshWidth);
+                mcd.meshHeight = EditorGUILayout.FloatField("    Height", mcd.meshHeight);
+                mcd.meshDepth = EditorGUILayout.FloatField("    Depth", mcd.meshDepth);
+                EditorGUILayout.Space();
+
                 EditorGUILayout.LabelField("  Edge Smoothing", "");
 				mcd.mergeClosePoints = EditorGUILayout.Toggle( "    Merge Close Vertices", mcd.mergeClosePoints);
 				//mcd.mergePercent = EditorGUILayout.FloatField( "Merge Percent Points", mcd.mergePercent);
