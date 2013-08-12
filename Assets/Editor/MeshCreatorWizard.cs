@@ -13,7 +13,7 @@ public enum ObjectColliderType
 {
     Boxes = 0,
     Mesh = 1,
-    AABB = 2, 
+    BoundingBox = 2, 
     None = 3
 }
 
@@ -143,7 +143,7 @@ public class MeshCreatorWizard : EditorWindow {
                         mcd.usePhysicMaterial = false;
                         //mcd.addRigidBody = false;
                     }
-                    else if (colliderType == ObjectColliderType.AABB)
+                    else if (colliderType == ObjectColliderType.BoundingBox)
                     {
                         mcd.generateCollider = true;
                         mcd.usePrimitiveCollider = false;

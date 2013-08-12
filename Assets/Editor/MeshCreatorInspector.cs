@@ -87,7 +87,7 @@ public class MeshCreatorInspector :  Editor {
 			}
             else if (mcd.usePrimitiveCollider == false && mcd.useAABBCollider == true)
             {
-                colliderType = ObjectColliderType.AABB;
+                colliderType = ObjectColliderType.BoundingBox;
             }
 			else
 			{
@@ -105,7 +105,7 @@ public class MeshCreatorInspector :  Editor {
                 mcd.usePrimitiveCollider = false;
                 mcd.useAABBCollider = false;
             }
-            else if (colliderType == ObjectColliderType.AABB)
+            else if (colliderType == ObjectColliderType.BoundingBox)
             {
                 mcd.generateCollider = true;
                 mcd.usePrimitiveCollider = false;
