@@ -167,12 +167,13 @@ public class MeshCreatorInspector :  Editor {
 			}
 			
 			EditorGUILayout.Space();
-			showExperimentalInfo = EditorGUILayout.Foldout(showExperimentalInfo, "Experimental");
+			showExperimentalInfo = EditorGUILayout.Foldout(showExperimentalInfo, "Advanced");
 			if (showExperimentalInfo)
-			{				
-				mcd.mergeClosePoints = EditorGUILayout.Toggle( "  Merge Close Points", mcd.mergeClosePoints);
+			{
+                EditorGUILayout.LabelField("  Edge Smoothing", "");
+				mcd.mergeClosePoints = EditorGUILayout.Toggle( "    Merge Close Vertices", mcd.mergeClosePoints);
 				//mcd.mergePercent = EditorGUILayout.FloatField( "Merge Percent Points", mcd.mergePercent);
-				mcd.mergeDistance = EditorGUILayout.FloatField( "  Merge Distance (px)", mcd.mergeDistance);
+				if (mcd.mergeClosePoints) mcd.mergeDistance = EditorGUILayout.FloatField( "      Merge Distance (px)", mcd.mergeDistance);
 				EditorGUILayout.Space();
 				
 				EditorGUILayout.LabelField("  Pivot Position", "");
