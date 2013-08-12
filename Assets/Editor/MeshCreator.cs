@@ -146,9 +146,10 @@ public class MeshCreator : UnityEngine.Object {
 		}
 		//DestroyImmediate(mf.sharedMesh, true);  // get rid of the old shared mesh
 		mf.sharedMesh = msh;
+
+        // save the main mesh
 		string meshName = "Assets/Meshes/" + saveName + ".asset";
 		AssetDatabase.CreateAsset(msh, meshName);
-
 			
 		// if we need the side edges, go ahead and make a new game object for that
 		if (!mcd.uvWrapMesh && mcd.createEdges) {
@@ -312,6 +313,12 @@ public class MeshCreator : UnityEngine.Object {
 			else 
             {
 				mcol.sharedMesh = collidermesh;
+                // save the collider mesh if necessary
+                if (!mcd.uvWrapMesh) // if uvWrapMesh, then mesh already saved
+                {
+                    string colliderMeshName = "Assets/Meshes/" + saveName + ".collider.asset";
+                    AssetDatabase.CreateAsset(collidermesh, colliderMeshName);
+                }
 			}
 
 			if (mcd.usePhysicMaterial) 
