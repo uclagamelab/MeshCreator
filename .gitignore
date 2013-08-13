@@ -23,3 +23,5 @@ Assembly-CSharp-vs.csproj
 MeshCreator-csharp.v11.suo
 MeshCreatorDev-csharp.sln
 MeshCreatorDev.sln
+Assembly-CSharp-Editor.pidb
+Assembly-CSharp.pidb
