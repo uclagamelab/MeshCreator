@@ -1,32 +1,14 @@
 UCLA Game Lab
 Mesh Creator
 
-Create simple meshes from alpha image textures in Unity. Mesh Creator has editor scripts that use the alpha channel in textures to build a mesh and colliders in your scene.
+Create meshes from alpha image textures in Unity. Mesh Creator has editor scripts that use the alpha channel in textures to build a mesh and colliders in your scene. This allows simple creation of art assets without the need for external 3d software.
 
+Major releases are available on the Unity Asset store here: xxxxxx. This is our developement repository, use at your own peril. Major release packages are kept here in the MeshCreator.Packages directory. Those packages may not be compatible with files in the rest of this repo. Also, don't miss the AlphaUtilityAdditions Photoshop action in the OtherFiles directory.
 
+The MeshCreatorOverview pdf included here gives a brief overview of some features of this tool.
 
-There are two methods of mesh creation supported:
-1. Simple Method. In GameObject menu, select Create Mesh Creator. In popup window, select the texture to use as a basis for mesh, flat or extruded for depth, and with colliders or without. Click the Make New Mesh button to create a new game object. Mesh can be updated in the inspector for more complicated changes.
-2. Advanced Method. Create a new empty game object, attach the MeshCreatorData component found the scripts folder, and assign the desired texture to use as the basis for the mesh. Tweak the parameters to your heart's content. Click the Update Mesh button to create the object. I recommend using method #1 and updating after the object is created...
-
-
-
-Images used with this tool need to have transparency and areas of highest opacity. PNGs work well. For those concerned about quality, Photoshop documents seem to work really well. I've included a couple Photoshop actions I use to speed up creation and updating of textures. See the OtherFiles directory.
-
-Hint: use images with solid areas of opaque pixels. The simple triangulation algorithm used by these scripts doesn't like holes.
-
-
-
-To use Mesh Creator in your project, import the Unity package MeshCreator.061.unitypackage with Assets->Import Package->Custom Package... The package will import the required assets in their correct locations. There are two folder locations you can not change: Editor and Meshes both have to stay in your folder hierarchy where they are imported.
-
-The MeshCreatorOverview pdf included here gives a good introduction to some features of this tool.
-
-For a sample scene with fully created objects, import the package MeshCreator.061.SampleScene.unitypackage
-
-Or see a tutorial at(looks different, but idea is the same):
+Or see a tutorial at:
 http://games.ucla.edu/resources/unity-mesh-creator/
-
-
 
 For license information, see license.txt.
 
@@ -38,6 +20,25 @@ http://games.ucla.edu/
 
 
 **** Versions ****
+
+Version 0.7
+August 16, 2013
+Changes:
+- Streamlined wizard and inspector layouts for easier usablity.
+- Added pixel opacity threshold for edge smoothing.
+- Changed from max box size(confusing) to maximum number of box colliders.
+- Added Bounding Box box collider option.
+- Remove rigidbody adding features.
+- Added ability to set triggers on all created box colliders.
+- Saved meshes now visible as Unity assets.
+- Compatiblity with Unity 4.2
+- Many bug fixes.
+Things to come:
+- Circle packing for cylinder colliders.
+- Deal properly with alpha holes in images.
+- Cleaner edge creation and smoothing.
+- Automatic old mesh asset cleanup tool.
+- Runtime mesh creation. :)
 
 Version 0.61
 August 16, 2012
