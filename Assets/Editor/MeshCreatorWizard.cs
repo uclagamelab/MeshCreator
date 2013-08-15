@@ -120,6 +120,9 @@ public class MeshCreatorWizard : EditorWindow
         if (GUILayout.Button("Create Mesh", GUILayout.Width(100))
             && textureToCreateMeshFrom != null)
         {
+            // register the Undo
+            Undo.RegisterSceneUndo("Create New Mesh Object");
+
             // create the new object and set the proper variables		
             GameObject newObject = new GameObject(gameObjectName);
             MeshCreatorData mcd = newObject.AddComponent("MeshCreatorData") as MeshCreatorData;
