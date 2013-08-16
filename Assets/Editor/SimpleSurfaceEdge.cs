@@ -99,7 +99,7 @@ class MC_SimpleSurfaceEdge {
 						//pixelBelowLeftAlpha = pixelBelowLeft.a;
 					}
 					else {
-						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+                        Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values. Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 					}
 				}
 				else if ( x == 0 ) {
@@ -135,7 +135,7 @@ class MC_SimpleSurfaceEdge {
 						pixelBelowRightAlpha = pixelBelowRight.a;
 					}
 					else {
-						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+                        Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 					}
 					
 				}
@@ -172,7 +172,7 @@ class MC_SimpleSurfaceEdge {
 						//pixelBelowLeftAlpha = pixelBelowLeft.a;
 					}
 					else {
-						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+                        Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 					}
 				}
 				
@@ -535,11 +535,11 @@ class MC_EdgeLoop {
 			MC_Vertex v2 = testEdge.v2;
 			MC_Vertex sharedPoint = currentEdge.v2;
 			if (sharedPoint != testEdge.v1) { // oops, bad list, it should be closed by now
-				Debug.LogError("EdgeLoop Error: list is not ordered when simplifying edge");
+                Debug.LogError("EdgeLoop Error: list is not ordered when simplifying edge.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 				return;
 			}
 			if (v1 == v2) {
-				Debug.LogError("EdgeLoop Error: found matching endpoints for a line when simplifying.");
+                Debug.LogError("EdgeLoop Error: found matching endpoints for a line when simplifying.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 				return;
 			}
 			// determine if sharedPoint is on a line between the two endpoints
@@ -557,65 +557,9 @@ class MC_EdgeLoop {
 		newOrderedEdges.Add(currentEdge);
 		orderedEdges = newOrderedEdges;
 	}
-	/*
-	public void MergeClosePoints(float percentMerge)
-	{
-		ArrayList edgeDistances = new ArrayList();
-		
-		foreach (MC_Edge edge in orderedEdges)
-		{
-			float dist = Vector2.Distance(new Vector2(edge.v1.x, edge.v1.y), new Vector2(edge.v2.x, edge.v2.y));
-			//edgeDistances.Add(dist);
-			if (edgeDistances.Count == 0) 
-			{
-				edgeDistances.Add(dist);
-				continue;
-			}
-			bool found = false;
-			for (int i = 0; i < edgeDistances.Count; i++)
-			{
-				float edgeDistance = (float) edgeDistances[i];
-				if ( dist < edgeDistance ) 
-				{
-					found = true;
-					edgeDistances.Insert(i, dist);
-					break;
-				}
-			}
-			if (!found) edgeDistances.Add(dist);
-		}
-		
-		if (percentMerge > 1.0f) return;
-		if (percentMerge < 0.0f) return;
-		
-		int cutoffCount = (int)(edgeDistances.Count * percentMerge);
-		Debug.Log("cutoff count " + cutoffCount + ", total edges " + edgeDistances.Count + ", " + orderedEdges.Count);
-		
-		float cutoffAmount = (float) edgeDistances[cutoffCount];
-		Debug.Log("cutoff amount " + cutoffAmount);
-		ArrayList newOrderedEdges = new ArrayList(); // list to stick the joined edges
-		
-		MC_Edge currentEdge = (MC_Edge)orderedEdges[0];
-		for (int i = 1; i < orderedEdges.Count; i++) { // start with the second edge for comparison
-			MC_Edge testEdge = (MC_Edge) orderedEdges[i];
-			float dist = Vector2.Distance( new Vector2(currentEdge.v1.x, currentEdge.v1.y), new Vector2(testEdge.v2.x, testEdge.v2.y) );
-			MC_Vertex v1 = currentEdge.v1;
-			MC_Vertex v2 = testEdge.v2;
-			MC_Vertex sharedPoint = currentEdge.v2;
-			
-			if ( dist < cutoffAmount ) { // combine the two lines into current
-				currentEdge.v2 = v2;
-			}
-			else { // there isn't a continuation of line, so add current to new ordered and set current to testEdge
-				newOrderedEdges.Add(currentEdge);
-				currentEdge = testEdge;
-			}
-		}
-		newOrderedEdges.Add(currentEdge);
-		orderedEdges = newOrderedEdges;
-		Debug.Log("trimmed from " + edgeDistances.Count + " to " + orderedEdges.Count);
-	}*/
 	
+	// very simple edge smoothing by comparing distance between adjacent
+    // points on edge and merging if close enough
 	public void MergeClosePoints(float mergeDistance)
 	{
 		if (mergeDistance < 0.0f) return;
@@ -626,9 +570,7 @@ class MC_EdgeLoop {
 		for (int i = 1; i < orderedEdges.Count; i++) { // start with the second edge for comparison
 			MC_Edge testEdge = (MC_Edge) orderedEdges[i];
 			float dist = Vector2.Distance( new Vector2(currentEdge.v1.x, currentEdge.v1.y), new Vector2(testEdge.v2.x, testEdge.v2.y) );
-			//MC_Vertex v1 = currentEdge.v1;
 			MC_Vertex v2 = testEdge.v2;
-			//MC_Vertex sharedPoint = currentEdge.v2;
 			
 			if ( dist < mergeDistance ) { // combine the two lines into current
 				currentEdge.v2 = v2;
@@ -640,9 +582,9 @@ class MC_EdgeLoop {
 		}
 		newOrderedEdges.Add(currentEdge);
 		orderedEdges = newOrderedEdges;
-		if (originalCount != orderedEdges.Count)
+		/*if (originalCount != orderedEdges.Count)
 		{
 			Debug.Log("SimpleSurfaceEdge::MergeClosePoints(): trimmed from " + originalCount + " to " + orderedEdges.Count + " edges.");
-		}
+		}*/
 	}
 }
