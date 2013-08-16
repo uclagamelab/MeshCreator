@@ -6,9 +6,9 @@ using System;
 
 /***
 * MeshCreatorInspector
-*	modifies the inspector to show controls for the Mesh Creator.
-*	this script needs to be in the Editor folder of your project along
-*	with the SimpleSurfaceEdge.cs and the Triangulator.cs script.
+*	modifies the inspector to show controls for the Mesh Creator Data component.
+*	This script needs to be in the Editor folder of your project along
+*	with the SimpleSurfaceEdge.cs, MeshCreator.cs, and the Triangulator.cs script.
 *   
 ***/
 [CustomEditor(typeof(MeshCreatorData))]
@@ -190,6 +190,9 @@ public class MeshCreatorInspector :  Editor {
 			
 			EditorGUILayout.Space();
 			if (GUILayout.Button("Update Mesh", GUILayout.MaxWidth(100))) {
+                // set entire scene for undo, object only won't work cause we're adding and removing components
+                Undo.RegisterSceneUndo("Update Mesh Creator Object");
+
 				// do some simple parameter checking here so we don't get into trouble
                 if (mcd.maxNumberBoxes < 1)
                 {
