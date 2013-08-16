@@ -49,7 +49,6 @@ class MC_SimpleSurfaceEdge {
 				float pixelAboveRightAlpha = 0.0f;
 				float pixelAboveLeftAlpha = 0.0f;
 				float pixelBelowRightAlpha = 0.0f;
-				//float pixelBelowLeftAlpha = 0.0f;
 				
 				// check x area, then the y. 
 				if ( x > 0 && x < imageWidth-1) {
@@ -69,8 +68,7 @@ class MC_SimpleSurfaceEdge {
 						pixelAboveLeftAlpha = pixelAboveLeft.a;
 						Color pixelBelowRight = pixels[x + 1 + (imageWidth * (y - 1))];
 						pixelBelowRightAlpha = pixelBelowRight.a;
-						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
-						//pixelBelowLeftAlpha = pixelBelowLeft.a;
+
 					}
 					else if ( y == 0) {
 						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
@@ -95,8 +93,6 @@ class MC_SimpleSurfaceEdge {
 					
 						Color pixelBelowRight = pixels[x + 1 + (imageWidth * (y - 1))];
 						pixelBelowRightAlpha = pixelBelowRight.a;
-						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
-						//pixelBelowLeftAlpha = pixelBelowLeft.a;
 					}
 					else {
                         Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values. Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
@@ -150,8 +146,6 @@ class MC_SimpleSurfaceEdge {
 					
 						Color pixelAboveLeft = pixels[x - 1 + (imageWidth * (y + 1))];
 						pixelAboveLeftAlpha = pixelAboveLeft.a;
-						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
-						//pixelBelowLeftAlpha = pixelBelowLeft.a;
 					}
 					else if ( y == 0) {
 						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
@@ -168,8 +162,6 @@ class MC_SimpleSurfaceEdge {
 						Color pixelLeft = pixels[x - 1 + (imageWidth * y)];
 						pixelLeftAlpha = pixelLeft.a;
 					
-						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
-						//pixelBelowLeftAlpha = pixelBelowLeft.a;
 					}
 					else {
                         Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
