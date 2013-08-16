@@ -565,7 +565,7 @@ class MC_EdgeLoop {
 		if (mergeDistance < 0.0f) return;
 		
 		ArrayList newOrderedEdges = new ArrayList(); // list to stick the joined edges
-		int originalCount = orderedEdges.Count;
+		//int originalCount = orderedEdges.Count;
 		MC_Edge currentEdge = (MC_Edge)orderedEdges[0];
 		for (int i = 1; i < orderedEdges.Count; i++) { // start with the second edge for comparison
 			MC_Edge testEdge = (MC_Edge) orderedEdges[i];
