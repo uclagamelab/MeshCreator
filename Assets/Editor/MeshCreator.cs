@@ -144,7 +144,7 @@ public class MeshCreator : UnityEngine.Object {
 			//Debug.LogWarning("MeshCreator Warning: no mesh filter found on update object, adding one.");
 			mf= mcd.gameObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
 		}
-		//DestroyImmediate(mf.sharedMesh, true);  // get rid of the old shared mesh
+        
 		mf.sharedMesh = msh;
 
         // save the main mesh
@@ -186,6 +186,7 @@ public class MeshCreator : UnityEngine.Object {
 			edgeObject.name = edgeName;
 			MeshFilter edgemf = (MeshFilter) edgeObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
 			edgemf.sharedMesh = edgemesh;
+
 			// save the mesh in the Assets folder
 			string edgeMeshName = "Assets/Meshes/" + saveName + ".Edge" + ".asset";
 			AssetDatabase.CreateAsset(edgemesh, edgeMeshName);
@@ -336,6 +337,7 @@ public class MeshCreator : UnityEngine.Object {
                 mcol.isTrigger = false;
             }
 		} // end generate mesh collider
+
         // generate box colliders
 		else if (mcd.generateCollider && mcd.usePrimitiveCollider && !mcd.useAABBCollider) {
 			// remove the old collider if necessary
@@ -395,8 +397,6 @@ public class MeshCreator : UnityEngine.Object {
 					continue;
 				}
 				
-				// this will be needed when capsule colliders are needed
-				//if (mcd.useBoxCollider)
 				{
 					count++;
 					GameObject colgo = new GameObject();
@@ -411,15 +411,10 @@ public class MeshCreator : UnityEngine.Object {
 					float vert2Y = bc.w/imageHeight;
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-					//vertX = vertX + mcd.widthOffset;
-					//vertY = vertY + mcd.heightOffset;
 					
 					vert2X = (vert2X * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vert2Y = (vert2Y * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-					//vert2X = vert2X + mcd.widthOffset;
-					//vert2Y = vert2Y + mcd.heightOffset;
 					
-					//bxcol.center = new Vector3(vertX - ((vertX-vert2X)/2.0f)-mcd.pivotWidthOffset, vertY - ((vertY-vert2Y)/2.0f)-mcd.pivotHeightOffset, mcd.depthOffset - mcd.pivotDepthOffset);
 					bxcol.center = new Vector3(vertX - ((vertX-vert2X)/2.0f)-mcd.pivotWidthOffset, vertY - ((vertY-vert2Y)/2.0f)-mcd.pivotHeightOffset, - mcd.pivotDepthOffset);
 
 					bxcol.size = new Vector3(Math.Abs(vertX-vert2X), Math.Abs(vertY-vert2Y), mcd.meshDepth);
@@ -437,6 +432,7 @@ public class MeshCreator : UnityEngine.Object {
 				}
 			}
         } // end generate box colliders
+
         // generate AABB collider
         else if (mcd.generateCollider && !mcd.usePrimitiveCollider && mcd.useAABBCollider)
         {
@@ -514,15 +510,6 @@ public class MeshCreator : UnityEngine.Object {
 		mcd.gameObject.transform.rotation = oldRotation;
 		mcd.gameObject.transform.localScale = oldScale;
 		
-        /*
-		if (mcd.addRigidBody) {
-			Rigidbody rb = (Rigidbody) mcd.gameObject.GetComponent(typeof(Rigidbody));
-			if (rb == null) {
-				rb = (Rigidbody) mcd.gameObject.AddComponent(typeof(Rigidbody));
-				rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
-			}
-		}
-         * */
     }
 
     // Vec4 returned is box coordinates
@@ -620,8 +607,7 @@ public class MeshCreator : UnityEngine.Object {
 		
 		for  ( int I = 0 ; I < n ; I++ ) {
 			for  ( int j = 0 ; j < m ;  j++ ) {
-				if (pixs[j + (imageWidth * I )].a < threshold) a[ I ][ j ] = 1; // check if alpha is one, old was != 1.0f
-				//else a[ I ][ j ] = 0;
+				if (pixs[j + (imageWidth * I )].a < threshold) a[ I ][ j ] = 1; // check if alpha is less than threshold
 			}
 		}
 		 
@@ -654,9 +640,9 @@ public class MeshCreator : UnityEngine.Object {
 				int oldLarge = ans;
 				ans = Math.Max (ans, (i - d[j]) * (d2[j] - d1[j] - 1));
 				if (oldLarge != ans) {
-					largestBox[2] = d2[j];//correct
-					largestBox[3] = i+1; // correct
-					largestBox[0] = d1[j] +1;//(d2[j] - d1[j] - 1);
+					largestBox[2] = d2[j];
+					largestBox[3] = i+1; 
+					largestBox[0] = d1[j] +1;
 					largestBox[1] = d[j]+1;
 				}
 			}
@@ -697,9 +683,7 @@ public class MeshCreator : UnityEngine.Object {
 		textureImporter.isReadable = true;
 		AssetDatabase.ImportAsset(path);
 		
-		//Debug.Log("found texture " + outlineTexture.width + "," + outlineTexture.height);
 		Color[] pixels = mcd.outlineTexture.GetPixels();	// get the pixels to build the mesh from
-		//Debug.Log("total pixel count " + pixels.Length);
 		
 		// possibly do some size checking
 		int imageHeight = mcd.outlineTexture.height;
@@ -715,7 +699,6 @@ public class MeshCreator : UnityEngine.Object {
 		if ( mcd.mergeClosePoints ) mcs.MergeClosePoints(mcd.mergeDistance);
 		
 		// Create the mesh
-		//Mesh msh = new Mesh();
 		
 		if (!mcs.ContainsIslands()) {
 			// need a list of ordered 2d points
@@ -723,11 +706,11 @@ public class MeshCreator : UnityEngine.Object {
     
 			// Use the triangulator to get indices for creating triangles
 			Triangulator tr = new Triangulator(vertices2D);
+
 			int[] indices = tr.Triangulate(); // these will be reversed for the back side
 			Vector2[] uvs = new Vector2[vertices2D.Length * 4];
 			// Create the Vector3 vertices
 			Vector3[] vertices = new Vector3[vertices2D.Length * 4];
-			//Vector3[] verticesBack = new Vector3[vertices2D.Length];
 		
 			float halfDepth = -mcd.meshDepth/2.0f;
 			float halfVerticalPixel = 0.5f/imageHeight;
@@ -737,15 +720,13 @@ public class MeshCreator : UnityEngine.Object {
 				float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 				vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 				vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-				//vertX = vertX + mcd.widthOffset;
-				//vertY = vertY + mcd.heightOffset;
-				//vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
+				
 				vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth  - mcd.pivotDepthOffset);
-				//vertices[i + vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
+				
 				vertices[i + vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth-mcd.pivotDepthOffset);
-				//vertices[i+(vertices2D.Length*2)] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset-mcd.pivotDepthOffset); // vertex for side
+				
 				vertices[i+(vertices2D.Length*2)] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth -mcd.pivotDepthOffset); // vertex for side
-				//vertices[i +(vertices2D.Length*3)] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
+				
 				vertices[i +(vertices2D.Length*3)] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth -mcd.pivotDepthOffset);
 
 				uvs[i] = mcs.GetUVForIndex(i);
@@ -823,12 +804,6 @@ public class MeshCreator : UnityEngine.Object {
 					float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-					//vertX = vertX + mcd.widthOffset;
-					//vertY = vertY + mcd.heightOffset;
-					//~ vertices[i] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
-					//~ vertices[i + vertices2D.Length] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
-					//~ vertices[i+(vertices2D.Length*2)] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset-mcd.pivotDepthOffset); // vertex for side
-					//~ vertices[i +(vertices2D.Length*3)] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
 					
 					vertices[i] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, -halfDepth -mcd.pivotDepthOffset);
 					vertices[i + vertices2D.Length] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth-mcd.pivotDepthOffset);
@@ -912,8 +887,6 @@ public class MeshCreator : UnityEngine.Object {
 		textureImporter.isReadable = true;
 		AssetDatabase.ImportAsset(path);
 			
-		//Color[] pixels = mcd.outlineTexture.GetPixels();	// get the pixels to build the mesh from
-			
 		// do some size checking
 		int imageHeight = mcd.outlineTexture.height;
 		int imageWidth = mcd.outlineTexture.width;
@@ -939,9 +912,7 @@ public class MeshCreator : UnityEngine.Object {
 			float vertY = vertices2D[i].y/imageHeight; // get Y point and normalize
 			vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 			vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-			//vertX = vertX + mcd.widthOffset;
-			//vertY = vertY + mcd.heightOffset;
-			//vertices[i] = new Vector3(vertX -mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset );
+
 			vertices[i] = new Vector3(vertX -mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth - mcd.pivotDepthOffset );
 			
 			uvs[i] = frontUVs[i];
@@ -997,9 +968,7 @@ public class MeshCreator : UnityEngine.Object {
 			float vertY = vertices2D[i].y/imageHeight; // get Y point and normalize
 			vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 			vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-			//vertX = vertX + mcd.widthOffset;
-			//vertY = vertY + mcd.heightOffset;
-			//vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
+			
 			vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth - mcd.pivotDepthOffset);
 
 			uvs[i] = frontUVs[i];
@@ -1052,7 +1021,6 @@ public class MeshCreator : UnityEngine.Object {
 				Vector2[] uvs = new Vector2[vertices2D.Length * 2];
 				// Create the Vector3 vertices
 				Vector3[] vertices = new Vector3[vertices2D.Length * 2];
-				//Vector3[] verticesBack = new Vector3[vertices2D.Length];
 			
 				float halfDepth = -mcd.meshDepth/2.0f;
 				float halfVerticalPixel = 0.5f/imageHeight;
@@ -1062,10 +1030,6 @@ public class MeshCreator : UnityEngine.Object {
 					float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-					//vertX = vertX + mcd.widthOffset;
-					//vertY = vertY + mcd.heightOffset;
-					//vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset); // vertex for side
-					//vertices[i +vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
 					
 					vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth  - mcd.pivotDepthOffset); // vertex for side
 					vertices[i +vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth  - mcd.pivotDepthOffset);
@@ -1133,10 +1097,6 @@ public class MeshCreator : UnityEngine.Object {
 						float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 						vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 						vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-						//vertX = vertX + mcd.widthOffset;
-						//vertY = vertY + mcd.heightOffset;
-						//vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
-						//vertices[i + vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
 						
 						vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth - mcd.pivotDepthOffset);
 						vertices[i + vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth - mcd.pivotDepthOffset);
