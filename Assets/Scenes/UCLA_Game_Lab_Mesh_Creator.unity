@@ -416,26 +416,26 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2008542990}
-  - {fileID: 296611325}
-  - {fileID: 612580777}
-  - {fileID: 1695672071}
-  - {fileID: 1408139943}
-  - {fileID: 1337834121}
-  - {fileID: 1695151855}
-  - {fileID: 1362860237}
-  - {fileID: 1820615091}
-  - {fileID: 1707444601}
-  - {fileID: 502435539}
-  - {fileID: 746515367}
-  - {fileID: 347582168}
-  - {fileID: 1833213767}
-  - {fileID: 1522108969}
-  - {fileID: 1962910768}
-  - {fileID: 1945094471}
-  - {fileID: 1369723978}
-  - {fileID: 797397710}
-  - {fileID: 1584109451}
+  - {fileID: 1324665529}
+  - {fileID: 203373577}
+  - {fileID: 702958643}
+  - {fileID: 1698837512}
+  - {fileID: 627281638}
+  - {fileID: 1213849470}
+  - {fileID: 227548444}
+  - {fileID: 2120119106}
+  - {fileID: 1683415880}
+  - {fileID: 2054256647}
+  - {fileID: 819330865}
+  - {fileID: 730141569}
+  - {fileID: 1843574100}
+  - {fileID: 1578076982}
+  - {fileID: 174217108}
+  - {fileID: 1301267969}
+  - {fileID: 824199251}
+  - {fileID: 167271501}
+  - {fileID: 279788903}
+  - {fileID: 680933272}
   m_Father: {fileID: 194}
 --- !u!4 &178
 Transform:
@@ -646,11 +646,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 99}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.01872301, z: 0}
+  m_LocalPosition: {x: 0, y: .518723011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2121555913}
-  - {fileID: 1120773708}
+  - {fileID: 1011820288}
+  - {fileID: 1949255926}
   - {fileID: 177}
   m_Father: {fileID: 0}
 --- !u!4 &195
@@ -1375,10 +1375,10 @@ MonoBehaviour:
   meshHeight: 1
   meshWidth: 1
   meshDepth: 1
-  pivotHeightOffset: .5
+  pivotHeightOffset: 0
   pivotWidthOffset: 0
   pivotDepthOffset: 0
-  lastPivotOffset: {x: 0, y: .5, z: 0}
+  lastPivotOffset: {x: 0, y: 0, z: 0}
   generateCollider: 1
   usePrimitiveCollider: 1
   useAABBCollider: 0
@@ -1639,6 +1639,84 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .095703125, y: .01953125, z: 1}
   m_Center: {x: -.0263671875, y: -.4453125, z: -0}
+--- !u!1 &167271500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 167271501}
+  - 65: {fileID: 167271502}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.18
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &167271501
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 167271500}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &167271502
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 167271500}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .015625, y: .03515625, z: 1}
+  m_Center: {x: -.0703125, y: -.376953125, z: -0}
+--- !u!1 &174217107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 174217108}
+  - 65: {fileID: 174217109}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.15
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &174217108
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 174217107}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &174217109
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 174217107}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .02734375, y: .0234375, z: 1}
+  m_Center: {x: -.314453125, y: -.19921875, z: -0}
 --- !u!1 &180206793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,6 +1756,84 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .091796875, y: .326171875, z: 1}
   m_Center: {x: -.334960938, y: -.163085938, z: -0}
+--- !u!1 &203373576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 203373577}
+  - 65: {fileID: 203373578}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &203373577
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 203373576}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &203373578
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 203373576}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .1953125, y: .7890625, z: 1}
+  m_Center: {x: .26171875, y: .08984375, z: -0}
+--- !u!1 &227548443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 227548444}
+  - 65: {fileID: 227548445}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &227548444
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 227548443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &227548445
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 227548443}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .0390625, y: .06640625, z: 1}
+  m_Center: {x: .18359375, y: -.337890625, z: -0}
 --- !u!1 &231828480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,45 +1887,45 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 231828480}
   m_Mesh: {fileID: 4300000, guid: 291e26cdbf9658144adc7c80b80e16ca, type: 2}
---- !u!1 &296611324
+--- !u!1 &279788902
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 296611325}
-  - 65: {fileID: 296611326}
+  - 4: {fileID: 279788903}
+  - 65: {fileID: 279788904}
   m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.2
+  m_Name: UCLAGameLabFlagCompoundColliders.19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &296611325
+--- !u!4 &279788903
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 296611324}
+  m_GameObject: {fileID: 279788902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 177}
---- !u!65 &296611326
+--- !u!65 &279788904
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 296611324}
+  m_GameObject: {fileID: 279788902}
   m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .1953125, y: .7890625, z: 1}
-  m_Center: {x: .26171875, y: -.41015625, z: -0}
+  m_Size: {x: .015625, y: .03515625, z: 1}
+  m_Center: {x: .3046875, y: -.322265625, z: -0}
 --- !u!1 &302878527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,45 +2004,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.75, y: 3.265625, z: 1}
   m_Center: {x: 0, y: .3203125, z: -0}
---- !u!1 &347582167
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 347582168}
-  - 65: {fileID: 347582169}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.13
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &347582168
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 347582167}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &347582169
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 347582167}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .0234375, y: .02734375, z: 1}
-  m_Center: {x: .109375, y: -.876953125, z: -0}
 --- !u!1 &407800941
 GameObject:
   m_ObjectHideFlags: 0
@@ -2174,45 +2291,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .19921875, y: .12890625, z: 1}
   m_Center: {x: -.333984375, y: -1.04882812, z: -0}
---- !u!1 &502435538
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 502435539}
-  - 65: {fileID: 502435540}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.11
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &502435539
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 502435538}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &502435540
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 502435538}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .03125, y: .02734375, z: 1}
-  m_Center: {x: -.19140625, y: -.638671875, z: -0}
 --- !u!1 &507070890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2415,45 +2493,45 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .05859375, y: .05859375, z: 1}
   m_Center: {x: -.591796875, y: -1.23632812, z: -0}
---- !u!1 &612580776
+--- !u!1 &627281637
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 612580777}
-  - 65: {fileID: 612580778}
+  - 4: {fileID: 627281638}
+  - 65: {fileID: 627281639}
   m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.3
+  m_Name: UCLAGameLabFlagCompoundColliders.5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &612580777
+--- !u!4 &627281638
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 612580776}
+  m_GameObject: {fileID: 627281637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 177}
---- !u!65 &612580778
+--- !u!65 &627281639
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 612580776}
+  m_GameObject: {fileID: 627281637}
   m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .19921875, y: .609375, z: 1}
-  m_Center: {x: -.228515625, y: -.3203125, z: -0}
+  m_Size: {x: .05078125, y: .05859375, z: 1}
+  m_Center: {x: .095703125, y: -.333984375, z: -0}
 --- !u!1 &631623076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2493,6 +2571,45 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .015625, y: 3.1875, z: 1}
   m_Center: {x: 1.3828125, y: .28125, z: -0}
+--- !u!1 &680933271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 680933272}
+  - 65: {fileID: 680933273}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.20
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &680933272
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 680933271}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &680933273
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 680933271}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .0234375, y: .0234375, z: 1}
+  m_Center: {x: .05859375, y: -.31640625, z: -0}
 --- !u!1 &681297523
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2663,45 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 681297523}
   m_Mesh: {fileID: 4300000, guid: b367313ba3c21d34c9a42b6fafc5e7ee, type: 2}
+--- !u!1 &702958642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 702958643}
+  - 65: {fileID: 702958644}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &702958643
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 702958642}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &702958644
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 702958642}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .19921875, y: .609375, z: 1}
+  m_Center: {x: -.228515625, y: .1796875, z: -0}
 --- !u!1 &716226511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,15 +2755,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 716226511}
   m_Mesh: {fileID: 4300000, guid: 16ed3d53d056f4e4ea98d7c02bb4e68c, type: 2}
---- !u!1 &746515366
+--- !u!1 &730141568
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 746515367}
-  - 65: {fileID: 746515368}
+  - 4: {fileID: 730141569}
+  - 65: {fileID: 730141570}
   m_Layer: 0
   m_Name: UCLAGameLabFlagCompoundColliders.12
   m_TagString: Untagged
@@ -2615,29 +2771,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &746515367
+--- !u!4 &730141569
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 746515366}
+  m_GameObject: {fileID: 730141568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 177}
---- !u!65 &746515368
+--- !u!65 &730141570
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 746515366}
+  m_GameObject: {fileID: 730141568}
   m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: .03125, y: .02734375, z: 1}
-  m_Center: {x: -.265625, y: -.638671875, z: -0}
+  m_Center: {x: -.265625, y: -.138671875, z: -0}
 --- !u!1 &790993446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2677,45 +2833,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .12890625, y: .0703125, z: 1}
   m_Center: {x: .498046875, y: -1.1484375, z: -0}
---- !u!1 &797397709
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 797397710}
-  - 65: {fileID: 797397711}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.19
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &797397710
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 797397709}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &797397711
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 797397709}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .015625, y: .03515625, z: 1}
-  m_Center: {x: .3046875, y: -.822265625, z: -0}
 --- !u!1 &806380954
 GameObject:
   m_ObjectHideFlags: 0
@@ -2755,6 +2872,84 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .12890625, y: .0703125, z: 1}
   m_Center: {x: -.169921875, y: -1.01953125, z: -0}
+--- !u!1 &819330864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 819330865}
+  - 65: {fileID: 819330866}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.11
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &819330865
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 819330864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &819330866
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 819330864}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .03125, y: .02734375, z: 1}
+  m_Center: {x: -.19140625, y: -.138671875, z: -0}
+--- !u!1 &824199250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 824199251}
+  - 65: {fileID: 824199252}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.17
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &824199251
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 824199250}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &824199252
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 824199250}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .01953125, y: .03125, z: 1}
+  m_Center: {x: -.138671875, y: -.20703125, z: -0}
 --- !u!1 &834376492
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,6 +3486,59 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .1875, y: .09375, z: 1}
   m_Center: {x: -.875, y: -1.65625, z: -0}
+--- !u!1 &1011820287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1011820288}
+  - 33: {fileID: 1011820290}
+  - 23: {fileID: 1011820289}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlag.backside
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1011820288
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1011820287}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 194}
+--- !u!23 &1011820289
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1011820287}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: c8a3ac1b0f7142b42af8ff4251ef7435, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!33 &1011820290
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1011820287}
+  m_Mesh: {fileID: 4300000, guid: 1798181621e0d964dbcddb14265cc341, type: 2}
 --- !u!1 &1027201372
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,59 +3695,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .06640625, y: .138671875, z: 1}
   m_Center: {x: -.4140625, y: -.202148438, z: -0}
---- !u!1 &1120773707
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1120773708}
-  - 33: {fileID: 1120773710}
-  - 23: {fileID: 1120773709}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlag.edge
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1120773708
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1120773707}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 194}
---- !u!23 &1120773709
-Renderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1120773707}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: c8a3ac1b0f7142b42af8ff4251ef7435, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
---- !u!33 &1120773710
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1120773707}
-  m_Mesh: {fileID: 4300000, guid: b719fa796c5027f4589ccf7aadd4c30a, type: 2}
 --- !u!1 &1134673135
 GameObject:
   m_ObjectHideFlags: 0
@@ -3617,6 +3812,45 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .17578125, y: .046875, z: 1}
   m_Center: {x: -.943359375, y: -1.3828125, z: -0}
+--- !u!1 &1213849469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1213849470}
+  - 65: {fileID: 1213849471}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1213849470
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1213849469}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &1213849471
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1213849469}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .046875, y: .0625, z: 1}
+  m_Center: {x: -.3046875, y: -.15625, z: -0}
 --- !u!1 &1257704117
 GameObject:
   m_ObjectHideFlags: 0
@@ -3695,6 +3929,45 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .466796875, y: .564453125, z: 1}
   m_Center: {x: -.0556640625, y: -.124023438, z: -0}
+--- !u!1 &1301267968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1301267969}
+  - 65: {fileID: 1301267970}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.16
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1301267969
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1301267968}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &1301267970
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1301267968}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .015625, y: .0390625, z: 1}
+  m_Center: {x: .3515625, y: -.375, z: -0}
 --- !u!1 &1317952375
 GameObject:
   m_ObjectHideFlags: 0
@@ -3734,162 +4007,45 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .34375, y: .140625, z: 1}
   m_Center: {x: 1.21875, y: -1.7421875, z: -0}
---- !u!1 &1337834120
+--- !u!1 &1324665527
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 1337834121}
-  - 65: {fileID: 1337834122}
+  - 4: {fileID: 1324665529}
+  - 65: {fileID: 1324665528}
   m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.6
+  m_Name: UCLAGameLabFlagCompoundColliders.1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1337834121
+--- !u!65 &1324665528
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1324665527}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .19921875, y: .7890625, z: 1}
+  m_Center: {x: .021484375, y: .08984375, z: -0}
+--- !u!4 &1324665529
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1337834120}
+  m_GameObject: {fileID: 1324665527}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 177}
---- !u!65 &1337834122
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1337834120}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .046875, y: .0625, z: 1}
-  m_Center: {x: -.3046875, y: -.65625, z: -0}
---- !u!1 &1362860236
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1362860237}
-  - 65: {fileID: 1362860238}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.8
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1362860237
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1362860236}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &1362860238
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1362860236}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .046875, y: .0546875, z: 1}
-  m_Center: {x: -.0546875, y: -.83203125, z: -0}
---- !u!1 &1369723977
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1369723978}
-  - 65: {fileID: 1369723979}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.18
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1369723978
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1369723977}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &1369723979
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1369723977}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .015625, y: .03515625, z: 1}
-  m_Center: {x: -.0703125, y: -.876953125, z: -0}
---- !u!1 &1408139942
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1408139943}
-  - 65: {fileID: 1408139944}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1408139943
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1408139942}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &1408139944
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1408139942}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .05078125, y: .05859375, z: 1}
-  m_Center: {x: .095703125, y: -.833984375, z: -0}
 --- !u!1 &1458442375
 GameObject:
   m_ObjectHideFlags: 0
@@ -3968,84 +4124,45 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 546939093}
---- !u!1 &1522108968
+--- !u!1 &1578076981
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 1522108969}
-  - 65: {fileID: 1522108970}
+  - 4: {fileID: 1578076982}
+  - 65: {fileID: 1578076983}
   m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.15
+  m_Name: UCLAGameLabFlagCompoundColliders.14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1522108969
+--- !u!4 &1578076982
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1522108968}
+  m_GameObject: {fileID: 1578076981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 177}
---- !u!65 &1522108970
+--- !u!65 &1578076983
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1522108968}
+  m_GameObject: {fileID: 1578076981}
   m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: .02734375, y: .0234375, z: 1}
-  m_Center: {x: -.314453125, y: -.69921875, z: -0}
---- !u!1 &1584109450
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1584109451}
-  - 65: {fileID: 1584109452}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.20
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1584109451
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1584109450}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &1584109452
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1584109450}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .0234375, y: .0234375, z: 1}
-  m_Center: {x: .05859375, y: -.81640625, z: -0}
+  m_Center: {x: -.017578125, y: -.31640625, z: -0}
 --- !u!1 &1585187933
 GameObject:
   m_ObjectHideFlags: 0
@@ -4340,84 +4457,45 @@ Mesh:
     m_Extent: {x: 1.03125, y: 1.46484375, z: .5}
   m_MeshUsageFlags: 0
   m_MeshOptimized: 0
---- !u!1 &1695151854
+--- !u!1 &1683415879
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 1695151855}
-  - 65: {fileID: 1695151856}
+  - 4: {fileID: 1683415880}
+  - 65: {fileID: 1683415881}
   m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.7
+  m_Name: UCLAGameLabFlagCompoundColliders.9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1695151855
+--- !u!4 &1683415880
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1695151854}
+  m_GameObject: {fileID: 1683415879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 177}
---- !u!65 &1695151856
+--- !u!65 &1683415881
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1695151854}
+  m_GameObject: {fileID: 1683415879}
   m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .0390625, y: .06640625, z: 1}
-  m_Center: {x: .18359375, y: -.837890625, z: -0}
---- !u!1 &1695672070
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1695672071}
-  - 65: {fileID: 1695672072}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1695672071
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1695672070}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &1695672072
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1695672070}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .046875, y: .06640625, z: 1}
-  m_Center: {x: -.15234375, y: -.658203125, z: -0}
+  m_Size: {x: .046875, y: .05078125, z: 1}
+  m_Center: {x: .3359375, y: -.330078125, z: -0}
 --- !u!1 &1696385644
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,6 +4535,45 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .10546875, y: .05859375, z: 1}
   m_Center: {x: .732421875, y: -1.28320312, z: -0}
+--- !u!1 &1698837511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1698837512}
+  - 65: {fileID: 1698837513}
+  m_Layer: 0
+  m_Name: UCLAGameLabFlagCompoundColliders.4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1698837512
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1698837511}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177}
+--- !u!65 &1698837513
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1698837511}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .046875, y: .06640625, z: 1}
+  m_Center: {x: -.15234375, y: -.158203125, z: -0}
 --- !u!1 &1707089187
 GameObject:
   m_ObjectHideFlags: 0
@@ -4496,45 +4613,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .078125, y: .078125, z: 1}
   m_Center: {x: -.5390625, y: -1.5234375, z: -0}
---- !u!1 &1707444599
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1707444601}
-  - 65: {fileID: 1707444600}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.10
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1707444600
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1707444599}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .02734375, y: .03515625, z: 1}
-  m_Center: {x: .216796875, y: -.822265625, z: -0}
---- !u!4 &1707444601
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1707444599}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
 --- !u!1 &1782330660
 GameObject:
   m_ObjectHideFlags: 0
@@ -4652,84 +4730,45 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .05859375, y: .046875, z: 1}
   m_Center: {x: .404296875, y: -1.13671875, z: -0}
---- !u!1 &1820615090
+--- !u!1 &1843574099
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 1820615091}
-  - 65: {fileID: 1820615092}
+  - 4: {fileID: 1843574100}
+  - 65: {fileID: 1843574101}
   m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.9
+  m_Name: UCLAGameLabFlagCompoundColliders.13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1820615091
+--- !u!4 &1843574100
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1820615090}
+  m_GameObject: {fileID: 1843574099}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 177}
---- !u!65 &1820615092
+--- !u!65 &1843574101
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1820615090}
+  m_GameObject: {fileID: 1843574099}
   m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .046875, y: .05078125, z: 1}
-  m_Center: {x: .3359375, y: -.830078125, z: -0}
---- !u!1 &1833213766
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1833213767}
-  - 65: {fileID: 1833213768}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.14
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1833213767
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1833213766}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &1833213768
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1833213766}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .02734375, y: .0234375, z: 1}
-  m_Center: {x: -.017578125, y: -.81640625, z: -0}
+  m_Size: {x: .0234375, y: .02734375, z: 1}
+  m_Center: {x: .109375, y: -.376953125, z: -0}
 --- !u!1 &1845715660
 GameObject:
   m_ObjectHideFlags: 0
@@ -4953,45 +4992,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .796875, y: .296875, z: 1}
   m_Center: {x: -.9765625, y: -1.4609375, z: -0}
---- !u!1 &1945094470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1945094471}
-  - 65: {fileID: 1945094472}
-  m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.17
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1945094471
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1945094470}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &1945094472
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1945094470}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .01953125, y: .03125, z: 1}
-  m_Center: {x: -.138671875, y: -.70703125, z: -0}
 --- !u!1 &1949142905
 GameObject:
   m_ObjectHideFlags: 0
@@ -5031,84 +5031,98 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .59765625, y: .22265625, z: 1}
   m_Center: {x: -.732421875, y: -1.09570312, z: -0}
---- !u!1 &1962910767
+--- !u!1 &1949255925
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 1962910768}
-  - 65: {fileID: 1962910769}
+  - 4: {fileID: 1949255926}
+  - 33: {fileID: 1949255928}
+  - 23: {fileID: 1949255927}
   m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.16
+  m_Name: UCLAGameLabFlag.edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1962910768
+--- !u!4 &1949255926
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1962910767}
+  m_GameObject: {fileID: 1949255925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 177}
---- !u!65 &1962910769
-BoxCollider:
+  m_Father: {fileID: 194}
+--- !u!23 &1949255927
+Renderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1962910767}
-  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
-  m_IsTrigger: 0
+  m_GameObject: {fileID: 1949255925}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .015625, y: .0390625, z: 1}
-  m_Center: {x: .3515625, y: -.875, z: -0}
---- !u!1 &2008542989
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: c8a3ac1b0f7142b42af8ff4251ef7435, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!33 &1949255928
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1949255925}
+  m_Mesh: {fileID: 4300000, guid: b719fa796c5027f4589ccf7aadd4c30a, type: 2}
+--- !u!1 &2054256646
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 2008542990}
-  - 65: {fileID: 2008542991}
+  - 4: {fileID: 2054256647}
+  - 65: {fileID: 2054256648}
   m_Layer: 0
-  m_Name: UCLAGameLabFlagCompoundColliders.1
+  m_Name: UCLAGameLabFlagCompoundColliders.10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2008542990
+--- !u!4 &2054256647
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2008542989}
+  m_GameObject: {fileID: 2054256646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 177}
---- !u!65 &2008542991
+--- !u!65 &2054256648
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2008542989}
+  m_GameObject: {fileID: 2054256646}
   m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .19921875, y: .7890625, z: 1}
-  m_Center: {x: .021484375, y: -.41015625, z: -0}
+  m_Size: {x: .02734375, y: .03515625, z: 1}
+  m_Center: {x: .216796875, y: -.322265625, z: -0}
 --- !u!1 &2067584326
 GameObject:
   m_ObjectHideFlags: 0
@@ -5187,56 +5201,42 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .2578125, y: .10546875, z: 1}
   m_Center: {x: .9140625, y: -1.30664062, z: -0}
---- !u!1 &2121555912
+--- !u!1 &2120119105
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 2121555913}
-  - 33: {fileID: 2121555915}
-  - 23: {fileID: 2121555914}
+  - 4: {fileID: 2120119106}
+  - 65: {fileID: 2120119107}
   m_Layer: 0
-  m_Name: UCLAGameLabFlag.backside
+  m_Name: UCLAGameLabFlagCompoundColliders.8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2121555913
+--- !u!4 &2120119106
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2121555912}
+  m_GameObject: {fileID: 2120119105}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 194}
---- !u!23 &2121555914
-Renderer:
+  m_Father: {fileID: 177}
+--- !u!65 &2120119107
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2121555912}
+  m_GameObject: {fileID: 2120119105}
+  m_Material: {fileID: 13400000, guid: f0c20d3503f6a3148a86c5b914666d9c, type: 2}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: c8a3ac1b0f7142b42af8ff4251ef7435, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
---- !u!33 &2121555915
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2121555912}
-  m_Mesh: {fileID: 4300000, guid: 1798181621e0d964dbcddb14265cc341, type: 2}
+  serializedVersion: 2
+  m_Size: {x: .046875, y: .0546875, z: 1}
+  m_Center: {x: -.0546875, y: -.33203125, z: -0}
