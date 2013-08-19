@@ -3,6 +3,10 @@ MeshCreatorDev is the internal development copy of the Mesh Creator for the game
 
 BUGS:
 - triangulation is always run, even if no mesh is required.
+- calling undo on wizard created object does not remove new mesh from hierarchy.
+- update mass error when using Flat2d and mesh collider. do collider first, then
+the render mesh.
+- switching between 2d and 3d mesh in inspector does not change opacity of the material. materials should be present for opaque and transparent. should switch out between the two.
 FIXED 8/12/13 - collider mesh not being saved when front plane is used.
 FIXED 8/12/13 - generative meshes not seen by unity as meshes(change extension to .asset)
 FIXED 8/9/13 - rigid body added when generate collider set to off
@@ -15,6 +19,7 @@ FIXED 8/2/13 - small window size for wizard
 
 Version 0.7 TODO:
 DONE 8/9/13 - set version number to 0.7 in all scripts
+DONE 8/12/13 - add scale option back, under "advanced" tab
 DONE 8/9/13 - Bounding Box collider for top level
 DONE 8/9/13 - change max box size to max number box colliders
 DONE 8/2/13 - dropdown list for 2d vs 3d object creation in inspector
@@ -29,6 +34,10 @@ DONE 8/2/13 - remove sizing in wizard and inspector
 DONE - game lab logo and link - branding
 
 Version 1.0 features
+- separate out the adobe actions
+- user should be able to configure location of saved meshes and materials.
+	- use http://docs.unity3d.com/Documentation/ScriptReference/PreferenceItem.html
+	- add mesh and material locations
 - circle packing for cylinder colliders
 - deal with holes and islands
 	- holes in mesh via poly2tri
@@ -40,7 +49,6 @@ Version 1.0 features
 	- search through scene and rectify filenames in Meshes folder
 - cleanup of mesh creator data, breaks backward compatibility
 	- enums for mesh type, collider type
-- add scale option back, under "advanced" tab
 - output island and hole information
 - full code cleanup and comments
 - base materials should be dynamically generated in code
