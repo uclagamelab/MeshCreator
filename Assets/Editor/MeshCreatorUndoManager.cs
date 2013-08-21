@@ -5,7 +5,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public class HOEditorUndoManager
+public class MeshCreatorUndoManager
 {
 
     // VARS ///////////////////////////////////////////////////
@@ -25,13 +25,13 @@ public class HOEditorUndoManager
     /// setting it so that the target is marked as dirty each time a new undo is stored. 
     /// The default Object you want to save undo info for.
     /// The default name of the thing to undo (displayed as "Undo [name]" in the main menu).
-    public HOEditorUndoManager(Object p_target, string p_name) : this(p_target, p_name, true) { }
+    public MeshCreatorUndoManager(Object p_target, string p_name) : this(p_target, p_name, true) { }
 
     /// Creates a new HOEditorUndoManager. 
     /// The default Object you want to save undo info for.
     /// The default name of the thing to undo (displayed as "Undo [name]" in the main menu).
     /// If TRUE, marks the target as dirty each time a new undo is stored.
-    public HOEditorUndoManager(Object p_target, string p_name, bool p_autoSetDirty)
+    public MeshCreatorUndoManager(Object p_target, string p_name, bool p_autoSetDirty)
     {
         defTarget = p_target;
         defName = p_name;

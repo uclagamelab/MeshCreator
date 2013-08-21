@@ -15,6 +15,7 @@ using System;
 public class MeshCreatorInspector :  Editor {
 	
 	private MeshCreatorData mcd;
+    private MeshCreatorUndoManager mcud;
 	private const float versionNumber = 0.7f;
 	private bool showColliderInfo = false;
 	private bool showMeshInfo = false;
@@ -36,6 +37,7 @@ public class MeshCreatorInspector :  Editor {
 		if (mcd == null) {
 			Debug.LogError("MeshCreatorInspector::OnEnable(): couldn't find a MeshCreatorData component");
 		}
+        mcud = new MeshCreatorUndoManager(mcd, "Mesh Creator");
     }
 	 
 	/***
@@ -43,6 +45,8 @@ public class MeshCreatorInspector :  Editor {
 	*	this does the main display of information in the inspector.
 	***/
 	public override void OnInspectorGUI() {
+        mcud.CheckUndo();
+
 		EditorGUIUtility.LookLikeInspector();
 		
 		// TODO: inspector layout should be redesigned so that it's easier to 
@@ -215,7 +219,7 @@ public class MeshCreatorInspector :  Editor {
 		else {
 			Debug.LogError("MeshCreatorInspector::OnInspectorGUI(): couldn't find a MeshCreatorData component");
 		}
-		
+        mcud.CheckDirty();
 	}
 	
 }
