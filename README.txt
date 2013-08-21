@@ -18,6 +18,12 @@ FIXED 8/2/13 - wizard texture box should be larger and square
 FIXED 8/2/13 - small window size for wizard
 
 Version 0.7 TODO:
+- asset store documentation
+- rewrite warnings to explain solutions.
+- use serialized property?
+- great images for front page
+- move BSD license to header of each script file
+DONE 8/21/13 - add undo
 DONE 8/9/13 - set version number to 0.7 in all scripts
 DONE 8/12/13 - add scale option back, under "advanced" tab
 DONE 8/9/13 - Bounding Box collider for top level
@@ -34,7 +40,11 @@ DONE 8/2/13 - remove sizing in wizard and inspector
 DONE - game lab logo and link - branding
 
 Version 1.0 features
-- separate out the adobe actions
+- store inspector GUI variables in MeshCreatorData
+- replace Mesh Creator Info section with a simpler message:
+	- all scripts version XX
+	- scripts are wrong, versions XX and XX present.
+- separate out the adobe actions from the repository
 - user should be able to configure location of saved meshes and materials.
 	- use http://docs.unity3d.com/Documentation/ScriptReference/PreferenceItem.html
 	- add mesh and material locations
