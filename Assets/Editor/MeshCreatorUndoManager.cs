@@ -21,13 +21,15 @@ public class MeshCreatorUndoManager
     // CONSTRUCTOR
     // ***********************************************************************************
 
-    /// Creates a new HOEditorUndoManager,
+    /// Creates a new MeshCreatorUndoManager,
     /// setting it so that the target is marked as dirty each time a new undo is stored. 
+    /// params:
     /// The default Object you want to save undo info for.
     /// The default name of the thing to undo (displayed as "Undo [name]" in the main menu).
     public MeshCreatorUndoManager(Object p_target, string p_name) : this(p_target, p_name, true) { }
 
-    /// Creates a new HOEditorUndoManager. 
+    /// Creates a new MeshCreatorUndoManager.
+    /// params:
     /// The default Object you want to save undo info for.
     /// The default name of the thing to undo (displayed as "Undo [name]" in the main menu).
     /// If TRUE, marks the target as dirty each time a new undo is stored.
@@ -47,14 +49,14 @@ public class MeshCreatorUndoManager
 
     /// Call this method BEFORE any undoable UnityGUI call.
     /// Manages undo for the given target, with the default name.
+    /// params:
     /// The object you want to save undo info for.
     public void CheckUndo(Object p_target) { CheckUndo(p_target, defName); }
 
     /// Call this method BEFORE any undoable UnityGUI call.
     /// Manages undo for the given target, with the given name.
-
+    /// params:
     /// The object you want to save undo info for.
-
     /// The name of the thing to undo (displayed as "Undo [name]" in the main menu).
     public void CheckUndo(Object p_target, string p_name)
     {
@@ -95,12 +97,14 @@ public class MeshCreatorUndoManager
     /// Call this method AFTER any undoable UnityGUI call.
     /// Manages undo for the given target, with the default name,
     /// and returns a value of TRUE if the target is marked as dirty.
+    /// params:
     /// The object you want to save undo info for.
     public bool CheckDirty(Object p_target) { return CheckDirty(p_target, defName); }
 
     /// Call this method AFTER any undoable UnityGUI call.
     /// Manages undo for the given target, with the given name,
     /// and returns a value of TRUE if the target is marked as dirty.
+    /// params:
     /// The object you want to save undo info for.
     /// The name of the thing to undo (displayed as "Undo [name]" in the main menu).
     public bool CheckDirty(Object p_target, string p_name)
@@ -120,13 +124,13 @@ public class MeshCreatorUndoManager
     /// Forces undo for the default target, with the default name.
     /// Used to undo operations that are performed by pressing a button,
     /// which doesn't set the GUI to a changed state.
-
     public void ForceDirty() { ForceDirty(defTarget, defName); }
 
     /// Call this method AFTER any undoable UnityGUI call.
     /// Forces undo for the given target, with the default name.
     /// Used to undo operations that are performed by pressing a button,
     /// which doesn't set the GUI to a changed state.
+    /// params:
     /// The object you want to save undo info for.
     public void ForceDirty(Object p_target) { ForceDirty(p_target, defName); }
 
@@ -134,7 +138,7 @@ public class MeshCreatorUndoManager
     /// Forces undo for the given target, with the given name.
     /// Used to undo operations that are performed by pressing a button,
     /// which doesn't set the GUI to a changed state.
-
+    /// params:
     /// The object you want to save undo info for.
     /// The name of the thing to undo (displayed as "Undo [name]" in the main menu).
     public void ForceDirty(Object p_target, string p_name)
