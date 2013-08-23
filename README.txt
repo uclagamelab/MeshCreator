@@ -18,9 +18,9 @@ FIXED 8/2/13 - wizard texture box should be larger and square
 FIXED 8/2/13 - small window size for wizard
 
 Version 0.7 TODO:
-- restructure project for asset store
+DONE 8/23/13 - restructure project for asset store
 - asset store documentation
-- rewrite warnings to explain solutions.
+DONE 8/23/13 - rewrite warnings to explain solutions.
 - great images for front page
 DONE 8/23/13 - move BSD license to header of each script file
 DONE 8/21/13 - add undo

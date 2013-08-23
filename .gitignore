@@ -1,7 +1,6 @@
 obj/
 Temp/
 Library/
-old_git.zip
 UpgradeLog.XML
 _UpgradeReport_Files/UpgradeReport.css
 _UpgradeReport_Files/UpgradeReport.xslt
@@ -27,3 +26,4 @@ Assembly-CSharp-Editor.pidb
 Assembly-CSharp.pidb
 #README.txt#
 README.txt~
+.gitignore~
