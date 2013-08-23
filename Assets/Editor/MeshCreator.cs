@@ -29,11 +29,11 @@ public class MeshCreator : UnityEngine.Object {
 		if ( mcd.idNumber == "" )
 		{
 			mcd.idNumber = MeshCreator.GenerateId();
-			
-			Debug.Log(mcd.gameObject.name + "MeshCreator: set new mesh id number to " + mcd.idNumber);
+			// Debug.Log(mcd.gameObject.name + "MeshCreator: set new mesh id number to " + mcd.idNumber);
 		}
 		
-		// this will probably never be the case, but check the id number
+		// check the id number, if it is used in another scene object
+        // generate a new id number
 		while (MeshCreator.IdExistsInScene(mcd))
 		{
 			mcd.idNumber = MeshCreator.GenerateId(); 
@@ -49,7 +49,7 @@ public class MeshCreator : UnityEngine.Object {
 		}
 		string sceneName = sceneNames[sceneNames.Length-1];
 		string folderName = sceneName.Substring(0, sceneName.Length - 6);
-		string folderPath = "Assets/Meshes/" + folderName;
+		string folderPath = "Assets/Meshes/" + folderName; // TODO: this should be a preference
 
         if (!Directory.Exists("Assets/Meshes"))
         {
@@ -689,8 +689,8 @@ public class MeshCreator : UnityEngine.Object {
 		int imageHeight = mcd.outlineTexture.height;
 		int imageWidth = mcd.outlineTexture.width;
 		if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-			Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
-			Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
+			//Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+			//Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
 		}
 		
 		// make a surface object to create and store data from image

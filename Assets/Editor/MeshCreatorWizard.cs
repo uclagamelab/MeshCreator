@@ -136,7 +136,7 @@ public class MeshCreatorWizard : EditorWindow
             {
                 float height = textureToCreateMeshFrom.height;
                 float width = textureToCreateMeshFrom.width;
-                Debug.Log("MeshCreatorWizard:: image has non-square size " + width + "x" + height + ", adjusting scale to match.");
+                Debug.LogWarning("MeshCreatorWizard:: image " + textureToCreateMeshFrom.name + " has non-square size " + width + "x" + height + ", adjusting scale to match.");
                 if (height > width)
                 {
                     mcd.meshHeight = 1.0f;
