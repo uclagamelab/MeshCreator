@@ -519,7 +519,7 @@ class MC_EdgeLoop {
 	
 	public Vector2 GetUVForIndex(int i) {
 		if (i >= orderedEdges.Count) {
-			Debug.Log("got " + i + " index for ordered edge with " + orderedEdges.Count + " elements");
+			//Debug.Log("got " + i + " index for ordered edge with " + orderedEdges.Count + " elements");
 			return new Vector2();
 		}
 		MC_Vertex v = ((MC_Edge)orderedEdges[i]).v1;
@@ -552,11 +552,11 @@ class MC_EdgeLoop {
 			MC_Vertex v2 = testEdge.v2;
 			MC_Vertex sharedPoint = currentEdge.v2;
 			if (sharedPoint != testEdge.v1) { // oops, bad list, it should be closed by now
-                Debug.LogError("EdgeLoop Error: list is not ordered when simplifying edge.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
+                Debug.LogError("Mesh Creator EdgeLoop Error: list is not ordered when simplifying edge.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 				return;
 			}
 			if (v1 == v2) {
-                Debug.LogError("EdgeLoop Error: found matching endpoints for a line when simplifying.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
+                Debug.LogError("Mesh Creator EdgeLoop Error: found matching endpoints for a line when simplifying.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 				return;
 			}
 			// determine if sharedPoint is on a line between the two endpoints

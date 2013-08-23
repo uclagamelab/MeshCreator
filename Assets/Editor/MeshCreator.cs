@@ -46,7 +46,7 @@ public class MeshCreator : UnityEngine.Object {
 		// add a TextureImporter object here to check whether texture is readable
 		// set it to readable if necessary
 		if (mcd.outlineTexture == null) {
-			Debug.LogError("MeshCreator Error: no texture found. Make sure to have a texture selected before updating mesh.");
+			Debug.LogError("MeshCreator: no texture found. Make sure to have a texture selected before updating mesh.");
 			return;
 		}
 		
@@ -79,12 +79,12 @@ public class MeshCreator : UnityEngine.Object {
         if (!Directory.Exists("Assets/Meshes"))
         {
             AssetDatabase.CreateFolder("Assets", "Meshes");
-            Debug.Log("MeshCreator:: making new Meshes folder at Assets/Meshes");
+            Debug.Log("MeshCreator: making new Meshes folder at Assets/Meshes");
         }
 
 		if (!Directory.Exists(folderPath))
 		{
-			Debug.Log("MeshCreator:: making new folder in Meshes folder at " + folderPath);
+			Debug.Log("MeshCreator: making new folder in Meshes folder at " + folderPath);
 			AssetDatabase.CreateFolder("Assets/Meshes", folderName );
 		}
 		
@@ -361,7 +361,7 @@ public class MeshCreator : UnityEngine.Object {
 			MeshCollider mcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
 			if (mcol == null) 
             {
-				Debug.LogWarning("MeshCreator Warning: found a non-Mesh collider on object to update. If you really want a new collider generated, remove the old one and update the object with MeshCreator again.");
+				Debug.LogWarning("MeshCreator: found a non-Mesh collider on object to update. If you really want a new collider generated, remove the old one and update the object with MeshCreator again.");
 			}
 			else 
             {
@@ -631,7 +631,7 @@ public class MeshCreator : UnityEngine.Object {
 		int imageWidth = mcd.outlineTexture.width;
 		
 		if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-			Debug.LogWarning("Mesh Creator Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+			Debug.LogWarning("Mesh Creator: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
 		}
 		
 		// copy the pixels so they can be modified
@@ -726,7 +726,7 @@ public class MeshCreator : UnityEngine.Object {
 				}
 			}
 			else {
-				Debug.Log("got negative box");
+                Debug.Log("Mesh Creator: yikes, got a negative box inside pixel map array. Try resaving the image. Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 			}
 		
 		return largestBox;
@@ -953,7 +953,7 @@ public class MeshCreator : UnityEngine.Object {
 		int imageWidth = mcd.outlineTexture.width;
 		
 		if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-			Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+			Debug.LogWarning("Mesh Creator: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
 			Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
 		}
 		
@@ -1065,7 +1065,7 @@ public class MeshCreator : UnityEngine.Object {
 			int imageHeight = mcd.outlineTexture.height;
 			int imageWidth = mcd.outlineTexture.width;
 			if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-				Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+				Debug.LogWarning("Mesh Creator: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
 				Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
 			}
 			
