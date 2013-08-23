@@ -1,5 +1,5 @@
-UCLA Game Lab
-Mesh Creator
+# UCLA Game Lab
+# Mesh Creator
 
 Create meshes from alpha image textures in Unity. Mesh Creator has editor scripts that use the alpha channel in textures to build a mesh and colliders in your scene. This allows simple creation of art assets without the need for external 3d software.
 
