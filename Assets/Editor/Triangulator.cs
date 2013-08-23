@@ -1,6 +1,5 @@
 // can't use holes
 // from http://www.unifycommunity.com/wiki/index.php?title=Triangulator
-// version 0.5
 
 using UnityEngine;
 using System.Collections.Generic;
