@@ -1,4 +1,4 @@
-Copyright (c) 2012, Jonathan Cecil and UCLA Game Lab
+Copyright (c) 2013, Jonathan Cecil and UCLA Game Lab
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
