@@ -2,11 +2,12 @@ MeshCreatorDev is the internal development copy of the Mesh Creator for the game
 
 
 BUGS:
-- triangulation is always run, even if no mesh is required.
+FIXED 8/23/13 - triangulation is always run, even if no mesh is required.
 - calling undo on wizard created object does not remove new mesh from hierarchy.
-- update mass error when using Flat2d and mesh collider. do collider first, then
+FIXED 8/23/13 - update mass error when using Flat2d and mesh collider. do collider first, then
 the render mesh.
 - switching between 2d and 3d mesh in inspector does not change opacity of the material. materials should be present for opaque and transparent. should switch out between the two.
+FIXED 8/22/13 - updating a prefab in project causes tons of errors. - RESULT - made inspector read only for prefabs.
 FIXED 8/12/13 - collider mesh not being saved when front plane is used.
 FIXED 8/12/13 - generative meshes not seen by unity as meshes(change extension to .asset)
 FIXED 8/9/13 - rigid body added when generate collider set to off
@@ -20,7 +21,6 @@ FIXED 8/2/13 - small window size for wizard
 Version 0.7 TODO:
 - asset store documentation
 - rewrite warnings to explain solutions.
-- use serialized property?
 - great images for front page
 - move BSD license to header of each script file
 DONE 8/21/13 - add undo
