@@ -80,7 +80,11 @@ public class MeshCreator : UnityEngine.Object {
 			mcd.gameObject.transform.localPosition += mcd.lastPivotOffset;
 		}
 		
+        // mesh for rendering the object
+        // will either be flat or full mesh
 		Mesh msh = new Mesh();
+
+        // collider for mesh, if used
 		Mesh collidermesh = new Mesh();
 		if (mcd.uvWrapMesh) {
 			// Set up game object with mesh;
@@ -89,7 +93,9 @@ public class MeshCreator : UnityEngine.Object {
 		}
 		else {
 			AssignPlaneMesh(gameObject, ref msh);
-			AssignMesh(gameObject, ref collidermesh);
+            // if needed, create the 3d mesh collider
+            if (mcd.generateCollider && !mcd.usePrimitiveCollider && !mcd.useAABBCollider)
+    			AssignMesh(gameObject, ref collidermesh);
 		}
 			
 		MeshRenderer mr = (MeshRenderer) mcd.gameObject.GetComponent("MeshRenderer");
@@ -295,6 +301,15 @@ public class MeshCreator : UnityEngine.Object {
 				}
 			}
 			
+            // if the current mesh on the mesh renderer is flat
+            // and the object has a rigidbody, unity will give an
+            // error trying to update the mass.
+            // the fix is to stash the current mesh, switch to the
+            // full 3d version, and switch back
+            if ( !mcd.uvWrapMesh )
+            {
+                mf.mesh = collidermesh;
+            }
 			Collider col = mcd.gameObject.collider;
             if (col == null)
             {
@@ -321,6 +336,13 @@ public class MeshCreator : UnityEngine.Object {
                     AssetDatabase.CreateAsset(collidermesh, colliderMeshName);
                 }
 			}
+
+            // switch mesh filter back if the flat one was
+            // swapped out previously
+            if (!mcd.uvWrapMesh)
+            {
+                mf.mesh = msh;
+            }
 
 			if (mcd.usePhysicMaterial) 
             {
@@ -506,6 +528,8 @@ public class MeshCreator : UnityEngine.Object {
                 }
             }
         }
+
+        // end collider section
 			
 		mcd.gameObject.transform.rotation = oldRotation;
 		mcd.gameObject.transform.localScale = oldScale;
