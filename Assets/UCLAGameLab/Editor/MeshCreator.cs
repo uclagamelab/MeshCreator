@@ -1,3 +1,28 @@
+/****************************************************************************
+Copyright (c) 2013, Jonathan Cecil and UCLA Game Lab
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -6,7 +31,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MeshCreator : UnityEngine.Object {
-	public const float versionNumber = 0.6f;
+	public static float versionNumber = 0.7f;
 	
 	public static void UpdateMesh(GameObject gameObject)
 	{
@@ -14,14 +39,14 @@ public class MeshCreator : UnityEngine.Object {
 		
 		// unity should prevent this from happening to the inspector, but just in case.....
 		if (mcd == null) {
-			Debug.LogError("MeshCreator Error: selected object does not have a MeshCreatorData component. Select an object with a MeshCreatorData component to update."); // TODO: add instructions on how to fix
+			Debug.LogError("MeshCreator Error: selected object does not have a MeshCreatorData component. Select an object with a MeshCreatorData component to update.");
 			return;
 		}
 			
 		// add a TextureImporter object here to check whether texture is readable
 		// set it to readable if necessary
 		if (mcd.outlineTexture == null) {
-			Debug.LogError("MeshCreator Error: no texture found. Make sure to have a texture selected before updating mesh.");
+			Debug.LogError("MeshCreator: no texture found. Make sure to have a texture selected before updating mesh.");
 			return;
 		}
 		
@@ -29,11 +54,11 @@ public class MeshCreator : UnityEngine.Object {
 		if ( mcd.idNumber == "" )
 		{
 			mcd.idNumber = MeshCreator.GenerateId();
-			
-			Debug.Log(mcd.gameObject.name + "MeshCreator: set new mesh id number to " + mcd.idNumber);
+			// Debug.Log(mcd.gameObject.name + "MeshCreator: set new mesh id number to " + mcd.idNumber);
 		}
 		
-		// this will probably never be the case, but check the id number
+		// check the id number, if it is used in another scene object
+        // generate a new id number
 		while (MeshCreator.IdExistsInScene(mcd))
 		{
 			mcd.idNumber = MeshCreator.GenerateId(); 
@@ -49,12 +74,23 @@ public class MeshCreator : UnityEngine.Object {
 		}
 		string sceneName = sceneNames[sceneNames.Length-1];
 		string folderName = sceneName.Substring(0, sceneName.Length - 6);
-		string folderPath = "Assets/Meshes/" + folderName;
-			
+		string folderPath = "Assets/UCLAGameLab/Meshes/" + folderName; // TODO: this should be a preference
+
+        if (!Directory.Exists("Assets/UCLAGameLab/Meshes"))
+        {
+            if (!Directory.Exists("Assets/UCLAGameLab"))
+            {
+                Debug.LogError("MeshCreator: UCLAGameLab folder is missing from your project, please reinstall Mesh Creator.");
+                return;
+            }
+            AssetDatabase.CreateFolder("Assets/UCLAGameLab", "Meshes");
+            Debug.Log("MeshCreator: making new Meshes folder at Assets/Meshes");
+        }
+
 		if (!Directory.Exists(folderPath))
 		{
-			Debug.Log("MeshCreator:: making new folder in Meshes folder at " + folderPath);
-			AssetDatabase.CreateFolder("Assets/Meshes", folderName );
+			Debug.Log("MeshCreator: making new folder in Meshes folder at " + folderPath);
+			AssetDatabase.CreateFolder("Assets/UCLAGameLab/Meshes", folderName );
 		}
 		
 		string saveName = folderName + "/" + mcd.gameObject.name + "." + mcd.idNumber ;
@@ -73,8 +109,16 @@ public class MeshCreator : UnityEngine.Object {
 			mcd.lastPivotOffset = new Vector3(mcd.pivotWidthOffset, mcd.pivotHeightOffset, mcd.pivotDepthOffset);
 			mcd.gameObject.transform.localPosition += mcd.lastPivotOffset;
 		}
+
+        // 
+        // start mesh renderer setup section
+        //
 		
+        // mesh for rendering the object
+        // will either be flat or full mesh
 		Mesh msh = new Mesh();
+
+        // collider for mesh, if used
 		Mesh collidermesh = new Mesh();
 		if (mcd.uvWrapMesh) {
 			// Set up game object with mesh;
@@ -83,48 +127,38 @@ public class MeshCreator : UnityEngine.Object {
 		}
 		else {
 			AssignPlaneMesh(gameObject, ref msh);
-			AssignMesh(gameObject, ref collidermesh);
+            // if needed, create the 3d mesh collider
+            if (mcd.generateCollider && !mcd.usePrimitiveCollider && !mcd.useAABBCollider)
+    			AssignMesh(gameObject, ref collidermesh);
 		}
 			
 		MeshRenderer mr = (MeshRenderer) mcd.gameObject.GetComponent("MeshRenderer");
 		if (mr == null) {
-			Debug.Log("MeshCreator Warning: no mesh renderer found on update object, adding one.");
+			//Debug.Log("MeshCreator Warning: no mesh renderer found on update object, adding one.");
 			mcd.gameObject.AddComponent(typeof(MeshRenderer));
 		}
 			
 		// update the front material via renderer
-		// TODO: cleanup the redundant code below
 		Material meshmat;
+        string materialNameLocation = "Assets/UCLAGameLab/Materials/"+mcd.outlineTexture.name+".material.mat";
+        string transparentMaterialNameLocation = "Assets/UCLAGameLab/Materials/"+mcd.outlineTexture.name+".trans.material.mat";
+
+        string baseMaterialNameLocation = "Assets/UCLAGameLab/Materials/baseMaterial.mat";
+        string transparentBaseMaterialNameLocation = "Assets/UCLAGameLab/Materials/baseTransparentMaterial.mat";
+
 		if (mcd.useAutoGeneratedMaterial) {
 			// if using uvWrapMesh, use regular material
 			if (mcd.uvWrapMesh) {
-				meshmat = (Material) Resources.LoadAssetAtPath("Assets/Materials/"+mcd.outlineTexture.name+".material.mat", typeof(Material));
+				meshmat = (Material) Resources.LoadAssetAtPath(materialNameLocation, typeof(Material));
 				if (meshmat == null) {
-					AssetDatabase.CopyAsset("Assets/Materials/baseMaterial.mat", "Assets/Materials/"+mcd.outlineTexture.name+".material.mat");
-					AssetDatabase.ImportAsset("Assets/Materials/"+mcd.outlineTexture.name+".material.mat");
-					meshmat = (Material) Resources.LoadAssetAtPath("Assets/Materials/"+mcd.outlineTexture.name+".material.mat", typeof(Material));
-					meshmat.name = mcd.outlineTexture.name + ".Material";
-					meshmat.mainTexture = mcd.outlineTexture;
-					AssetDatabase.SaveAssets();
-				}
-				else 
-				{
-					Debug.LogWarning("Mesh Creator: found existing material. If you want a new one created, delete Assets/Materials/" + mcd.outlineTexture.name +".material.mat");
+					meshmat = CopyTexture(baseMaterialNameLocation, materialNameLocation, mcd.outlineTexture);
 				}
 				mcd.gameObject.renderer.sharedMaterial = meshmat;
 			}
 			else { // use a transparent material
-				meshmat = (Material) Resources.LoadAssetAtPath("Assets/Materials/"+mcd.outlineTexture.name+".material.mat", typeof(Material));
+				meshmat = (Material) Resources.LoadAssetAtPath(transparentMaterialNameLocation, typeof(Material));
 				if (meshmat == null) {
-					AssetDatabase.CopyAsset("Assets/Materials/baseTransparentMaterial.mat", "Assets/Materials/"+mcd.outlineTexture.name+".material.mat");
-					AssetDatabase.ImportAsset("Assets/Materials/"+mcd.outlineTexture.name+".material.mat");
-					meshmat = (Material) Resources.LoadAssetAtPath("Assets/Materials/"+mcd.outlineTexture.name+".material.mat", typeof(Material));
-					meshmat.name = mcd.outlineTexture.name + ".Material";
-					meshmat.mainTexture = mcd.outlineTexture;
-					AssetDatabase.SaveAssets();
-				}
-				else {
-					Debug.LogWarning("Mesh Creator: found existing material. If you want a new one created, delete Assets/Materials/" + mcd.outlineTexture.name +".material.mat");
+					meshmat = CopyTexture(transparentBaseMaterialNameLocation, transparentMaterialNameLocation, mcd.outlineTexture); 
 				}
 				mcd.gameObject.renderer.sharedMaterial = meshmat;
 			}
@@ -135,17 +169,19 @@ public class MeshCreator : UnityEngine.Object {
 			
 		MeshFilter mf = (MeshFilter) mcd.gameObject.GetComponent("MeshFilter");
 		if (mf == null) {
-			Debug.LogWarning("MeshCreator Warning: no mesh filter found on update object, adding one.");
+			//Debug.LogWarning("MeshCreator Warning: no mesh filter found on update object, adding one.");
 			mf= mcd.gameObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
 		}
-		//DestroyImmediate(mf.sharedMesh, true);  // get rid of the old shared mesh
+        
 		mf.sharedMesh = msh;
-		string meshName = "Assets/Meshes/" + saveName + ".mesh";
-		AssetDatabase.CreateAsset(msh, meshName);
 
+        // save the main mesh
+		string meshName = "Assets/UCLAGameLab/Meshes/" + saveName + ".asset";
+		AssetDatabase.CreateAsset(msh, meshName);
 			
-		// if we need the side edges, go ahead and make a new game object for that
-		if (!mcd.uvWrapMesh && mcd.createEdges) {
+		// make the side edges
+		if (!mcd.uvWrapMesh && mcd.createEdges) 
+        {
 			Mesh edgemesh = new Mesh();
 			MeshCreator.AssignEdgeMesh(gameObject, ref edgemesh);
 				
@@ -179,14 +215,23 @@ public class MeshCreator : UnityEngine.Object {
 			edgeObject.name = edgeName;
 			MeshFilter edgemf = (MeshFilter) edgeObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
 			edgemf.sharedMesh = edgemesh;
+
 			// save the mesh in the Assets folder
-			string edgeMeshName = "Assets/Meshes/" + saveName + ".Edge" + ".mesh";
+			string edgeMeshName = "Assets/UCLAGameLab/Meshes/" + saveName + ".Edge" + ".asset";
 			AssetDatabase.CreateAsset(edgemesh, edgeMeshName);
 				
 			MeshRenderer edgemr = edgeObject.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
-			edgemr.renderer.sharedMaterial = mcd.gameObject.renderer.sharedMaterial;
+
+            // for side meshes use the opaque material
+            Material edgematerial = (Material)Resources.LoadAssetAtPath(materialNameLocation, typeof(Material));
+            if (edgematerial == null)
+            {
+                edgematerial = CopyTexture(baseMaterialNameLocation, materialNameLocation, mcd.outlineTexture);
+            }
+			edgemr.renderer.sharedMaterial = edgematerial;
 		}
-		else {
+		else // destroy the old edge objects because they're not needed
+        {
 			string edgeName = mcd.gameObject.name + ".edge";
 			ArrayList destroyObject = new ArrayList();
 			foreach (Transform child in mcd.gameObject.transform) {
@@ -207,7 +252,8 @@ public class MeshCreator : UnityEngine.Object {
 				DestroyImmediate(child.gameObject);
 			}
 		}
-			
+		
+        // make the backside plane
 		if (!mcd.uvWrapMesh && mcd.createBacksidePlane) {
 			Mesh backmesh = new Mesh();
 			AssignPlaneMeshBackside(gameObject, ref backmesh);
@@ -243,14 +289,21 @@ public class MeshCreator : UnityEngine.Object {
 			MeshFilter backmf = (MeshFilter) backsideObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
 			backmf.sharedMesh = backmesh;
 			// save the mesh in the Assets folder
-			string backMeshName = "Assets/Meshes/" + saveName + ".Back" + ".mesh";
+			string backMeshName = "Assets/UCLAGameLab/Meshes/" + saveName + ".Back" + ".asset";
 			AssetDatabase.CreateAsset(backmesh, backMeshName);
 				
 			MeshRenderer backmr = backsideObject.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
-			backmr.renderer.sharedMaterial = mcd.gameObject.renderer.sharedMaterial;
+
+            // for backside plane, use the transparent material
+            Material backmaterial = (Material)Resources.LoadAssetAtPath(transparentMaterialNameLocation, typeof(Material));
+            if (backmaterial == null)
+            {
+                backmaterial = CopyTexture(transparentBaseMaterialNameLocation, transparentMaterialNameLocation, mcd.outlineTexture);
+            }
+			backmr.renderer.sharedMaterial = backmaterial;
 		}
-		else {
-			// remove the old backside mesh game object
+        else // remove the old backside mesh game object because it's not needed
+        {
 			string backsideName = mcd.gameObject.name + ".backside";
 			ArrayList destroyObject = new ArrayList();
 			foreach (Transform child in mcd.gameObject.transform) {
@@ -273,9 +326,14 @@ public class MeshCreator : UnityEngine.Object {
 				DestroyImmediate(child.gameObject);
 			}
 		}
-			
+        // end mesh renderer setup section
+
+        //
+        // start collider setup section
+		//
+
 		// generate a mesh collider
-		if (mcd.generateCollider && !mcd.usePrimitiveCollider) {
+		if (mcd.generateCollider && !mcd.usePrimitiveCollider && !mcd.useAABBCollider) {
 			
 			// remove the old compound collider before assigning new
 			string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
@@ -285,33 +343,81 @@ public class MeshCreator : UnityEngine.Object {
 				}
 			}
 			
+            // if the current mesh on the mesh renderer is flat
+            // and the object has a rigidbody, unity will give an
+            // error trying to update the mass.
+            // the fix is to stash the current mesh, switch to the
+            // full 3d version, and switch back
+            if ( !mcd.uvWrapMesh )
+            {
+                mf.mesh = collidermesh;
+            }
 			Collider col = mcd.gameObject.collider;
-			if (col == null) {
-				mcd.gameObject.AddComponent(typeof(MeshCollider));
-			}
+            if (col == null)
+            {
+                mcd.gameObject.AddComponent(typeof(MeshCollider));
+            }
+            else
+            {
+                DestroyImmediate(col);
+                mcd.gameObject.AddComponent(typeof(MeshCollider));
+            }
 			
-				
 			MeshCollider mcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
-			if (mcol == null) {
-				Debug.LogWarning("MeshCreator Warning: found a non-Mesh collider on object to update. If you really want a new collider generated, remove the old one and update the object with MeshCreator again.");
+			if (mcol == null) 
+            {
+				Debug.LogWarning("MeshCreator: found a non-Mesh collider on object to update. If you really want a new collider generated, remove the old one and update the object with MeshCreator again.");
 			}
-			else {
+			else 
+            {
 				mcol.sharedMesh = collidermesh;
+                // save the collider mesh if necessary
+                if (!mcd.uvWrapMesh) // if uvWrapMesh, then mesh already saved
+                {
+                    string colliderMeshName = "Assets/UCLAGameLab/Meshes/" + saveName + ".collider.asset";
+                    AssetDatabase.CreateAsset(collidermesh, colliderMeshName);
+                }
 			}
-			if (mcd.usePhysicMaterial) {
+
+            // switch mesh filter back if the flat one was
+            // swapped out previously
+            if (!mcd.uvWrapMesh)
+            {
+                mf.mesh = msh;
+            }
+
+			if (mcd.usePhysicMaterial) 
+            {
 				mcol.material = mcd.physicMaterial;
 			}
-		}
-		else if (mcd.generateCollider && mcd.usePrimitiveCollider) {
+
+            // set triggers for the mesh collider?
+            if (mcd.setTriggers)
+            {
+                mcol.isTrigger = true;
+            }
+            else
+            {
+                mcol.isTrigger = false;
+            }
+		} // end generate mesh collider
+
+        // generate box colliders
+		else if (mcd.generateCollider && mcd.usePrimitiveCollider && !mcd.useAABBCollider) {
 			// remove the old collider if necessary
 			Collider col = mcd.gameObject.collider;
-			if (col != null) { 
-				Debug.LogWarning("Mesh Creator: found a collider on game object " + gameObject.name +", please remove it.");
-				MeshCollider mshcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
-				if (mshcol != null) {
-					Debug.LogWarning("Mesh Creator: found a mesh collider on game object " + gameObject.name + ", destroying it's mesh.");
-					mshcol.sharedMesh = null;
-				}
+			if (col != null) {
+                if (col.GetType() == typeof(MeshCollider))
+                {
+                    //Debug.LogWarning("Mesh Creator: found a collider on game object " + gameObject.name +", please remove it.");
+                    MeshCollider mshcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
+                    if (mshcol != null)
+                    {
+                        //Debug.LogWarning("Mesh Creator: found a mesh collider on game object " + gameObject.name + ", destroying it's mesh.");
+                        mshcol.sharedMesh = null;
+                    }
+                }
+                DestroyImmediate(col);
 			}
 				
 			// all compound colliders are stored in a gameObject 
@@ -355,8 +461,6 @@ public class MeshCreator : UnityEngine.Object {
 					continue;
 				}
 				
-				// this will be needed when capsule colliders are needed
-				//if (mcd.useBoxCollider)
 				{
 					count++;
 					GameObject colgo = new GameObject();
@@ -371,36 +475,149 @@ public class MeshCreator : UnityEngine.Object {
 					float vert2Y = bc.w/imageHeight;
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-					//vertX = vertX + mcd.widthOffset;
-					//vertY = vertY + mcd.heightOffset;
 					
 					vert2X = (vert2X * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vert2Y = (vert2Y * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-					//vert2X = vert2X + mcd.widthOffset;
-					//vert2Y = vert2Y + mcd.heightOffset;
 					
-					//bxcol.center = new Vector3(vertX - ((vertX-vert2X)/2.0f)-mcd.pivotWidthOffset, vertY - ((vertY-vert2Y)/2.0f)-mcd.pivotHeightOffset, mcd.depthOffset - mcd.pivotDepthOffset);
 					bxcol.center = new Vector3(vertX - ((vertX-vert2X)/2.0f)-mcd.pivotWidthOffset, vertY - ((vertY-vert2Y)/2.0f)-mcd.pivotHeightOffset, - mcd.pivotDepthOffset);
 
 					bxcol.size = new Vector3(Math.Abs(vertX-vert2X), Math.Abs(vertY-vert2Y), mcd.meshDepth);
-					if (mcd.usePhysicMaterial) {
+					
+                    // use physics material
+                    if (mcd.usePhysicMaterial) {
 						bxcol.material = mcd.physicMaterial;
 					}
+
+                    // set trigger for this box collider?
+                    if (mcd.setTriggers)
+                    {
+                        bxcol.isTrigger = true;
+                    }
 				}
 			}
-		}
+        } // end generate box colliders
+
+        // generate AABB collider
+        else if (mcd.generateCollider && !mcd.usePrimitiveCollider && mcd.useAABBCollider)
+        {
+            // remove the old collider if necessary
+            Collider col = mcd.gameObject.collider;
+            if (col != null)
+            {
+                DestroyImmediate(col);
+            }
+            mcd.gameObject.AddComponent(typeof(BoxCollider));
+
+            // remove the old compound collider before assigning new
+            string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
+            foreach (Transform child in mcd.gameObject.transform)
+            {
+                if (child.name == compoundColliderName)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+
+            BoxCollider bxcol = mcd.gameObject.GetComponent("BoxCollider") as BoxCollider;
+
+            Vector4 extents = GetTransparencyExtents(mcd.gameObject);
+            int imageHeight = mcd.outlineTexture.height;
+            int imageWidth = mcd.outlineTexture.width;
+
+            float vertX = 1.0f - (extents.x / imageWidth); // get X point and normalize
+            float vertY = extents.y / imageHeight; // get Y point and normalize
+            float vert2X = 1.0f - (extents.z / imageWidth);
+            float vert2Y = extents.w / imageHeight;
+            vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
+            vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
+
+            vert2X = (vert2X * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
+            vert2Y = (vert2Y * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
+
+            bxcol.center = new Vector3(vertX - ((vertX - vert2X) / 2.0f) - mcd.pivotWidthOffset, vertY - ((vertY - vert2Y) / 2.0f) - mcd.pivotHeightOffset, -mcd.pivotDepthOffset);
+
+            bxcol.size = new Vector3(Math.Abs(vertX - vert2X), Math.Abs(vertY - vert2Y), mcd.meshDepth);
+
+            // use physics material
+            if (mcd.usePhysicMaterial)
+            {
+                bxcol.material = mcd.physicMaterial;
+            }
+
+            // set trigger for this box collider?
+            if (mcd.setTriggers)
+            {
+                bxcol.isTrigger = true;
+            }
+
+        } // end generate AABB collider
+        else
+        {
+            // remove the old collider if necessary
+            Collider col = mcd.gameObject.collider;
+            if (col != null)
+            {
+                DestroyImmediate(col);
+            }
+
+            // remove the old compound collider before assigning new
+            string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
+            foreach (Transform child in mcd.gameObject.transform)
+            {
+                if (child.name == compoundColliderName)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+        }
+
+        // end collider section
 			
 		mcd.gameObject.transform.rotation = oldRotation;
 		mcd.gameObject.transform.localScale = oldScale;
 		
-		if (mcd.addRigidBody) {
-			Rigidbody rb = (Rigidbody) mcd.gameObject.GetComponent(typeof(Rigidbody));
-			if (rb == null) {
-				rb = (Rigidbody) mcd.gameObject.AddComponent(typeof(Rigidbody));
-				rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
-			}
-		}
-    }  
+    }
+
+    // Vec4 returned is box coordinates
+    // upperleft.x,upperleft.y, lowerright.x,lowerright.y
+    // pixels in Unity are left to right, from bottom to top
+    static Vector4 GetTransparencyExtents(GameObject gameObject)
+    {
+        MeshCreatorData mcd = gameObject.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;
+        Vector4 extents = new Vector4();
+
+        string path = AssetDatabase.GetAssetPath(mcd.outlineTexture);
+        TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+        textureImporter.isReadable = true;
+        AssetDatabase.ImportAsset(path);
+
+        Color[] pixels = mcd.outlineTexture.GetPixels();	// get the pixels to build the mesh from
+        float pixelThreshold = mcd.pixelTransparencyThreshold / 255.0f;
+        int imageHeight = mcd.outlineTexture.height;
+        int imageWidth = mcd.outlineTexture.width;
+
+        // set the extents to max mins
+        extents.z = imageWidth - 1;
+        extents.w = imageHeight - 1;
+        extents.x = 0;
+        extents.y = 0;
+
+        for (int I = 0; I < imageWidth; I++)
+        {
+            for (int j = 0; j < imageHeight; j++)
+            {
+                if (pixels[I + (imageWidth * j)].a >= pixelThreshold)
+                {
+                    if (I < extents.z) extents.z = I;
+                    if (I > extents.x) extents.x = I;
+                    if (j < extents.w) extents.w = j;
+                    if (j > extents.y) extents.y = j;
+                }
+            }
+        }
+
+        return extents;
+    }
 	
 	static ArrayList GetBoxColliderCoordinates(GameObject gameObject) {
 		MeshCreatorData mcd = gameObject.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;
@@ -419,7 +636,7 @@ public class MeshCreator : UnityEngine.Object {
 		int imageWidth = mcd.outlineTexture.width;
 		
 		if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-			Debug.LogWarning("Mesh Creator Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+			Debug.LogWarning("Mesh Creator: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
 		}
 		
 		// copy the pixels so they can be modified
@@ -429,19 +646,19 @@ public class MeshCreator : UnityEngine.Object {
 			pix[i] = new Color(pixel.r, pixel.g, pixel.b, pixel.a);
 		}
 		
-		Vector4 boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight);
-		while ((Math.Abs(boxCoord.x-boxCoord.z) * Math.Abs(boxCoord.y-boxCoord.w) ) >= mcd.smallestBoxArea) {
-			//Debug.Log("Largest Box " + boxCoord);
-			boxCoordinates.Add(boxCoord);
-			boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight);
+		Vector4 boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
+        boxCoordinates.Add(boxCoord);
+		while(boxCoordinates.Count < mcd.maxNumberBoxes)
+        {
+			boxCoord = GetLargestBox(ref pix, imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
+            boxCoordinates.Add(boxCoord);
 		}
-		//Debug.Log("Last box was " + boxCoord);
 		return boxCoordinates;
 	}
 	
 		
 	// based on algorithm from http://e-maxx.ru/algo/maximum_zero_submatrix
-	static Vector4 GetLargestBox(ref Color[] pixs, int imageWidth, int imageHeight) {
+	static Vector4 GetLargestBox(ref Color[] pixs, int imageWidth, int imageHeight, float threshold) {
 		Vector4 largestBox = new Vector4(-1.0f,-1.0f,-1.0f,-1.0f);
 		int n = imageHeight;
 		int m = imageWidth; 
@@ -456,8 +673,7 @@ public class MeshCreator : UnityEngine.Object {
 		
 		for  ( int I = 0 ; I < n ; I++ ) {
 			for  ( int j = 0 ; j < m ;  j++ ) {
-				if (pixs[j + (imageWidth * I )].a != 1.0f) a[ I ][ j ] = 1; // check if alpha is one
-				//else a[ I ][ j ] = 0;
+				if (pixs[j + (imageWidth * I )].a < threshold) a[ I ][ j ] = 1; // check if alpha is less than threshold
 			}
 		}
 		 
@@ -490,9 +706,9 @@ public class MeshCreator : UnityEngine.Object {
 				int oldLarge = ans;
 				ans = Math.Max (ans, (i - d[j]) * (d2[j] - d1[j] - 1));
 				if (oldLarge != ans) {
-					largestBox[2] = d2[j];//correct
-					largestBox[3] = i+1; // correct
-					largestBox[0] = d1[j] +1;//(d2[j] - d1[j] - 1);
+					largestBox[2] = d2[j];
+					largestBox[3] = i+1; 
+					largestBox[0] = d1[j] +1;
 					largestBox[1] = d[j]+1;
 				}
 			}
@@ -515,7 +731,7 @@ public class MeshCreator : UnityEngine.Object {
 				}
 			}
 			else {
-				Debug.Log("got negative box");
+                Debug.Log("Mesh Creator: yikes, got a negative box inside pixel map array. Try resaving the image. Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 			}
 		
 		return largestBox;
@@ -533,25 +749,22 @@ public class MeshCreator : UnityEngine.Object {
 		textureImporter.isReadable = true;
 		AssetDatabase.ImportAsset(path);
 		
-		//Debug.Log("found texture " + outlineTexture.width + "," + outlineTexture.height);
 		Color[] pixels = mcd.outlineTexture.GetPixels();	// get the pixels to build the mesh from
-		//Debug.Log("total pixel count " + pixels.Length);
 		
 		// possibly do some size checking
 		int imageHeight = mcd.outlineTexture.height;
 		int imageWidth = mcd.outlineTexture.width;
 		if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-			Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
-			Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
+			//Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+			//Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
 		}
 		
 		// make a surface object to create and store data from image
-		MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight);
+		MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
 		
 		if ( mcd.mergeClosePoints ) mcs.MergeClosePoints(mcd.mergeDistance);
 		
 		// Create the mesh
-		//Mesh msh = new Mesh();
 		
 		if (!mcs.ContainsIslands()) {
 			// need a list of ordered 2d points
@@ -559,11 +772,11 @@ public class MeshCreator : UnityEngine.Object {
     
 			// Use the triangulator to get indices for creating triangles
 			Triangulator tr = new Triangulator(vertices2D);
+
 			int[] indices = tr.Triangulate(); // these will be reversed for the back side
 			Vector2[] uvs = new Vector2[vertices2D.Length * 4];
 			// Create the Vector3 vertices
 			Vector3[] vertices = new Vector3[vertices2D.Length * 4];
-			//Vector3[] verticesBack = new Vector3[vertices2D.Length];
 		
 			float halfDepth = -mcd.meshDepth/2.0f;
 			float halfVerticalPixel = 0.5f/imageHeight;
@@ -573,15 +786,13 @@ public class MeshCreator : UnityEngine.Object {
 				float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 				vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 				vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-				//vertX = vertX + mcd.widthOffset;
-				//vertY = vertY + mcd.heightOffset;
-				//vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
+				
 				vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth  - mcd.pivotDepthOffset);
-				//vertices[i + vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
+				
 				vertices[i + vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth-mcd.pivotDepthOffset);
-				//vertices[i+(vertices2D.Length*2)] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset-mcd.pivotDepthOffset); // vertex for side
+				
 				vertices[i+(vertices2D.Length*2)] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth -mcd.pivotDepthOffset); // vertex for side
-				//vertices[i +(vertices2D.Length*3)] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
+				
 				vertices[i +(vertices2D.Length*3)] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth -mcd.pivotDepthOffset);
 
 				uvs[i] = mcs.GetUVForIndex(i);
@@ -626,7 +837,7 @@ public class MeshCreator : UnityEngine.Object {
 			msh.uv = uvs;
 			msh.RecalculateNormals();
 			msh.RecalculateBounds();
-			msh.name = mcd.outlineTexture.name + ".mesh";
+			msh.name = mcd.outlineTexture.name + ".asset";
 			
 			// this will get the pivot drawing in the correct place
 			Bounds oldBounds = msh.bounds;
@@ -659,12 +870,6 @@ public class MeshCreator : UnityEngine.Object {
 					float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-					//vertX = vertX + mcd.widthOffset;
-					//vertY = vertY + mcd.heightOffset;
-					//~ vertices[i] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
-					//~ vertices[i + vertices2D.Length] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
-					//~ vertices[i+(vertices2D.Length*2)] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset-mcd.pivotDepthOffset); // vertex for side
-					//~ vertices[i +(vertices2D.Length*3)] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth + mcd.depthOffset-mcd.pivotDepthOffset);
 					
 					vertices[i] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, -halfDepth -mcd.pivotDepthOffset);
 					vertices[i + vertices2D.Length] = new Vector3(vertX-mcd.pivotWidthOffset, vertY-mcd.pivotHeightOffset, halfDepth-mcd.pivotDepthOffset);
@@ -727,7 +932,7 @@ public class MeshCreator : UnityEngine.Object {
 			msh.uv = (Vector2[]) completeUVs.ToArray(typeof(Vector2));
 			msh.RecalculateNormals();
 			msh.RecalculateBounds();
-			msh.name = mcd.outlineTexture.name + ".mesh";
+			msh.name = mcd.outlineTexture.name + ".asset";
 			
 			// this will get the pivot drawing in the correct place
 			Bounds oldBounds = msh.bounds;
@@ -748,14 +953,12 @@ public class MeshCreator : UnityEngine.Object {
 		textureImporter.isReadable = true;
 		AssetDatabase.ImportAsset(path);
 			
-		//Color[] pixels = mcd.outlineTexture.GetPixels();	// get the pixels to build the mesh from
-			
 		// do some size checking
 		int imageHeight = mcd.outlineTexture.height;
 		int imageWidth = mcd.outlineTexture.width;
 		
 		if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-			Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+			Debug.LogWarning("Mesh Creator: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
 			Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
 		}
 		
@@ -775,9 +978,7 @@ public class MeshCreator : UnityEngine.Object {
 			float vertY = vertices2D[i].y/imageHeight; // get Y point and normalize
 			vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 			vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-			//vertX = vertX + mcd.widthOffset;
-			//vertY = vertY + mcd.heightOffset;
-			//vertices[i] = new Vector3(vertX -mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset );
+
 			vertices[i] = new Vector3(vertX -mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth - mcd.pivotDepthOffset );
 			
 			uvs[i] = frontUVs[i];
@@ -833,9 +1034,7 @@ public class MeshCreator : UnityEngine.Object {
 			float vertY = vertices2D[i].y/imageHeight; // get Y point and normalize
 			vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 			vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-			//vertX = vertX + mcd.widthOffset;
-			//vertY = vertY + mcd.heightOffset;
-			//vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
+			
 			vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth - mcd.pivotDepthOffset);
 
 			uvs[i] = frontUVs[i];
@@ -846,7 +1045,7 @@ public class MeshCreator : UnityEngine.Object {
 		msh.uv = uvs;
 		msh.RecalculateNormals();
 		msh.RecalculateBounds();
-		msh.name = mcd.outlineTexture.name + ".mesh";
+		msh.name = mcd.outlineTexture.name + ".asset";
 		
 		// this will get the pivot drawing in the correct place
 		Bounds oldBounds = msh.bounds;
@@ -871,12 +1070,12 @@ public class MeshCreator : UnityEngine.Object {
 			int imageHeight = mcd.outlineTexture.height;
 			int imageWidth = mcd.outlineTexture.width;
 			if ( ((float)imageWidth)/((float)imageHeight) != mcd.meshWidth/mcd.meshHeight) {
-				Debug.LogWarning("Mesh Creator Inspector Warning: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
+				Debug.LogWarning("Mesh Creator: selected meshWidth and meshHeight is not the same proportion as source image width and height. Results may be distorted.");
 				Debug.LogWarning("    You may want to resize your image to be square, it can be easier that way.");
 			}
 			
 			// make a surface object to create and store data from image
-			MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight);
+			MC_SimpleSurfaceEdge mcs = new MC_SimpleSurfaceEdge(pixels,  imageWidth, imageHeight, mcd.pixelTransparencyThreshold/255.0f);
 			
 			if (!mcs.ContainsIslands()) {
 				// need a list of ordered 2d points
@@ -888,7 +1087,6 @@ public class MeshCreator : UnityEngine.Object {
 				Vector2[] uvs = new Vector2[vertices2D.Length * 2];
 				// Create the Vector3 vertices
 				Vector3[] vertices = new Vector3[vertices2D.Length * 2];
-				//Vector3[] verticesBack = new Vector3[vertices2D.Length];
 			
 				float halfDepth = -mcd.meshDepth/2.0f;
 				float halfVerticalPixel = 0.5f/imageHeight;
@@ -898,10 +1096,6 @@ public class MeshCreator : UnityEngine.Object {
 					float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 					vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 					vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-					//vertX = vertX + mcd.widthOffset;
-					//vertY = vertY + mcd.heightOffset;
-					//vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset); // vertex for side
-					//vertices[i +vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
 					
 					vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth  - mcd.pivotDepthOffset); // vertex for side
 					vertices[i +vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth  - mcd.pivotDepthOffset);
@@ -940,7 +1134,7 @@ public class MeshCreator : UnityEngine.Object {
 				msh.uv = uvs;
 				msh.RecalculateNormals();
 				msh.RecalculateBounds();
-				msh.name = mcd.outlineTexture.name + ".mesh";
+				msh.name = mcd.outlineTexture.name + ".asset";
 				
 				// this will get the pivot drawing in the correct place
 				Bounds oldBounds = msh.bounds;
@@ -969,10 +1163,6 @@ public class MeshCreator : UnityEngine.Object {
 						float vertY = vertices2D[i].y/imageHeight + halfVerticalPixel; // get Y point and normalize
 						vertX = (vertX * mcd.meshWidth) - (mcd.meshWidth / 2.0f);  // scale X and position centered
 						vertY = (vertY * mcd.meshHeight) - (mcd.meshHeight / 2.0f);
-						//vertX = vertX + mcd.widthOffset;
-						//vertY = vertY + mcd.heightOffset;
-						//vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
-						//vertices[i + vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth + mcd.depthOffset - mcd.pivotDepthOffset);
 						
 						vertices[i] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, -halfDepth - mcd.pivotDepthOffset);
 						vertices[i + vertices2D.Length] = new Vector3(vertX - mcd.pivotWidthOffset, vertY - mcd.pivotHeightOffset, halfDepth - mcd.pivotDepthOffset);
@@ -1025,7 +1215,7 @@ public class MeshCreator : UnityEngine.Object {
 				msh.uv = (Vector2[]) completeUVs.ToArray(typeof(Vector2));
 				msh.RecalculateNormals();
 				msh.RecalculateBounds();
-				msh.name = mcd.outlineTexture.name + ".mesh";
+				msh.name = mcd.outlineTexture.name + ".asset";
 				
 				// this will get the pivot drawing in the correct place
 				Bounds oldBounds = msh.bounds;
@@ -1036,6 +1226,21 @@ public class MeshCreator : UnityEngine.Object {
 	private static String GetTimestamp() {
 		return DateTime.Now.ToString("yyyyMMddHHmmssffff");
 	}
+
+    // copies a texture and saves into the project
+    public static Material CopyTexture(string baseNameLocation, 
+        string newNameLocation,
+        Texture texture)
+    {
+        Material mat;
+        AssetDatabase.CopyAsset(baseNameLocation, newNameLocation);
+        AssetDatabase.ImportAsset(newNameLocation);
+        mat = (Material)Resources.LoadAssetAtPath(newNameLocation, typeof(Material));
+        // mat.name = mcd.outlineTexture.name + ".Material"; // this probably isn't needed
+        mat.mainTexture = texture;
+        AssetDatabase.SaveAssets();
+        return mat;
+    }
 	
 	// generates a unique string for mesh naming
 	// from http://madskristensen.net/post/Generate-unique-strings-and-numbers-in-C.aspx
@@ -1052,7 +1257,7 @@ public class MeshCreator : UnityEngine.Object {
 	public static bool IdExistsInScene(MeshCreatorData mcd)
 	{
 		// check all objects in this scene for a matching unique number
-		object[] objs = GameObject.FindSceneObjectsOfType( typeof(GameObject));
+		object[] objs = GameObject.FindObjectsOfType( typeof(GameObject));
 		foreach (GameObject go in objs)
 		{
 			MeshCreatorData meshcd = go.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;

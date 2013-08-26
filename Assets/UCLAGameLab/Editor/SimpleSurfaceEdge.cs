@@ -1,3 +1,28 @@
+/****************************************************************************
+Copyright (c) 2013, Jonathan Cecil and UCLA Game Lab
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
+
 using UnityEngine;
 using System.Collections;
 
@@ -5,11 +30,10 @@ using System.Collections;
 * MC_SimpleSurfaceEdge
 *	class to read pixel data and create outline edges around opaque pixel areas.
 *
-*	version 0.5 - updated 1/1/2012
 ***/
 
 class MC_SimpleSurfaceEdge {
-	private const float versionNumber = 0.6f;
+	private const float versionNumber = 0.7f;
 	
 	Color[] pixels; // the original pixel data from the image
 	int imageHeight;
@@ -19,7 +43,7 @@ class MC_SimpleSurfaceEdge {
 	ArrayList vertices;
 	ArrayList edgeLoops;
 	
-	public MC_SimpleSurfaceEdge(Color[] _pixels, int _imageWidth, int _imageHeight) {
+	public MC_SimpleSurfaceEdge(Color[] _pixels, int _imageWidth, int _imageHeight, float threshold) {
 		pixels = _pixels;
 		imageWidth = _imageWidth;
 		imageHeight = _imageHeight;
@@ -40,7 +64,7 @@ class MC_SimpleSurfaceEdge {
 				float pixelAlpha = pixel.a;
 				
 				// only continue if the current pixel is opaque
-				if (pixelAlpha != 1.0) continue;
+				if (pixelAlpha < threshold) continue;
 				
 				// set up values for other possible pixel values
 				float pixelAboveAlpha = 0.0f;
@@ -50,7 +74,6 @@ class MC_SimpleSurfaceEdge {
 				float pixelAboveRightAlpha = 0.0f;
 				float pixelAboveLeftAlpha = 0.0f;
 				float pixelBelowRightAlpha = 0.0f;
-				//float pixelBelowLeftAlpha = 0.0f;
 				
 				// check x area, then the y. 
 				if ( x > 0 && x < imageWidth-1) {
@@ -70,8 +93,7 @@ class MC_SimpleSurfaceEdge {
 						pixelAboveLeftAlpha = pixelAboveLeft.a;
 						Color pixelBelowRight = pixels[x + 1 + (imageWidth * (y - 1))];
 						pixelBelowRightAlpha = pixelBelowRight.a;
-						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
-						//pixelBelowLeftAlpha = pixelBelowLeft.a;
+
 					}
 					else if ( y == 0) {
 						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
@@ -96,11 +118,9 @@ class MC_SimpleSurfaceEdge {
 					
 						Color pixelBelowRight = pixels[x + 1 + (imageWidth * (y - 1))];
 						pixelBelowRightAlpha = pixelBelowRight.a;
-						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
-						//pixelBelowLeftAlpha = pixelBelowLeft.a;
 					}
 					else {
-						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+                        Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values. Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 					}
 				}
 				else if ( x == 0 ) {
@@ -136,7 +156,7 @@ class MC_SimpleSurfaceEdge {
 						pixelBelowRightAlpha = pixelBelowRight.a;
 					}
 					else {
-						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+                        Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 					}
 					
 				}
@@ -151,8 +171,6 @@ class MC_SimpleSurfaceEdge {
 					
 						Color pixelAboveLeft = pixels[x - 1 + (imageWidth * (y + 1))];
 						pixelAboveLeftAlpha = pixelAboveLeft.a;
-						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
-						//pixelBelowLeftAlpha = pixelBelowLeft.a;
 					}
 					else if ( y == 0) {
 						Color pixelAbove = pixels[x + (imageWidth * (y+1))];
@@ -169,25 +187,23 @@ class MC_SimpleSurfaceEdge {
 						Color pixelLeft = pixels[x - 1 + (imageWidth * y)];
 						pixelLeftAlpha = pixelLeft.a;
 					
-						//Color pixelBelowLeft = pixels[x - 1 + (imageWidth * (y - 1))];
-						//pixelBelowLeftAlpha = pixelBelowLeft.a;
 					}
 					else {
-						Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values");
+                        Debug.Log("SimpleSurfaceEdge:: error constructing pixel values, misinterpreted y values.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 					}
 				}
 				
 				// try the up facing case
-				if (pixelAlpha == 1.0 && pixelAboveAlpha == 1.0) {
-					if (pixelAboveRightAlpha != 1.0 && pixelRightAlpha != 1.0) {
-						if (pixelAboveLeftAlpha == 1.0 || pixelLeftAlpha == 1.0) {
+				if (pixelAlpha >= threshold && pixelAboveAlpha >= threshold) {
+					if (pixelAboveRightAlpha < threshold && pixelRightAlpha < threshold) {
+						if (pixelAboveLeftAlpha >= threshold || pixelLeftAlpha >= threshold) {
 							// add the vertical edge
 							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x,y+1,uvX/uvWidth,(uvY+1)/uvHeight));
 							edges.Add(e);
 						}
 					}
-					else if ( pixelAboveLeftAlpha != 1.0 && pixelLeftAlpha != 1.0) {
-						if (pixelAboveRightAlpha == 1.0 || pixelRightAlpha == 1.0) {
+					else if ( pixelAboveLeftAlpha < threshold && pixelLeftAlpha < threshold) {
+						if (pixelAboveRightAlpha >= threshold || pixelRightAlpha >= threshold) {
 							// add the vertical edge
 							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x,y+1,uvX/uvWidth,(uvY+1)/uvHeight));
 							edges.Add(e);
@@ -196,13 +212,13 @@ class MC_SimpleSurfaceEdge {
 				}
 				
 				// try the up diagonal case
-				if (pixelAlpha == 1.0 && pixelAboveRightAlpha == 1.0) {
-					if (pixelAboveAlpha != 1.0 && pixelRightAlpha == 1.0) {
+				if (pixelAlpha >= threshold && pixelAboveRightAlpha >= threshold) {
+					if (pixelAboveAlpha < threshold && pixelRightAlpha >= threshold) {
 						// add the up diagonal edge
 						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y+1,(uvX+1)/uvWidth,(uvY+1)/uvHeight));
 						edges.Add(e);
 					}
-					else if (pixelAboveAlpha == 1.0 && pixelRightAlpha != 1.0) {
+					else if (pixelAboveAlpha >= threshold && pixelRightAlpha < threshold) {
 						// add the up diagonal edge
 						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y+1,(uvX+1)/uvWidth,(uvY+1)/uvHeight));
 						edges.Add(e);
@@ -210,16 +226,16 @@ class MC_SimpleSurfaceEdge {
 				}
 				
 				// try the right facing case
-				if (pixelAlpha == 1.0 && pixelRightAlpha == 1.0) {
-					if (pixelAboveAlpha != 1.0 && pixelAboveRightAlpha != 1.0) {
-						if (pixelBelowAlpha == 1.0 || pixelBelowRightAlpha == 1.0) {
+				if (pixelAlpha >= threshold && pixelRightAlpha >= threshold) {
+					if (pixelAboveAlpha < threshold && pixelAboveRightAlpha < threshold) {
+						if (pixelBelowAlpha >= threshold || pixelBelowRightAlpha >= threshold) {
 							// add the horizontal edge
 							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y,(uvX+1)/uvWidth,uvY/uvHeight));
 							edges.Add(e);
 						}
 					}
-					else if ( pixelBelowAlpha != 1.0 && pixelBelowRightAlpha != 1.0) {
-						if (pixelAboveAlpha == 1.0 || pixelAboveRightAlpha == 1.0) {
+					else if ( pixelBelowAlpha < threshold && pixelBelowRightAlpha < threshold) {
+						if (pixelAboveAlpha >= threshold || pixelAboveRightAlpha >= threshold) {
 							// add the horizontal edge
 							MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y,(uvX+1)/uvWidth,uvY/uvHeight));
 							edges.Add(e);
@@ -228,13 +244,13 @@ class MC_SimpleSurfaceEdge {
 				}
 				
 				// try the down diagonal case
-				if (pixelAlpha == 1.0 && pixelBelowRightAlpha == 1.0) {
-					if ( pixelRightAlpha != 1.0 && pixelBelowAlpha == 1.0) {
+				if (pixelAlpha >= threshold && pixelBelowRightAlpha >= threshold) {
+					if ( pixelRightAlpha < threshold && pixelBelowAlpha >= threshold) {
 						// add the down diagonal edge
 						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y-1,(uvX+1)/uvWidth,(uvY-1)/uvHeight));
 						edges.Add(e);
 					}
-					else if (pixelRightAlpha == 1.0 && pixelBelowAlpha != 1.0) {
+					else if (pixelRightAlpha >= threshold && pixelBelowAlpha < threshold) {
 						// ad the down diagonal edge
 						MC_Edge e = new MC_Edge(GetVertex(x,y,uvX/uvWidth,uvY/uvHeight), GetVertex(x+1,y-1,(uvX+1)/uvWidth,(uvY-1)/uvHeight));
 						edges.Add(e);
@@ -503,7 +519,7 @@ class MC_EdgeLoop {
 	
 	public Vector2 GetUVForIndex(int i) {
 		if (i >= orderedEdges.Count) {
-			Debug.Log("got " + i + " index for ordered edge with " + orderedEdges.Count + " elements");
+			//Debug.Log("got " + i + " index for ordered edge with " + orderedEdges.Count + " elements");
 			return new Vector2();
 		}
 		MC_Vertex v = ((MC_Edge)orderedEdges[i]).v1;
@@ -536,11 +552,11 @@ class MC_EdgeLoop {
 			MC_Vertex v2 = testEdge.v2;
 			MC_Vertex sharedPoint = currentEdge.v2;
 			if (sharedPoint != testEdge.v1) { // oops, bad list, it should be closed by now
-				Debug.LogError("EdgeLoop Error: list is not ordered when simplifying edge");
+                Debug.LogError("Mesh Creator EdgeLoop Error: list is not ordered when simplifying edge.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 				return;
 			}
 			if (v1 == v2) {
-				Debug.LogError("EdgeLoop Error: found matching endpoints for a line when simplifying.");
+                Debug.LogError("Mesh Creator EdgeLoop Error: found matching endpoints for a line when simplifying.  Please create a new issue at https://github.com/uclagamelab/MeshCreator/issues.");
 				return;
 			}
 			// determine if sharedPoint is on a line between the two endpoints
@@ -558,78 +574,20 @@ class MC_EdgeLoop {
 		newOrderedEdges.Add(currentEdge);
 		orderedEdges = newOrderedEdges;
 	}
-	/*
-	public void MergeClosePoints(float percentMerge)
-	{
-		ArrayList edgeDistances = new ArrayList();
-		
-		foreach (MC_Edge edge in orderedEdges)
-		{
-			float dist = Vector2.Distance(new Vector2(edge.v1.x, edge.v1.y), new Vector2(edge.v2.x, edge.v2.y));
-			//edgeDistances.Add(dist);
-			if (edgeDistances.Count == 0) 
-			{
-				edgeDistances.Add(dist);
-				continue;
-			}
-			bool found = false;
-			for (int i = 0; i < edgeDistances.Count; i++)
-			{
-				float edgeDistance = (float) edgeDistances[i];
-				if ( dist < edgeDistance ) 
-				{
-					found = true;
-					edgeDistances.Insert(i, dist);
-					break;
-				}
-			}
-			if (!found) edgeDistances.Add(dist);
-		}
-		
-		if (percentMerge > 1.0f) return;
-		if (percentMerge < 0.0f) return;
-		
-		int cutoffCount = (int)(edgeDistances.Count * percentMerge);
-		Debug.Log("cutoff count " + cutoffCount + ", total edges " + edgeDistances.Count + ", " + orderedEdges.Count);
-		
-		float cutoffAmount = (float) edgeDistances[cutoffCount];
-		Debug.Log("cutoff amount " + cutoffAmount);
-		ArrayList newOrderedEdges = new ArrayList(); // list to stick the joined edges
-		
-		MC_Edge currentEdge = (MC_Edge)orderedEdges[0];
-		for (int i = 1; i < orderedEdges.Count; i++) { // start with the second edge for comparison
-			MC_Edge testEdge = (MC_Edge) orderedEdges[i];
-			float dist = Vector2.Distance( new Vector2(currentEdge.v1.x, currentEdge.v1.y), new Vector2(testEdge.v2.x, testEdge.v2.y) );
-			MC_Vertex v1 = currentEdge.v1;
-			MC_Vertex v2 = testEdge.v2;
-			MC_Vertex sharedPoint = currentEdge.v2;
-			
-			if ( dist < cutoffAmount ) { // combine the two lines into current
-				currentEdge.v2 = v2;
-			}
-			else { // there isn't a continuation of line, so add current to new ordered and set current to testEdge
-				newOrderedEdges.Add(currentEdge);
-				currentEdge = testEdge;
-			}
-		}
-		newOrderedEdges.Add(currentEdge);
-		orderedEdges = newOrderedEdges;
-		Debug.Log("trimmed from " + edgeDistances.Count + " to " + orderedEdges.Count);
-	}*/
 	
+	// very simple edge smoothing by comparing distance between adjacent
+    // points on edge and merging if close enough
 	public void MergeClosePoints(float mergeDistance)
 	{
 		if (mergeDistance < 0.0f) return;
 		
 		ArrayList newOrderedEdges = new ArrayList(); // list to stick the joined edges
-		int originalCount = orderedEdges.Count;
+		//int originalCount = orderedEdges.Count;
 		MC_Edge currentEdge = (MC_Edge)orderedEdges[0];
 		for (int i = 1; i < orderedEdges.Count; i++) { // start with the second edge for comparison
 			MC_Edge testEdge = (MC_Edge) orderedEdges[i];
 			float dist = Vector2.Distance( new Vector2(currentEdge.v1.x, currentEdge.v1.y), new Vector2(testEdge.v2.x, testEdge.v2.y) );
-			//MC_Vertex v1 = currentEdge.v1;
 			MC_Vertex v2 = testEdge.v2;
-			//MC_Vertex sharedPoint = currentEdge.v2;
 			
 			if ( dist < mergeDistance ) { // combine the two lines into current
 				currentEdge.v2 = v2;
@@ -641,6 +599,9 @@ class MC_EdgeLoop {
 		}
 		newOrderedEdges.Add(currentEdge);
 		orderedEdges = newOrderedEdges;
-		Debug.Log("trimmed from " + originalCount + " to " + orderedEdges.Count);
+		/*if (originalCount != orderedEdges.Count)
+		{
+			Debug.Log("SimpleSurfaceEdge::MergeClosePoints(): trimmed from " + originalCount + " to " + orderedEdges.Count + " edges.");
+		}*/
 	}
 }
