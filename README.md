@@ -7,17 +7,19 @@ Major release packages are kept here in the MeshCreator.Packages directory. Thos
 
 The MeshCreatorOverview pdf included here gives a brief overview of some features of this tool.
 
-Or see a old tutorial at:
-http://games.ucla.edu/resources/unity-mesh-creator/
+UCLA Mesh Creator is available on the Unity Asset store here:  
+https://www.assetstore.unity3d.com/#/content/11066
+
+A brief description is available on the UCLA Game Lab website:  
+http://games.ucla.edu/resource/unity-mesh-creator-2/
 
 For license information, see license.txt.
 
 The current version is 0.7
 
-Jonathan Cecil
-jonathancecil@arts.ucla.edu
-http://jonathancecil.com
+Jonathan Cecil  
+jonathancecil@arts.ucla.edu  
+http://jonathancecil.com  
 http://games.ucla.edu/
 
-Thanks to Chris Reilly for help with wizard interface.
-Thanks to Aliah Darke for usability and interface testing.
+Thanks to Chris Reilly for help with wizard interface. Thanks to Aliah Darke, Alex Rickett, and Tyler Stefanich for usability and interface testing.
