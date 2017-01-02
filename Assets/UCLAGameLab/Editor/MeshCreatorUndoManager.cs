@@ -82,9 +82,12 @@ public class MeshCreatorUndoManager
             // When the LMB is pressed or the TAB key is released,
             // store a snapshot, but don't register it as an undo
             // (so that if nothing changes we avoid storing a useless undo).
-            Undo.SetSnapshotTarget(p_target, p_name);
-            Undo.CreateSnapshot();
-            Undo.ClearSnapshotTarget(); // Not sure if this is necessary.
+
+            //[!!!]
+            //Undo.SetSnapshotTarget(p_target, p_name);
+            Undo.RecordObject(p_target, p_name);
+            //Undo.CreateSnapshot();
+            //Undo.ClearSnapshotTarget(); // Not sure if this is necessary.
             listeningForGuiChanges = true;
         }
     }
@@ -146,9 +149,10 @@ public class MeshCreatorUndoManager
         if (!listeningForGuiChanges)
         {
             // Create a new snapshot.
-            Undo.SetSnapshotTarget(p_target, p_name);
-            Undo.CreateSnapshot();
-            Undo.ClearSnapshotTarget();
+            Undo.RecordObject(p_target, p_name);
+            //Undo.SetSnapshotTarget(p_target, p_name);
+            //Undo.CreateSnapshot();
+            //Undo.ClearSnapshotTarget();
         }
         SetDirty(p_target, p_name);
     }
@@ -158,9 +162,11 @@ public class MeshCreatorUndoManager
 
     private void SetDirty(Object p_target, string p_name)
     {
-        Undo.SetSnapshotTarget(p_target, p_name);
-        Undo.RegisterSnapshot();
-        Undo.ClearSnapshotTarget(); // Not sure if this is necessary.
+        Undo.RecordObject(p_target, p_name);
+        //Undo.SetSnapshotTarget(p_target, p_name);
+        //Undo.RegisterSnapshot();
+        //Undo.ClearSnapshotTarget(); // Not sure if this is necessary.
+
         if (autoSetDirty) EditorUtility.SetDirty(p_target);
         listeningForGuiChanges = false;
 
