@@ -46,7 +46,7 @@ public enum ObjectColliderType
 public class MeshCreatorWizard : EditorWindow
 {
     private const float versionNumber = 0.7f;
-    private Texture2D gameLabLogo = Resources.Load("games.ucla.logo.small") as Texture2D;
+    private Texture2D gameLabLogo;
     public Texture2D textureToCreateMeshFrom;
 
     public bool withColliders;
@@ -70,6 +70,10 @@ public class MeshCreatorWizard : EditorWindow
         // Get existing open window or if none, make a new one:
         MeshCreatorWizard window = (MeshCreatorWizard)EditorWindow.GetWindow(typeof(MeshCreatorWizard), true, "Create Mesh Object v" + versionNumber);
         window.minSize = minWindowSize;
+    }
+
+    void OnEnable() {
+        gameLabLogo = Resources.Load("games.ucla.logo.small") as Texture2D;
     }
 
     void OnGUI()
