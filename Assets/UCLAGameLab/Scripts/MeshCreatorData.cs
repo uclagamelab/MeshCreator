@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class MeshCreatorData : MonoBehaviour {
 	public string errorMessage = "reinstall the mesh creator package.";
@@ -69,5 +70,6 @@ public class MeshCreatorData : MonoBehaviour {
 	
 	public bool mergeClosePoints = false;
 	public float mergeDistance = 0.0f;
+
 	
 }

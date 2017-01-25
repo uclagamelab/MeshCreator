@@ -38,6 +38,7 @@ public class MeshCreatorUndoManager
         defTarget = p_target;
         defName = p_name;
         autoSetDirty = p_autoSetDirty;
+    
     }
 
     // ===================================================================================

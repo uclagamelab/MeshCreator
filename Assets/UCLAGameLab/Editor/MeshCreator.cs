@@ -178,8 +178,12 @@ public class MeshCreator : UnityEngine.Object {
 
         // save the main mesh
 		string meshName = "Assets/UCLAGameLab/Meshes/" + saveName + ".asset";
-		AssetDatabase.CreateAsset(msh, meshName);
-			
+
+        AssetDatabase.CreateAsset(msh, meshName);
+
+  
+        	
+
 		// make the side edges
 		if (!mcd.uvWrapMesh && mcd.createEdges) 
         {
@@ -354,15 +358,13 @@ public class MeshCreator : UnityEngine.Object {
                 mf.mesh = collidermesh;
             }
 			Collider col = mcd.gameObject.GetComponent<Collider>();
-            if (col == null)
-            {
-                mcd.gameObject.AddComponent(typeof(MeshCollider));
-            }
-            else
+            if (col != null)
             {
                 DestroyImmediate(col);
-                mcd.gameObject.AddComponent(typeof(MeshCollider));
             }
+            //[!!!]
+            mcd.gameObject.AddComponent(typeof(MeshCollider));
+            //Undo.AddComponent<MeshCollider>(mcd.gameObject);
 			
 			MeshCollider mcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
 			if (mcol == null) 
@@ -507,6 +509,9 @@ public class MeshCreator : UnityEngine.Object {
             {
                 DestroyImmediate(col);
             }
+
+            // [!!!]
+            //Undo.AddComponent<BoxCollider>(mcd.gameObject);
             mcd.gameObject.AddComponent(typeof(BoxCollider));
 
             // remove the old compound collider before assigning new

@@ -105,7 +105,7 @@ public class MeshCreatorInspector :  Editor {
                     meshType = ObjectMeshType.Flat2D;
                 }
 
-                meshType = (ObjectMeshType)EditorGUILayout.EnumPopup("Mesh Type", meshType);
+                meshType = (ObjectMeshType) EditorGUILayout.EnumPopup("Mesh Type", meshType);
                 if (meshType == ObjectMeshType.Full3D)
                 {
                     mcd.uvWrapMesh = true;
@@ -232,7 +232,8 @@ public class MeshCreatorInspector :  Editor {
                     // set entire scene for undo, object only won't work cause we're adding and removing components
 
                     //[!!!]
-                    Undo.RegisterFullObjectHierarchyUndo(mcd.gameObject, "Update Mesh Creator Object");
+                    //Don't register everything??
+                    //Undo.RegisterFullObjectHierarchyUndo(mcd.gameObject, "Update Mesh Creator Object");
                     //Undo.RegisterSceneUndo("Update Mesh Creator Object");
 
                     // do some simple parameter checking here so we don't get into trouble
@@ -389,6 +390,8 @@ public class MeshCreatorInspector :  Editor {
 		}
         mcud.CheckDirty();
 	}
+
+
 	
 }
 
