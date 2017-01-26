@@ -36,6 +36,7 @@ public class MeshCreator : UnityEngine.Object {
 	
 	public static void UpdateMesh(GameObject gameObject)
 	{
+        Undo.SetCurrentGroupName("Update Mesh");
 		MeshCreatorData mcd = gameObject.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;
 		
 		// unity should prevent this from happening to the inspector, but just in case.....
@@ -344,7 +345,10 @@ public class MeshCreator : UnityEngine.Object {
 			string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
 			foreach(Transform child in mcd.gameObject.transform) {
 				if (child.name == compoundColliderName) {
-					DestroyImmediate(child.gameObject);
+					
+                    //[!!!]
+                    //DestroyImmediate(child.gameObject);
+                    Undo.DestroyObjectImmediate(child.gameObject);
 				}
 			}
 			
@@ -360,11 +364,15 @@ public class MeshCreator : UnityEngine.Object {
 			Collider col = mcd.gameObject.GetComponent<Collider>();
             if (col != null)
             {
-                DestroyImmediate(col);
+                // [!!!]
+                //DestroyImmediate(col);
+                Undo.DestroyObjectImmediate(col);
+
+
             }
             //[!!!]
-            mcd.gameObject.AddComponent(typeof(MeshCollider));
-            //Undo.AddComponent<MeshCollider>(mcd.gameObject);
+            //mcd.gameObject.AddComponent(typeof(MeshCollider));
+            Undo.AddComponent<MeshCollider>(mcd.gameObject);
 			
 			MeshCollider mcol = mcd.gameObject.GetComponent("MeshCollider") as MeshCollider;
 			if (mcol == null) 
@@ -420,18 +428,26 @@ public class MeshCreator : UnityEngine.Object {
                         mshcol.sharedMesh = null;
                     }
                 }
-                DestroyImmediate(col);
+                // [!!!]
+                //DestroyImmediate(col);
+                Undo.DestroyObjectImmediate(col);
+
 			}
 				
 			// all compound colliders are stored in a gameObject 
 			string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
-			GameObject go = new GameObject();
+
+            //[!!!]
+            GameObject go = null;//new GameObject();
 			
 			// find old compound colliders and remove
 			foreach (Transform child in mcd.gameObject.transform) {
 				if (child.name == compoundColliderName) {
-					DestroyImmediate(go);
-					go = child.gameObject;
+					
+                    //DestroyImmediate(go);
+
+					
+                    go = child.gameObject;
 					ArrayList removeChildren = new ArrayList();
 					foreach (Transform childchild in child) {
 						removeChildren.Add(childchild);
@@ -441,6 +457,14 @@ public class MeshCreator : UnityEngine.Object {
 					}
 				}
 			}
+
+            //[!!!]
+            if (go == null)
+            {
+                go = new GameObject();
+            }
+            Undo.RegisterFullObjectHierarchyUndo(go, Undo.GetCurrentGroupName());
+
 				
 			go.name = compoundColliderName;
 			go.transform.parent = mcd.gameObject.transform;
@@ -466,12 +490,17 @@ public class MeshCreator : UnityEngine.Object {
 				
 				{
 					count++;
-					GameObject colgo = new GameObject();
+                    //[!!!]
+                    GameObject colgo = new GameObject();
+                    Undo.RegisterCreatedObjectUndo(colgo, "Update Mesh");
+
 					colgo.name = compoundColliderName+"."+count;
 					colgo.transform.parent = go.transform;
 					colgo.transform.localPosition = Vector3.zero;
-					BoxCollider bxcol = colgo.AddComponent(typeof(BoxCollider)) as BoxCollider;
-					
+					//[!!!]
+                    //BoxCollider bxcol = colgo.AddComponent(typeof(BoxCollider)) as BoxCollider;
+                    BoxCollider bxcol = Undo.AddComponent<BoxCollider>(colgo);
+
 					float vertX = 1.0f - (bc.x/imageWidth) ; // get X point and normalize
 					float vertY = bc.y/imageHeight ; // get Y point and normalize
 					float vert2X = 1.0f - (bc.z/imageWidth);
@@ -507,12 +536,14 @@ public class MeshCreator : UnityEngine.Object {
             Collider col = mcd.gameObject.GetComponent<Collider>();
             if (col != null)
             {
-                DestroyImmediate(col);
+                //[!!!]
+                //DestroyImmediate(col);
+                Undo.DestroyObjectImmediate(col);
             }
 
             // [!!!]
-            //Undo.AddComponent<BoxCollider>(mcd.gameObject);
-            mcd.gameObject.AddComponent(typeof(BoxCollider));
+            Undo.AddComponent<BoxCollider>(mcd.gameObject);
+            //mcd.gameObject.AddComponent(typeof(BoxCollider));
 
             // remove the old compound collider before assigning new
             string compoundColliderName = mcd.gameObject.name + "CompoundColliders";
@@ -563,7 +594,9 @@ public class MeshCreator : UnityEngine.Object {
             Collider col = mcd.gameObject.GetComponent<Collider>();
             if (col != null)
             {
-                DestroyImmediate(col);
+                // [!!!]
+                //DestroyImmediate(col);
+                Undo.DestroyObjectImmediate(col);
             }
 
             // remove the old compound collider before assigning new
@@ -572,7 +605,9 @@ public class MeshCreator : UnityEngine.Object {
             {
                 if (child.name == compoundColliderName)
                 {
-                    DestroyImmediate(child.gameObject);
+                    //[!!!]
+                    //DestroyImmediate(child.gameObject);
+                    Undo.DestroyObjectImmediate(child.gameObject);
                 }
             }
         }
@@ -581,7 +616,14 @@ public class MeshCreator : UnityEngine.Object {
 			
 		mcd.gameObject.transform.rotation = oldRotation;
 		mcd.gameObject.transform.localScale = oldScale;
-		
+	
+        //[!!!]
+        //Trying to collapse add box stuff?
+        Undo.SetCurrentGroupName("Update Mesh");
+        Undo.CollapseUndoOperations(Undo.GetCurrentGroup());
+
+        //Prevents a harmless exception in case of any components being deleted
+        EditorGUIUtility.ExitGUI();
     }
 
     // Vec4 returned is box coordinates

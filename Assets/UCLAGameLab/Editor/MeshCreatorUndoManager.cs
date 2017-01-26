@@ -86,7 +86,7 @@ public class MeshCreatorUndoManager
 
             //[!!!]
             //Undo.SetSnapshotTarget(p_target, p_name);
-            Undo.RecordObject(p_target, p_name);
+            //Undo.RecordObject(p_target, p_name); //[!!!] restore this one?
             //Undo.CreateSnapshot();
             //Undo.ClearSnapshotTarget(); // Not sure if this is necessary.
             listeningForGuiChanges = true;
