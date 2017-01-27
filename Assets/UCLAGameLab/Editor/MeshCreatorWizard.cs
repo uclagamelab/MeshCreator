@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013, Jonathan Cecil and UCLA Game Lab
+Copyright (c) 2017, Jonathan Cecil and UCLA Game Lab
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ public enum ObjectColliderType
 // thanks to Chris Reilly for changing this to EditorWindow from Wizard
 public class MeshCreatorWizard : EditorWindow
 {
-    private const float versionNumber = 0.7f;
+    private const float versionNumber = 0.8f;
     private Texture2D gameLabLogo;
     public Texture2D textureToCreateMeshFrom;
 

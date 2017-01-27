@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013, Jonathan Cecil and UCLA Game Lab
+Copyright (c) 2017, Jonathan Cecil and UCLA Game Lab
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ public class MeshCreatorData : MonoBehaviour {
 	// use this texture for creating the outine
 	public Texture2D outlineTexture;
     public float pixelTransparencyThreshold = 175;
-	public const float versionNumber = 0.7f;
+	public const float versionNumber = 0.8f;
 	
 	// settings for what the script will create
 	public bool uvWrapMesh = true;

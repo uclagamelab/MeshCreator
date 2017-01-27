@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013, Jonathan Cecil and UCLA Game Lab
+Copyright (c) 2017, Jonathan Cecil and UCLA Game Lab
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class MeshCreator : UnityEngine.Object {
-	public static float versionNumber = 0.7f;
+	public static float versionNumber = 0.8f;
 	
     public static void UpdateMesh(GameObject gameObject, bool updatingExistingGameObject = true)
 	{

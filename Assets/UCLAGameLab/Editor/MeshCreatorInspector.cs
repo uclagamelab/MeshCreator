@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013, Jonathan Cecil and UCLA Game Lab
+Copyright (c) 2017, Jonathan Cecil and UCLA Game Lab
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@ public class MeshCreatorInspector :  Editor {
 	
 	private MeshCreatorData mcd;
     //private MeshCreatorUndoManager mcud;
-	private const float versionNumber = 0.7f;
+	private const float versionNumber = 0.8f;
 	private bool showColliderInfo = false;
 	private bool showMeshInfo = false;
 	private bool showMaterialInfo = false;

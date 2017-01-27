@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013, Jonathan Cecil and UCLA Game Lab
+Copyright (c) 2017, Jonathan Cecil and UCLA Game Lab
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ using System.Collections;
 ***/
 
 class MC_SimpleSurfaceEdge {
-	private const float versionNumber = 0.7f;
+	private const float versionNumber = 0.8f;
 	
 	Color[] pixels; // the original pixel data from the image
 	int imageHeight;
