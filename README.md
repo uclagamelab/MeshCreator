@@ -22,4 +22,4 @@ jonathancecil@arts.ucla.edu
 http://jonathancecil.com  
 http://games.ucla.edu/
 
-Thanks to Chris Reilly for help with wizard interface. Thanks to Aliah Darke, Alex Rickett, and Tyler Stefanich for usability and interface testing.
+Thanks to Chris Reilly for help with wizard interface. Thanks to Aliah Darke, Alex Rickett, and Tyler Stefanich for usability and interface testing. Many thanks to Alex Rickett for providing the fixes for Unity 5.4.
