@@ -71,11 +71,6 @@ public class MeshCreatorInspector :  Editor {
 	***/
 	public override void OnInspectorGUI() {
         
-
-       
-
-        //[!!!]
-		//EditorGUIUtility.LookLikeInspector();
 		
 		// TODO: inspector layout should be redesigned so that it's easier to 
 		// see the texture and material information
@@ -228,13 +223,6 @@ public class MeshCreatorInspector :  Editor {
                 EditorGUILayout.Space();
                 if (GUILayout.Button("Update Mesh", GUILayout.MaxWidth(100)))
                 {
-                    
-                    // set entire scene for undo, object only won't work cause we're adding and removing components
-
-                    //[!!!]
-                    //Don't register everything??
-                    //Undo.RegisterFullObjectHierarchyUndo(mcd.gameObject, "Update Mesh Creator Object");
-                    //Undo.RegisterSceneUndo("Update Mesh Creator Object");
 
                     // do some simple parameter checking here so we don't get into trouble
                     if (mcd.maxNumberBoxes < 1)
