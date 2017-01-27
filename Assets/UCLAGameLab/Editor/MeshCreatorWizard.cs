@@ -46,7 +46,7 @@ public enum ObjectColliderType
 public class MeshCreatorWizard : EditorWindow
 {
     private const float versionNumber = 0.7f;
-    private Texture2D gameLabLogo = Resources.Load("games.ucla.logo.small") as Texture2D;
+    private Texture2D gameLabLogo;
     public Texture2D textureToCreateMeshFrom;
 
     public bool withColliders;
@@ -102,6 +102,9 @@ public class MeshCreatorWizard : EditorWindow
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Texture to Create Mesh From", GUILayout.Width(175));
         GUILayoutOption[] textureDisplaySize = { GUILayout.Width(150), GUILayout.Height(150) };
+
+
+
         if (textureToCreateMeshFrom != null)
         {
             if (textureToCreateMeshFrom.height != textureToCreateMeshFrom.width)
@@ -118,6 +121,8 @@ public class MeshCreatorWizard : EditorWindow
                 }
             }
         }
+
+
 
         textureToCreateMeshFrom = (Texture2D)EditorGUILayout.ObjectField(textureToCreateMeshFrom, typeof(Texture2D), false, textureDisplaySize);
         EditorGUILayout.EndHorizontal();
@@ -146,11 +151,17 @@ public class MeshCreatorWizard : EditorWindow
             && textureToCreateMeshFrom != null)
         {
             // register the Undo
-            Undo.RegisterSceneUndo("Create New Mesh Object");
-
+            //[!!!]
+            //Undo.RegisterSceneUndo("Create New Mesh Object");
+            Undo.SetCurrentGroupName("Create New Mesh Object");
             // create the new object and set the proper variables		
             GameObject newObject = new GameObject(gameObjectName);
-            MeshCreatorData mcd = newObject.AddComponent("MeshCreatorData") as MeshCreatorData;
+
+
+            Undo.RegisterCreatedObjectUndo(newObject, Undo.GetCurrentGroupName());
+
+
+            MeshCreatorData mcd = newObject.AddComponent<MeshCreatorData>() as MeshCreatorData;
 
             // set up mesh creator data
             mcd.outlineTexture = textureToCreateMeshFrom;
@@ -232,9 +243,15 @@ public class MeshCreatorWizard : EditorWindow
                 //mcd.addRigidBody = false;
             }
 
-            // update the mesh
-            MeshCreator.UpdateMesh(newObject);
             Close();
+
+            // update the mesh
+            MeshCreator.UpdateMesh(newObject, false);
+
+
+            Undo.CollapseUndoOperations(Undo.GetCurrentGroup());
+
+
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
@@ -243,5 +260,10 @@ public class MeshCreatorWizard : EditorWindow
 
         GUILayout.EndHorizontal();
 
+    }
+
+    void OnEnable()
+    {
+        gameLabLogo = Resources.Load("games.ucla.logo.small") as Texture2D;
     }
 }

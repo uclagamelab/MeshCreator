@@ -40,7 +40,7 @@ using System;
 public class MeshCreatorInspector :  Editor {
 	
 	private MeshCreatorData mcd;
-    private MeshCreatorUndoManager mcud;
+    //private MeshCreatorUndoManager mcud;
 	private const float versionNumber = 0.7f;
 	private bool showColliderInfo = false;
 	private bool showMeshInfo = false;
@@ -62,7 +62,7 @@ public class MeshCreatorInspector :  Editor {
 		if (mcd == null) {
 			Debug.LogError("MeshCreatorInspector::OnEnable(): couldn't find a MeshCreatorData.cs component. Is the file in your project?");
 		}
-        mcud = new MeshCreatorUndoManager(mcd, "Mesh Creator");
+
     }
 	 
 	/***
@@ -70,11 +70,7 @@ public class MeshCreatorInspector :  Editor {
 	*	this does the main display of information in the inspector.
 	***/
 	public override void OnInspectorGUI() {
-        mcud.CheckUndo();
-
-       
-
-		EditorGUIUtility.LookLikeInspector();
+        
 		
 		// TODO: inspector layout should be redesigned so that it's easier to 
 		// see the texture and material information
@@ -104,7 +100,7 @@ public class MeshCreatorInspector :  Editor {
                     meshType = ObjectMeshType.Flat2D;
                 }
 
-                meshType = (ObjectMeshType)EditorGUILayout.EnumPopup("Mesh Type", meshType);
+                meshType = (ObjectMeshType) EditorGUILayout.EnumPopup("Mesh Type", meshType);
                 if (meshType == ObjectMeshType.Full3D)
                 {
                     mcd.uvWrapMesh = true;
@@ -227,8 +223,6 @@ public class MeshCreatorInspector :  Editor {
                 EditorGUILayout.Space();
                 if (GUILayout.Button("Update Mesh", GUILayout.MaxWidth(100)))
                 {
-                    // set entire scene for undo, object only won't work cause we're adding and removing components
-                    Undo.RegisterSceneUndo("Update Mesh Creator Object");
 
                     // do some simple parameter checking here so we don't get into trouble
                     if (mcd.maxNumberBoxes < 1)
@@ -382,8 +376,10 @@ public class MeshCreatorInspector :  Editor {
 		else {
 			Debug.LogError("MeshCreatorInspector::OnInspectorGUI(): couldn't find a MeshCreatorData component. Something has gone horribly wrong, try reloading your scene.");
 		}
-        mcud.CheckDirty();
+
 	}
+
+
 	
 }
 

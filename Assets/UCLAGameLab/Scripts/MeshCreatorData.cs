@@ -25,13 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class MeshCreatorData : MonoBehaviour {
 	public string errorMessage = "reinstall the mesh creator package.";
 	
 	// use this texture for creating the outine
 	public Texture2D outlineTexture;
-    public float pixelTransparencyThreshold = 255;
+    public float pixelTransparencyThreshold = 175;
 	public const float versionNumber = 0.7f;
 	
 	// settings for what the script will create
@@ -69,5 +70,6 @@ public class MeshCreatorData : MonoBehaviour {
 	
 	public bool mergeClosePoints = false;
 	public float mergeDistance = 0.0f;
+
 	
 }
