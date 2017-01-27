@@ -32,7 +32,7 @@ public class MeshCreatorData : MonoBehaviour {
 	
 	// use this texture for creating the outine
 	public Texture2D outlineTexture;
-    public float pixelTransparencyThreshold = 255;
+    public float pixelTransparencyThreshold = 175;
 	public const float versionNumber = 0.7f;
 	
 	// settings for what the script will create

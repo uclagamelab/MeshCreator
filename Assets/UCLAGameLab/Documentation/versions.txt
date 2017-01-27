@@ -1,5 +1,10 @@
 Major changes between versions are listed here, but not everything is documented. 
 
+Version 0.8
+January 26, 2017
+Changes:
+- Fixed compatibility with Unity 5.5
+
 Version 0.7
 August 23, 2013
 Changes:
