@@ -29,3 +29,6 @@ README.txt~
 .gitignore~
 ProjectSettings/
 README.md~
+MeshCreator.Editor.csproj
+MeshCreator.csproj
+MeshCreator.sln
