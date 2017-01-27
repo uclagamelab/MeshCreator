@@ -72,6 +72,10 @@ public class MeshCreatorWizard : EditorWindow
         window.minSize = minWindowSize;
     }
 
+    void OnEnable() {
+        gameLabLogo = Resources.Load("games.ucla.logo.small") as Texture2D;
+    }
+
     void OnGUI()
     {
 
