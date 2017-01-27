@@ -40,7 +40,7 @@ using System;
 public class MeshCreatorInspector :  Editor {
 	
 	private MeshCreatorData mcd;
-    private MeshCreatorUndoManager mcud;
+    //private MeshCreatorUndoManager mcud;
 	private const float versionNumber = 0.7f;
 	private bool showColliderInfo = false;
 	private bool showMeshInfo = false;
@@ -62,7 +62,7 @@ public class MeshCreatorInspector :  Editor {
 		if (mcd == null) {
 			Debug.LogError("MeshCreatorInspector::OnEnable(): couldn't find a MeshCreatorData.cs component. Is the file in your project?");
 		}
-        mcud = new MeshCreatorUndoManager(mcd, "Mesh Creator");
+
     }
 	 
 	/***
@@ -70,7 +70,7 @@ public class MeshCreatorInspector :  Editor {
 	*	this does the main display of information in the inspector.
 	***/
 	public override void OnInspectorGUI() {
-        mcud.CheckUndo();
+        
 
        
 
@@ -388,7 +388,7 @@ public class MeshCreatorInspector :  Editor {
 		else {
 			Debug.LogError("MeshCreatorInspector::OnInspectorGUI(): couldn't find a MeshCreatorData component. Something has gone horribly wrong, try reloading your scene.");
 		}
-        mcud.CheckDirty();
+
 	}
 
 

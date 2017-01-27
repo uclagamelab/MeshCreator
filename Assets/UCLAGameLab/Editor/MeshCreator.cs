@@ -34,9 +34,13 @@ using UnityEngine.SceneManagement;
 public class MeshCreator : UnityEngine.Object {
 	public static float versionNumber = 0.7f;
 	
-	public static void UpdateMesh(GameObject gameObject)
+    public static void UpdateMesh(GameObject gameObject, bool updatingExistingGameObject = true)
 	{
-        Undo.SetCurrentGroupName("Update Mesh");
+        if (updatingExistingGameObject)
+        {
+            Undo.SetCurrentGroupName("Update Mesh");
+        }
+
 		MeshCreatorData mcd = gameObject.GetComponent(typeof(MeshCreatorData)) as MeshCreatorData;
 		
 		// unity should prevent this from happening to the inspector, but just in case.....
@@ -210,7 +214,8 @@ public class MeshCreator : UnityEngine.Object {
 			while (destroyObject.Count > 0) {
 				Transform child = (Transform) destroyObject[0];
 				destroyObject.Remove(child);
-				DestroyImmediate(child.gameObject);
+				//[!!!]
+                Undo.DestroyObjectImmediate(child.gameObject);
 			}
 				
 			// create a new game object to attach the backside plane
@@ -255,7 +260,8 @@ public class MeshCreator : UnityEngine.Object {
 			while (destroyObject.Count > 0) {
 				Transform child = (Transform) destroyObject[0];
 				destroyObject.Remove(child);
-				DestroyImmediate(child.gameObject);
+                //[!!!]
+                Undo.DestroyObjectImmediate(child.gameObject);
 			}
 		}
 		
@@ -283,7 +289,8 @@ public class MeshCreator : UnityEngine.Object {
 			while (destroyObject.Count > 0) {
 				Transform child = (Transform) destroyObject[0];
 				destroyObject.Remove(child);
-				DestroyImmediate(child.gameObject);
+                //[!!!]
+                Undo.DestroyObjectImmediate(child.gameObject);
 			}
 				
 			// create a new game object to attach the backside plane
@@ -329,7 +336,8 @@ public class MeshCreator : UnityEngine.Object {
 			while (destroyObject.Count > 0) {
 				Transform child = (Transform) destroyObject[0];
 				destroyObject.Remove(child);
-				DestroyImmediate(child.gameObject);
+                //[!!!]
+                Undo.DestroyObjectImmediate(child.gameObject);
 			}
 		}
         // end mesh renderer setup section
@@ -453,7 +461,8 @@ public class MeshCreator : UnityEngine.Object {
 						removeChildren.Add(childchild);
 					}
 					foreach (Transform childchild in removeChildren) {
-						DestroyImmediate(childchild.gameObject);
+                        //[!!!]
+                        Undo.DestroyObjectImmediate(childchild.gameObject);
 					}
 				}
 			}
@@ -551,7 +560,7 @@ public class MeshCreator : UnityEngine.Object {
             {
                 if (child.name == compoundColliderName)
                 {
-                    DestroyImmediate(child.gameObject);
+                    Undo.DestroyObjectImmediate(child.gameObject);
                 }
             }
 
@@ -619,8 +628,11 @@ public class MeshCreator : UnityEngine.Object {
 	
         //[!!!]
         //Trying to collapse add box stuff?
-        Undo.SetCurrentGroupName("Update Mesh");
-        Undo.CollapseUndoOperations(Undo.GetCurrentGroup());
+        //Undo.SetCurrentGroupName("Update Mesh");
+        if (updatingExistingGameObject)
+        {
+            Undo.CollapseUndoOperations(Undo.GetCurrentGroup());
+        }
 
         //Prevents a harmless exception in case of any components being deleted
         EditorGUIUtility.ExitGUI();

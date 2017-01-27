@@ -153,9 +153,14 @@ public class MeshCreatorWizard : EditorWindow
             // register the Undo
             //[!!!]
             //Undo.RegisterSceneUndo("Create New Mesh Object");
-
+            Undo.SetCurrentGroupName("Create New Mesh Object");
             // create the new object and set the proper variables		
             GameObject newObject = new GameObject(gameObjectName);
+
+
+            Undo.RegisterCreatedObjectUndo(newObject, Undo.GetCurrentGroupName());
+
+
             MeshCreatorData mcd = newObject.AddComponent<MeshCreatorData>() as MeshCreatorData;
 
             // set up mesh creator data
@@ -238,11 +243,15 @@ public class MeshCreatorWizard : EditorWindow
                 //mcd.addRigidBody = false;
             }
 
-            // update the mesh
-            MeshCreator.UpdateMesh(newObject);
             Close();
 
-            Undo.RegisterCreatedObjectUndo(newObject, "Create New Mesh Object");
+            // update the mesh
+            MeshCreator.UpdateMesh(newObject, false);
+
+
+            Undo.CollapseUndoOperations(Undo.GetCurrentGroup());
+
+
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
